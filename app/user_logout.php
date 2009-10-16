@@ -36,11 +36,13 @@ else
 	{
 	   setcookie("bs_username", "", time()-60*60*24*100, "/");
 	   setcookie("bs_password", "", time()-60*60*24*100, "/");
+	   setcookie("bs_uid", "", time()-60*60*24*100, "/");
 	}
 	
 	// kill ze session variables
 	unset($_SESSION['username']);
 	unset($_SESSION['password']);
+	unset($_SESSION['uid']);
 	
 	// kill ze session
 	$_SESSION = array();
