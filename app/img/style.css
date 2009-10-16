@@ -331,6 +331,25 @@ td
 	font-size:13px;
 }
 
+/* tables for pages involving a sidebar... should only have one <tr> */
+
+.sidetbl
+{
+	width:100%;
+}
+
+.sidetbl tr:first-child td.left
+{
+	vertical-align:top;
+	padding-right:16px;
+}
+
+.sidetbl tr:first-child td.right
+{
+	width:320px;
+	vertical-align:top;
+}
+
 /* tables for forms */
 
 .frmtbl

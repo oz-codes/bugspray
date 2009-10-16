@@ -26,10 +26,9 @@ include("functions.php");
 template_top('issues');
 ?>
 
-<!-- todo: move this into the css somewhere -->
-<table style="width:100%;">
+<table class="sidetbl">
 	<tr>
-		<td style="vertical-align:top;padding-right:16px;">
+		<td class="left">
 			<h2 class="fl">Issue list</h2>
 			<div class="fr">
 				<button type="button" onclick="location.href='add_issue.php'"><img src="img/btn/add.png" alt="" />Add an issue</button>
@@ -117,7 +116,7 @@ while ($issue = mysql_fetch_array($result_issues))
 ?>
 			</table>
 		</td>
-		<td style="width:320px;vertical-align:top;">
+		<td class="right">
 			<h2>Assigned</h2>
 			<div class="ibox_generic">
 <?php
