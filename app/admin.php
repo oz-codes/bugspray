@@ -26,6 +26,7 @@ echo '<h2>Administration Panel</h2>';
 
 if (isadmin())
 {
+	// redundant, merge with adm() or something
 	switch ($_GET['p'])
 	{
 		case 'home': adm(); break;
