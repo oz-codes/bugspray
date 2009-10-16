@@ -29,25 +29,10 @@ echo '<h2>Administration Panel</h2>';
 
 if (isadmin())
 {
-	// redundant, merge with adm() or something
-	switch ($_GET['p'])
-	{
-		case 'home': adm(); break;
-		case 'projects': adm(); break;
-		case 'categories': adm(); break;
-		default: adm('home'); break;
-	}
-}
-else
-{
-	echo 'You do not have sufficient privileges to access this page.';
-}
-
-template_bottom();
-
-function adm($page='[nothingatall]')
-{
-	if ($page=='[nothingatall]') { $page = $_GET['p']; }
+	if (file_exists("adm/{$_GET['p']}.php"))
+		$page = $_GET['p'];
+	else
+		$page = 'home';
 	
 	echo '
 	<div class="tabs">
@@ -66,4 +51,10 @@ function adm($page='[nothingatall]')
 	
 	include("adm/$page.php");
 }
+else
+{
+	echo 'You do not have sufficient privileges to access this page.';
+}
+
+template_bottom();
 ?>
