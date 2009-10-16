@@ -128,7 +128,7 @@ function template_bottom()
 			</div>
 			
 			<footer id="footer">
-				powered by bugspray | version 0.0.8 | <?php echo $t; ?> seconds | <?php echo $q; ?>
+				powered by bugspray | version 0.1-dev | <?php echo $t; ?> seconds | <?php echo $q; ?>
 			</footer>
 		</div>
 	</body>
