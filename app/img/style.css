@@ -1,0 +1,705 @@
+/*
+ * bugspray theme - Classic Floral
+ * Copyright (c) a2h 2009
+ * 
+ * A FORMAT FOR MAKING YOUR OWN THEMES WILL BE INTRODUCED LATER ON
+ *
+ */
+
+/* main stuff */
+
+body
+{
+	background:url('bg/main.png');
+}
+body,td
+{
+	font-family:helvetica,arial,sans-serif;
+	font-size:13px;
+}
+
+/* HTML 5 support */  
+
+header,section,footer,aside,nav,article,figure
+{  
+	display:block;  
+}  
+
+/* links */
+
+a
+{
+	color:#4183C4;
+	text-decoration:none;
+}
+a:hover
+{
+	text-decoration:underline;
+}
+
+/* links to stuff that hasn't been implemented */
+
+a.notyet
+{
+	text-decoration:line-through;
+}
+
+/* lists */
+
+ul
+{
+	padding-left:32px;
+}
+
+/* apply palm to face, rub vigorously */
+
+img
+{
+	border:none;
+}
+
+#fade
+{
+	position:absolute;
+	top:0px;
+	left:0px;
+	background:url('bg/fade.png');
+	width:100%;
+	height:128px;
+	z-index:-1;
+}
+
+#global_wrapper
+{
+	background:url('bg/wrapper.png');
+	padding:8px;
+}
+
+/* header */
+
+#header
+{
+	padding:8px;
+}
+
+#header hgroup
+{
+	float:left;
+}
+
+#header hgroup h1
+{
+	margin:0px;
+	height:36px;
+	overflow:hidden;
+}
+
+#header nav
+{
+	color:#fff;
+	float:left;
+	padding-top:4px;
+}
+
+#header nav ul
+{
+	list-style:none;
+	padding:0px;
+	margin:0px;
+}
+#header nav ul li
+{
+	float:left;
+	margin:0px 16px;
+	padding:4px;
+}
+#header nav .sel
+{
+	background:url('bg/menusel.png');
+}
+#header nav ul li a
+{
+	color:#fff;
+}
+
+#search_wrapper
+{
+	float:right;
+	background:url('bg/menusel2.png');
+	color:#fff;
+	padding:8px;
+	height:20px;
+	margin-left:8px;
+}
+#search_wrapper input
+{
+	border:0px;
+	font-size:11px;
+	padding:2px;
+	background:#fff url('search.png') no-repeat right;
+	width:142px;
+	height:16px;
+	-moz-border-radius:0px !important;
+	-webkit-border-radius:0px !important;
+}
+#user_wrapper
+{
+	float:right;
+	background:url('bg/menusel2.png');
+	color:#fff;
+	padding:8px;
+	height:20px;
+}
+#user_left
+{
+	float:left;
+}
+#user_right
+{
+	float:left;
+	padding:2px 0px 0px 4px;
+}
+#user_right a
+{
+	color:#fff;
+}
+
+/* content */
+
+#content_wrapper
+{
+	background:#fff;
+	padding:16px;
+	margin-top:8px;
+}
+
+/* footer */
+
+#footer
+{
+	margin-top:8px;
+	color:#fff;
+	font-size:10px;
+	padding:4px 8px;
+}
+
+hr
+{
+	border:dotted #888;
+	border-width:1px 0px 0px 0px;
+}
+
+/* float the boat */
+
+.fl
+{
+	float:left;
+}
+.fr
+{
+	float:right;
+}
+.fc
+{
+	clear:both;
+}
+
+/* the headings */
+
+h2
+{
+	margin:0px 0px 12px 0px;
+}
+h3,h4,h5
+{
+	margin:0px 0px 4px 0px;
+}
+
+/* custom form styling :o */
+
+input[type=text], input[type=password], textarea, select
+{
+	border:1px solid #bbb;
+	font-size:13px;
+	font-family:helvetica,arial,sans-serif;
+	background:#fff url('bg/form.png') repeat-x;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	padding:4px;
+}
+
+button,input[type=submit]
+{
+	height:24px;
+	background:url('btn/grad.png');
+	border:1px solid #bebebe;
+	padding:0px 4px;
+	font-family:verdana;
+	font-size:11px;
+	text-shadow:0px 1px 0px #fff;
+	cursor:pointer;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+button img
+{
+	margin:-4px 8px -3px 0px;
+}
+
+input[type=submit]
+{
+	width:64px;
+}
+
+/* web 2.0 means BIIIIG forms */
+
+.biglabels label
+{
+	font-size:16px;
+	font-weight:bold;
+}
+
+.biginput
+{
+	font-size:24px !important;
+	color:#555;
+	width:512px;
+}
+
+/* avatars (duh?) */
+
+.avatar
+{
+	border:2px solid #444;
+	width:16px;
+	height:16px;
+}
+
+#user_wrapper .avatar
+{
+	border-color:#555;
+}
+
+/* NO, you tables, I don't want your crappy 1990's ways */
+
+table
+{
+	border-spacing:0px;
+}
+td
+{
+	border:0px;
+	padding:0px;
+}
+
+/* td spacing is mandatory for good of glorious nation */
+
+td
+{
+	padding-bottom:4px;
+}
+
+/* tabs */
+
+.tabs
+{
+	border-bottom:1px solid #777;
+	margin-bottom:8px;
+}
+.tabs a:first-child
+{
+	margin-left:16px !important;
+}
+.tabs a
+{
+	position:relative;
+	top:2px;
+	float:left;
+	padding:6px 16px;
+	margin:0px 8px;
+	font-weight:bold;
+	color:#777;
+	font-size:12px;
+}
+.tabs a.sel
+{
+	top:1px;
+	border:1px solid #777;
+	border-bottom:1px solid #fff;
+	color:#000;
+	font-size:13px;
+}
+
+/* tables for forms */
+
+.frmtbl
+{
+	width:100%;
+}
+.frmtbl td
+{
+	vertical-align:top;
+}
+.frmtbl tr td
+{
+	padding-bottom:8px;
+}
+.frmtbl tr td:first-child
+{
+	font-weight:bold;
+}
+
+/* tables for the regular listing of issues */
+
+.listingtbl
+{
+	width:100%;
+}
+.listingtbl a
+{
+	font-weight:bold;
+}
+.listingtbl td
+{
+	padding:4px;
+	font-size:12px;
+}
+.listingtbl td.comments
+{
+	width:64px;
+}
+.listingtbl td.comments div, .listingtbl td.views div
+{
+	background:#ddd;
+	text-align:center;
+	padding:0px 8px 8px 8px;
+	font-size:11px;
+}
+.listingtbl td.comments div:first-child, .listingtbl td.views div:first-child
+{
+	padding:8px 8px 0px 8px;
+	font-size:15px;
+	font-weight:bold;
+}
+.listingtbl td.views
+{
+	width:48px;
+}
+.listingtbl td.views div
+{
+	background:#f2f2f2;
+}
+.listingtbl .upper
+{
+	padding-bottom:1px;
+}
+.listingtbl .lower
+{
+	border-top:1px dotted #ccc;
+	padding-top:3px;
+}
+.listingtbl .left
+{
+	float:left;
+}
+.listingtbl .right
+{
+	float:right;
+}
+.listingtbl tr.closed, .listingtbl tr.closed a
+{
+	color:#999;
+}
+.listingtbl tr.closed .cat
+{
+	color:#000;
+}
+.listingtbl .upper .left a:first-child
+{
+	font-size:16px;
+}
+.listingtbl .upper .right
+{
+	margin-top:3px;
+}
+
+/* tables for the watchlist */
+
+.watchlisttbl td
+{
+	padding:0px 8px 2px 0px;
+}
+.watchlisttbl a
+{
+	font-weight:bold;
+}
+
+/* tables for lists of links */
+
+.linklisttbl tr td:first-child
+{
+	padding-right:16px;
+}
+.linklisttbl td
+{
+	padding-top:8px;
+}
+.linklisttbl tr:first-child td
+{
+	padding-top:0px !important;
+}
+
+/* little category labels */
+
+.cat
+{
+	font-size:9px;
+	padding:1px 2px;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+}
+
+/* infoboxes */
+
+.ibox_generic, .ibox_details, .ibox_comment, .ibox_alert, .ibox_error
+{
+	background:#eee;
+	border:1px solid #ccc;
+	padding:8px;
+}
+
+.ibox_generic em
+{
+	color:#777;
+}
+
+.ibox_details
+{
+	width:768px;
+	background-image:url(bgcom/details.png);
+	background-repeat:no-repeat;
+	background-position:bottom right;
+}
+.ibox_details td
+{
+	padding-left:8px;
+}
+.ibox_details td:first-child
+{
+	padding-left:0px !important;
+	border-right:1px solid #ccc;
+}
+
+.ibox_comment
+{
+	width:752px;
+	margin-bottom:16px;
+	/* this stuff is set in php */
+	background-repeat:no-repeat;
+	background-position:bottom right;
+}
+.ibox_comment td
+{
+	vertical-align:top;
+	word-wrap:break-word;
+}
+.ibox_comment .left
+{
+	width:128px;
+	min-width:128px;
+	border-right:1px solid #ccc;
+}
+.ibox_comment .right
+{
+	width:608px;
+	padding-left:8px;
+}
+.ibox_comment .time
+{
+	color:#777;
+	font-size:10px;
+}
+
+.ibox_alert
+{
+	background:#ffd;
+	border-color:#bb9;
+}
+
+.ibox_error
+{
+	background:#fdd;
+	border-color:#b99;
+}
+
+.biglabels .ibox_error
+{
+	padding:4px;
+	width:512px;
+	font-size:12px;
+	margin-bottom:4px;
+}
+
+/* monospaced fonts = instant cool */
+
+.mono
+{
+	font-family:'lucida console',monospace;
+	font-size:12px;
+}
+
+/* the bar graph thing for the watchlist */
+
+.bar_bottom
+{
+	height:22px;
+	width:222px;
+	margin-left:1px;
+}
+.bar_bottom div
+{
+	float:left;
+	height:22px;
+}
+.bar_bottom .red
+{
+	background:url('graph/bar_bottom_red.png');
+}
+.bar_bottom .green
+{
+	background:url('graph/bar_bottom_green.png');
+}
+.bar_bottom .blue
+{
+	background:url('graph/bar_bottom_blue.png');
+}
+.bar_top
+{
+	height:22px;
+	width:224px;
+	position:relative;
+	top:-22px;
+	float:left;
+}
+.ibox_generic .bar_top
+{
+	background:url('graph/bar_top_ibox_gen.png');
+}
+
+/* small text */
+
+.subtitle
+{
+	font-size:12px;
+}
+.subtitle2
+{
+	font-size:11px;
+}
+
+/* colour picker */
+
+.colorlist
+{
+	padding-bottom:8px;
+}
+
+.colorlist div.color_picker
+{
+	float:left;
+}
+
+.colorlist label
+{
+	float:left;
+	padding-left:8px;
+}
+
+.colorlist .a
+{
+	float:left;
+	font-size:11px;
+	padding:2px 8px;
+}
+
+div.color_picker
+{
+	height: 16px;
+	width: 16px;
+	padding: 0 !important;
+	border: 1px solid #ccc;
+	background: url(arrow.gif) no-repeat top right;
+	cursor: pointer;
+	line-height: 16px;
+}
+
+div#color_selector
+{
+	width: 110px;
+	position: absolute;
+	border: 1px solid #598FEF;
+	background-color: #EFEFEF;
+	padding: 2px;
+}
+
+div#color_custom {width: 100%; float:left }
+div#color_custom label {font-size: 95%; color: #2F2F2F; margin: 5px 2px; width: 25%}
+div#color_custom input {margin: 5px 2px; padding: 0; font-size: 95%; border: 1px solid #000; width: 65%; }
+
+div.color_swatch
+{
+	height: 12px;
+	width: 12px;
+	border: 1px solid #000;
+	margin: 2px;
+	float: left;
+	cursor: pointer;
+	line-height: 12px;
+}
+
+/* no javascript lamers */
+
+#nojs
+{
+	font-size:32px;
+	color:red;
+	background:yellow;
+	padding:32px;
+	margin-bottom:32px;
+	text-align:center;
+}
+
+/* image button */
+
+.imgbtn
+{
+	cursor:pointer;
+}
+
+/* fullscreen overlay */
+
+#amwnd_wnd
+{
+	width:600px;
+}
+#amwnd_title
+{
+	background:#ddd;
+	padding:8px 16px;
+	font-size:1.5em;
+	font-weight:bold;
+}
+#amwnd_content
+{
+	padding:16px;
+}
+#amwnd_btn
+{
+	padding:0px 16px 8px 16px;
+	text-align:right;
+}
+#amwnd_btn button
+{
+	width:64px;
+}
