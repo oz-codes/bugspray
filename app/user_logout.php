@@ -32,7 +32,7 @@ if (!isloggedin())
 else
 {
 	// kill ze cookies
-	if (isset($_COOKIE['cookuname']) && isset($_COOKIE['cookpwd']))
+	if (isset($_COOKIE['bs_username']) && isset($_COOKIE['bs_password']))
 	{
 	   setcookie("bs_username", "", time()-60*60*24*100, "/");
 	   setcookie("bs_password", "", time()-60*60*24*100, "/");
