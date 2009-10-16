@@ -23,6 +23,7 @@ include("functions.php");
 template_top('issues');
 ?>
 
+<!-- todo: move this into the css somewhere -->
 <table style="width:100%;">
 	<tr>
 		<td style="vertical-align:top;padding-right:16px;">
