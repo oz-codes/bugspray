@@ -40,8 +40,6 @@ else
 if (!isset($_POST['sub']))
 {
 ?>
-You are <b>posting</b> an issue for the project <a href="#"><b>[TODO]</b></a><br />
-<br />
 
 <form action="" method="post">	
 	<table class="frmtbl">
@@ -52,6 +50,16 @@ You are <b>posting</b> an issue for the project <a href="#"><b>[TODO]</b></a><br
 			<td>
 				<input name="title" type="text" /><br />
 				<small>Be succint! You are limited to 128 characters.</small>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Project
+			</td>
+			<td>
+				<select name="proj">
+					<option>todo</option>
+				</select>
 			</td>
 		</tr>
 		<tr>
