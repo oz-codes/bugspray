@@ -38,7 +38,8 @@ if (isadmin())
 		echo '<br />';
 		
 		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Discussion has been locked ***',NOW(),'close')");
-		if ($query2) { echo 'Comment added succesfully!'; } else { mysql_error(); }
+		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'");
+		if ($query2 && $query3) { echo 'Comment added succesfully!'; } else { mysql_error(); }
 		
 		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
 	}
@@ -50,7 +51,8 @@ if (isadmin())
 		echo '<br />';
 		
 		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Discussion has been unlocked ***',NOW(),'reopen')");
-		if ($query2) { echo 'Comment added succesfully!'; } else { mysql_error(); }
+		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'");
+		if ($query2 && $query3) { echo 'Comment added succesfully!'; } else { mysql_error(); }
 		
 		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
 	}
@@ -66,7 +68,7 @@ if (isadmin())
 		
 		echo '<br /><br /><a href="index.php">Go to issue index</a>';
 	}
-	elseif (isset($_GET['assign']))
+	/*elseif (isset($_GET['assign']))
 	{
 		$u = escape_smart($_GET['assign']);
 		
@@ -84,7 +86,7 @@ if (isadmin())
 		if ($query2) { echo 'Set status sucessfully!'; } else { mysql_error(); }
 		
 		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
-	}
+	}*/
 	elseif (isset($_GET['status']))
 	{
 		$s = escape_smart($_POST['st']);
@@ -95,7 +97,8 @@ if (isadmin())
 		echo '<br />';
 		
 		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Status changed to \'".getstatusnm($s)."\' ***',NOW(),'status')");
-		if ($query2) { echo 'Comment added succesfully!'; } else { mysql_error(); }
+		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'");
+		if ($query2 && $query3) { echo 'Comment added succesfully!'; } else { mysql_error(); }
 		
 		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
 	}
