@@ -581,6 +581,10 @@ td
 	float:left;
 	height:22px;
 }
+.bar_bottom .gray
+{
+	background:url('graph/bar_bottom_gray.png');
+}
 .bar_bottom .red
 {
 	background:url('graph/bar_bottom_red.png');

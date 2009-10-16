@@ -154,10 +154,20 @@ while ($project = mysql_fetch_array($result_projects))
 				$total += $log['actioncount'];
 			}
 			
+			if ($total > 0)
+			{
+				echo '
+				<div class="green" style="width:'.($amount[$project['id']][1] / $total * 222).'px;"></div>
+				<div class="red" style="width:'.($amount[$project['id']][2] / $total * 222).'px;"></div>
+				<div class="blue" style="width:'.($amount[$project['id']][3] / $total * 222).'px;"></div>';
+			}
+			else
+			{
+				echo '
+				<div class="gray" style="width:222px;"></div>';
+			}
+			
 			echo '
-			<div class="green" style="width:'.($amount[$project['id']][1] / $total * 222).'px;"></div>
-			<div class="red" style="width:'.($amount[$project['id']][2] / $total * 222).'px;"></div>
-			<div class="blue" style="width:'.($amount[$project['id']][3] / $total * 222).'px;"></div>
 			<div class="fc"></div>';
 			
 			echo '
