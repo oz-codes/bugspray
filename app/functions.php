@@ -105,7 +105,9 @@ function getuid($unm)
 {
 	if ($unm == $_SESSION['username'])
 	{
-		return $_SESSION['uid']; // added for sake of compatibility with old code; please don't write new code utilising this
+		// added for sake of compatibility with old code; please don't use this function like this: getuid($_SESSION['username'])
+		// if you want to do something like that just use $_SESSION['uid']
+		return $_SESSION['uid'];
 	}
 	else
 	{
