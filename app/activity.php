@@ -45,7 +45,7 @@ while ($project = mysql_fetch_array($result_projects))
 			while ($log_issue = mysql_fetch_array($result_log_issues))
 			{
 				$log_entry[$i] = array(
-					'when' => strtotime($log_issue['when']),
+					'when_occured' => strtotime($log_issue['when']),
 					'actiontype' => $log_issue['actiontype'],
 					'userid' => $log_issue['userid'],
 					'category' => $issue['category'],
