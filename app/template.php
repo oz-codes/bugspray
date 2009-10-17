@@ -38,14 +38,7 @@ function template_top($hi)
 		<script type="text/javascript" src="js/bugspray.js"></script>
 	</head>
 	
-	<body>
-		<div id="nojs">
-			Hello! The software running this bugtracker, bugspray, uses a lot of JavaScript.
-			It seems you either have it disabled or unsupported. Please enable it if you
-			have it disabled, and upgrade your browser if it doesn't support JavaScript!
-		</div>
-		<script type="text/javascript">$("#nojs").css({'display':'none'});</script>
-		
+	<body>		
 		<div id="fade"></div>
 		
 		<div id="btn_extend" style="display:none;"><div class="c">Let's have some filler text whee</div><div class="fr"><img src="img/btn/extend_end.png" alt="x" onclick="unextendbtn()" /></div><div class="fc"></div></div>
@@ -98,7 +91,15 @@ function template_top($hi)
 				<div class="fc"></div>
 			</header>
 			<div id="content_wrapper">
-<!-- content begin -->	
+<div id="nojs">
+	<div class="ibox_error">
+		Hey there, looks like <strong>you have JavaScript disabled</strong>.
+		bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
+		If you're an admin you'll need to have it on.
+	</div>
+</div>
+<script type="text/javascript">$("#nojs").css({'display':'none'});</script>
+<!-- content begin -->
 <?php
 }
 

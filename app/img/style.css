@@ -183,9 +183,11 @@ img
 	padding:4px 8px;
 }
 
+/* horizontal lines */
+
 hr
 {
-	border:dotted #888;
+	border:solid #888;
 	border-width:1px 0px 0px 0px;
 }
 
@@ -374,6 +376,10 @@ td
 .listingtbl
 {
 	width:100%;
+}
+.listingtbl hr
+{
+	border-style:dotted;
 }
 .listingtbl a
 {
@@ -685,12 +691,9 @@ div.color_swatch
 
 #nojs
 {
-	font-size:32px;
-	color:red;
-	background:yellow;
-	padding:32px;
-	margin-bottom:32px;
+	font-size:11px;
 	text-align:center;
+	margin-bottom:16px;
 }
 
 /* image button */
