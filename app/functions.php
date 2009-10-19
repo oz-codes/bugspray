@@ -285,18 +285,23 @@ function isexistinguser($uname,$pwd)
 
 function isloggedin()
 {
-	// original code from http://www.evolt.org/node/60265
+	// is the session active?
+	$sessionactive = isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['uid']);
 	
 	// is the user set to remember?
 	if (isset($_COOKIE['bs_username']) && isset($_COOKIE['bs_password']))
 	{
-		$_SESSION['username'] = $_COOKIE['bs_username'];
-		$_SESSION['password'] = $_COOKIE['bs_password'];
-		$_SESSION['uid'] = $_COOKIE['bs_uid'];
+		// don't set the session repeatedly if it's already set
+		if (!$sessionactive)
+		{
+			$_SESSION['username'] = $_COOKIE['bs_username'];
+			$_SESSION['password'] = $_COOKIE['bs_password'];
+			$_SESSION['uid'] = $_COOKIE['bs_uid'];
+		}
 	}
 
 	// user's session is still active
-	if (isset($_SESSION['username']) && isset($_SESSION['password']))
+	if ($sessionactive)
 	{
 		// but is their user/pass pair correct?
 		if (isexistinguser($_SESSION['username'], $_SESSION['password']) == 2)
@@ -307,9 +312,12 @@ function isloggedin()
 			unset($_SESSION['uid']);
 			return false;
 		}
-		return true;
+		else
+		{
+			return true;
+		}
 	}
-	// user isn't active D:
+	// looks like they're not active after all...
 	else
 	{
 		return false;
