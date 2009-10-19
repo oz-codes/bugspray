@@ -109,20 +109,15 @@ else
 		$a = escape_smart($_SESSION['uid']);
 		$d = escape_smart(htmlentities($_POST['desc']));
 		
-		$now = time();
-		
-		$query2 = db_query("INSERT INTO issues (name,author,description,project,when_opened,category) VALUES ('$t','$a','$d','1',FROM_UNIXTIME($now),'$c')");
+		$query2 = db_query("INSERT INTO issues (name,author,description,project,when_opened,category) VALUES ('$t','$a','$d','1',NOW(),'$c')");
 		if ($query2) { echo 'Added issue successfully!'; } else { mysql_error(); }
 		
-		echo '<br />';
-		
-		$query3 = db_query_single("SELECT id FROM issues WHERE name='$t' AND when_opened=FROM_UNIXTIME($now)");
-		if ($query3) { echo 'Logging...'; } else { mysql_error(); }
+		$query2_id = mysql_insert_id();
 		
 		echo '<br />';
 		
-		$query4 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (FROM_UNIXTIME($now),'$a',1,{$query3[0]})");
-		if ($query4) { echo 'Logged successfully!'; } else { mysql_error(); }
+		$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(),'$a',1,$query2_id)");
+		if ($query3) { echo 'Logged successfully!'; } else { mysql_error(); }
 		
 		echo '<br /><br /><a href="view_issue.php?id='.$query3[0].'">Go to issue</a>';
 	}
