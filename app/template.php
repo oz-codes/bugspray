@@ -41,8 +41,6 @@ function template_top($hi)
 	<body>		
 		<div id="fade"></div>
 		
-		<div id="btn_extend" style="display:none;"><div class="c">Let's have some filler text whee</div><div class="fr"><img src="img/btn/extend_end.png" alt="x" onclick="unextendbtn()" /></div><div class="fc"></div></div>
-		
 		<div id="global_wrapper">
 			<header id="header">
 				<hgroup class="logo">
