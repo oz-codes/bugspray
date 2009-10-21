@@ -1,5 +1,5 @@
 /*
- * a2h's modal window jQuery plugin 0.0.1
+ * a2h's modal window jQuery plugin 0.0.2
  * Copyright (c) 2009 a2h - http://a2h.uni.cc/
  * 
  * Permission is hereby granted, free of charge, to any person
@@ -77,59 +77,66 @@ $(document).ready(function() {
 	$("#amwnd_btn button").hide();
 });
 
-$.fn.amwnd = function(options) {
-	settings = $.extend({
-		title: '',
-		content: '',
-		buttons: ['ok'],
-		closer: 'ok',
-		speed: $.fx.speeds._default
-	}, options);
-	
-	func = function() {
-		// set the content
-		$("#amwnd_title").html(settings.title);
-		$("#amwnd_content").html(settings.content);
+$.extend({
+	amwnd: function(options,elem) {
+		settings = $.extend({
+			title: '',
+			content: '',
+			buttons: ['ok'],
+			closer: 'ok',
+			speed: $.fx.speeds._default
+		}, options);
 		
-		// show the appropriate buttons
-		for (var i in settings.buttons)
-		{
-			$("#amwnd_"+settings.buttons[i]).css({'display':'inline'});
-		}
-		
-		// bind the close button as appropriate
-		$("#amwnd_"+settings.closer).bind('click',function() {
+		func = function() {
+			// set the content
+			$("#amwnd_title").html(settings.title);
+			$("#amwnd_content").html(settings.content);
+			
+			// show the appropriate buttons
 			for (var i in settings.buttons)
 			{
-				if (settings.buttons[i] != settings.closer)
-				{
-					$("#amwnd_"+settings.buttons[i]).unbind();
-				}
+				$("#amwnd_"+settings.buttons[i]).css({'display':'inline'});
 			}
-			closewnd();
-		});
+			
+			// bind the close button as appropriate
+			$("#amwnd_"+settings.closer).bind('click',function() {
+				for (var i in settings.buttons)
+				{
+					if (settings.buttons[i] != settings.closer)
+					{
+						$("#amwnd_"+settings.buttons[i]).unbind();
+					}
+				}
+				closewnd();
+			});
+			
+			// show the window
+			$("#amwnd").fadeIn(settings.speed);
+		}
 		
-		// show the window
-		$("#amwnd").fadeIn(settings.speed);
+		closewnd = function() {
+			$("#amwnd").fadeOut(settings.speed);
+			setTimeout(function(){$("#amwnd_btn button").hide();},settings.speed);
+		}
+		
+		if (elem == undefined)
+		{
+			func();
+		}
+		else
+		{
+			$(elem).bind('click',func);
+			return elem;
+		}
 	}
-	
-	closewnd = function() {
-		$("#amwnd").fadeOut(settings.speed);
-		setTimeout(function(){$("#amwnd_btn button").hide();},settings.speed);
-	}
-	
-	if (typeof(this) == 'function')
-	{
-		func();
-	}
-	else
-	{
-		$(this).bind('click',func);
-	}
-	
-	return this;
-}
+});
 
-$.amwnd = $.fn.amwnd;
+$.fn.extend({
+	amwnd: function(options) {
+		return this.each(function() {
+			$.amwnd(options,this);
+		});
+	}
+});
 
 })(jQuery);
