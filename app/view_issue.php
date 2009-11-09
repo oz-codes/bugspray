@@ -208,7 +208,7 @@ if (!$issue['discussion_closed'] || isadmin())
 	if (isloggedin())
 	{
 	?>
-	<form action="add_comment.php" method="post">
+	<form action="add_comment.php" method="post" class="ajax">
 		<input type="hidden" name="id" value="<?php echo $id; ?>" />
 		<small>You can use BBcode here, like [b] and [url]. If you don't want something to be parsed, use [noparse]!</small><br />
 		<textarea rows="4" style="width:600px;" name="cont" class="mono"></textarea>
@@ -224,7 +224,7 @@ if (!$issue['discussion_closed'] || isadmin())
 				</div>';
 			}
 		?>
-		<input type="submit" name="sub" value="Add" />
+		<input type="submit" value="Add" />
 	</form>
 	<?php
 	}

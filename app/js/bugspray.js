@@ -21,6 +21,43 @@
  *
  */
 
+$(document).ready(function() {
+	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
+	$("form.ajax").submit(function(e) {
+		formelm = this;
+		$(formelm).find(".loadimg").show();
+		
+		$.ajax({
+			type: $(formelm).attr('method').toUpperCase(),
+			url: $(formelm).attr('action'),
+			data: $(formelm).serialize(),
+			dataType: 'json',
+			success: function(data) {
+				window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? delay = 250 : delay = 0;
+				
+				setTimeout(function() {
+					$(formelm).find(".loadimg").hide();
+					if (!data.success)
+					{
+						$.amwnd({
+							title: 'Error!',
+							content: data.message,
+							buttons: ['ok'],
+							closer: 'ok'
+						});
+					}
+					else
+					{
+						history.go();
+					}
+				}, delay);
+			}
+		});
+		
+		e.preventDefault();
+	});
+});
+
 function changestatus(id,status,assigns)
 {
 	// assigns list
