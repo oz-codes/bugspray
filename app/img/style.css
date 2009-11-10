@@ -169,7 +169,6 @@ img
 #content_wrapper
 {
 	background:#fff;
-	padding:16px;
 	margin-top:8px;
 }
 
@@ -343,13 +342,15 @@ td
 .sidetbl tr:first-child td.left
 {
 	vertical-align:top;
-	padding-right:16px;
+	padding:16px;
 }
 
 .sidetbl tr:first-child td.right
 {
-	width:320px;
+	width:256px;
 	vertical-align:top;
+	padding:16px;
+	background:#eee;
 }
 
 /* tables for forms */
