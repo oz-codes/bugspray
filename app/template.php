@@ -24,7 +24,6 @@
 
 function template_top($hi)
 {
-global $menu;
 ?>
 <!DOCTYPE html>
 <html lang="en">
