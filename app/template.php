@@ -85,9 +85,9 @@ global $menu;
 					</ul>
 					<div class="fc"></div>
 				</nav>
-				<div id="search_wrapper">
+				<form id="search_wrapper">
 					<input type="text" name="search" />
-				</div>
+				</form>
 				<div id="user_wrapper">
 					<div id="user_left">
 						<div class="avatar">
@@ -115,19 +115,20 @@ global $menu;
 				</div>
 				<div class="fc"></div>
 			</header>
+			
 			<div id="content_wrapper">
-<div id="nojs">
-	<div class="ibox_error">
-		Hey there, looks like <strong>you have JavaScript disabled</strong>.
-		bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
-		If you're an admin you'll need to have it on.
-	</div>
-</div>
-<script type="text/javascript">$("#nojs").css({'display':'none'});</script>
-<table class="sidetbl">
-	<tr>
-		<td class="left">
-<!-- content begin -->
+				<aside id="nojs">
+					<div class="ibox_error">
+						Hey there, looks like <strong>you have JavaScript disabled</strong>.
+						bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
+						If you're an admin you'll need to have it on.
+					</div>
+					<script type="text/javascript">$("#nojs").css({'display':'none'});</script>
+				</aside>
+				<table class="sidetbl">
+					<tr>
+						<td class="left">
+							<section id="content">
 <?php
 }
 
@@ -153,13 +154,15 @@ function template_bottom()
 			$q .= ' queries';
 	}
 ?>
-<!-- content end -->
-		</td>
-		<td class="right">
-			Soon, things will exist here
-		</td>
-	</tr>
-</table>
+							</section>
+						</td>
+						<td class="right">
+							<aside id="sidebar">
+								Soon, things will exist here
+							</aside>
+						</td>
+					</tr>
+				</table>
 			</div>
 			
 			<footer id="footer">
