@@ -180,7 +180,7 @@ while ($comment = mysql_fetch_array($result_comments))
 	$y=1;
 	
 	echo '
-	<div class="ibox_comment"' . ( $comment['type'] != '' ? ' style="background-image:url(img/bgcom/'.$comment['type'].'.png);"' : '' ) . '>
+	<div id="comment_'.$comment['id'].'" class="ibox_comment"' . ( $comment['type'] != '' ? ' style="background-image:url(img/bgcom/'.$comment['type'].'.png);"' : '' ) . '>
 		<table>
 			<tr>
 				<td class="left">
