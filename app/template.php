@@ -24,6 +24,7 @@
 
 function template_top($hi)
 {
+global $menu;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,11 +50,37 @@ function template_top($hi)
 				<nav>
 					<ul>
 						<?php
-						echo '<li id="menu_issues"'.($hi=='issues'?' class="sel"':'').'><a href="index.php">Issues</a></li>						
-						<li id="menu_projects"'.($hi=='projects'?' class="sel"':'').'><a href="#" class="notyet">Projects</a></li>
-						<li id="menu_activity"'.($hi=='log'?' class="sel"':'').'><a href="activity.php">Activity</a></li>
-						<li id="menu_help"'.($hi=='help'?' class="sel"':'').'><a href="#" class="notyet">Help</a></li>
-						'.(isadmin()?'<li id="menu_admin"'.($hi=='admin'?' class="sel"':'').'><a href="admin.php">Admin</a></li>' : '');
+						// preparation for the template system
+						$menu = array(
+							array(
+								'id' => 'issues',
+								'name' => 'Issues',
+								'url' => 'index.php'
+							),
+							array(
+								'id' => 'projects',
+								'name' => 'Projects'
+							),
+							array(
+								'id' => 'activity',
+								'name' => 'Activity',
+								'url' => 'activity.php'
+							),
+							array(
+								'id' => 'help',
+								'name' => 'Help'
+							),
+							array(
+								'id' => 'admin',
+								'name' => 'Admin',
+								'show' => isadmin(),
+								'url' => 'admin.php'
+							),
+						);
+						foreach ($menu as $link)
+						{
+							echo '<li id="menu_'.$link['id'].'"'.($hi==$link['id']?' class="sel"':'').'><a href="'.(isset($link['url'])?$link['url']:'javascript:void(0)').'">'.(isset($link['url'])?'':'<s>').''.$link['name'].''.(isset($link['url'])?'':'</s>').'</a></li>';
+						}
 						?>
 					</ul>
 					<div class="fc"></div>
@@ -97,6 +124,9 @@ function template_top($hi)
 	</div>
 </div>
 <script type="text/javascript">$("#nojs").css({'display':'none'});</script>
+<table class="sidetbl">
+	<tr>
+		<td class="left">
 <!-- content begin -->
 <?php
 }
@@ -124,6 +154,12 @@ function template_bottom()
 	}
 ?>
 <!-- content end -->
+		</td>
+		<td class="right">
+			Soon, things will exist here
+		</td>
+	</tr>
+</table>
 			</div>
 			
 			<footer id="footer">

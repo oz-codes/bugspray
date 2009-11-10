@@ -26,28 +26,25 @@ include("functions.php");
 template_top('issues');
 ?>
 
-<table class="sidetbl">
-	<tr>
-		<td class="left">
-			<h2 class="fl">Issue list</h2>
-			<div class="fr">
-				<button type="button" onclick="location.href='add_issue.php'"><img src="img/btn/add.png" alt="" />Add an issue</button>
-			</div>
-			<div class="fc"></div>
+<h2 class="fl">Issue list</h2>
+<div class="fr">
+	<button type="button" onclick="location.href='add_issue.php'"><img src="img/btn/add.png" alt="" />Add an issue</button>
+</div>
+<div class="fc"></div>
 
-			<div class="ibox_alert">About the tabs... the "All" tab will be removed later on when the other tabs are implemented if there aren't some good reasons for it staying.</div>
-			<br />
+<div class="ibox_alert">About the tabs... the "All" tab will be removed later on when the other tabs are implemented if there aren't some good reasons for it staying.</div>
+<br />
 
-			<div class="tabs">
-				<a href="#" class="sel">All</a>
-				<a href="#" class="notyet">Open</a>
-				<a href="#" class="notyet">Assigned</a>
-				<a href="#" class="notyet">Resolved</a>
-				<a href="#" class="notyet">Closed(?)</a>
-				<div class="fc"></div>
-			</div>
+<div class="tabs">
+	<a href="#" class="sel">All</a>
+	<a href="#" class="notyet">Open</a>
+	<a href="#" class="notyet">Assigned</a>
+	<a href="#" class="notyet">Resolved</a>
+	<a href="#" class="notyet">Closed(?)</a>
+	<div class="fc"></div>
+</div>
 
-			<table class="listingtbl">
+<table class="listingtbl">
 <?php
 // thanks to najmeddine for the mind-bursting sql http://stackoverflow.com/questions/1575673/mysql-limit-on-a-left-join
 $result_issues = db_query("
@@ -114,70 +111,6 @@ while ($issue = mysql_fetch_array($result_issues))
 	</tr>';
 }
 ?>
-			</table>
-		</td>
-		<td class="right">
-			<h2>Assigned</h2>
-			<div class="ibox_generic">
-<?php
-/*$result_issues2 = db_query("SELECT * FROM issues WHERE assign=".getuid($_SESSION['username'])." ORDER BY when_opened ASC");
-while ($issue = mysql_fetch_array($result_issues2))
-{
-	echo '<div>'.$issue['name'].'</div>';
-}*/
-echo '[todo: implement this]';
-?>
-			</div>
-			
-			<br />
-			<br />
-			
-			<h2>Activity</h2>
-<?php
-$result_projects = db_query("SELECT * FROM projects");
-while ($project = mysql_fetch_array($result_projects))
-{
-	// available width = bar_top-2px
-	echo '
-	<div class="ibox_generic">
-		<h3><a href="#">'.$project['name'].'</a></h3>
-		<small>Activity within the last month:</small>
-		<div class="bar_bottom">
-			';
-			
-			$total = 0;
-			
-			$result_log = db_query("SELECT log_issues.actiontype, COUNT(log_issues.actiontype) AS actioncount FROM issues,log_issues WHERE issues.project = ".$project['id']." AND log_issues.issue = issues.id GROUP BY log_issues.actiontype");
-			while ($log = mysql_fetch_array($result_log))
-			{
-				$amount[$project['id']][$log['actiontype']] = $log['actioncount'];
-				$total += $log['actioncount'];
-			}
-			
-			if ($total > 0)
-			{
-				echo '
-				<div class="green" style="width:'.($amount[$project['id']][1] / $total * 222).'px;"></div>
-				<div class="red" style="width:'.($amount[$project['id']][2] / $total * 222).'px;"></div>
-				<div class="blue" style="width:'.($amount[$project['id']][3] / $total * 222).'px;"></div>';
-			}
-			else
-			{
-				echo '
-				<div class="gray" style="width:222px;"></div>';
-			}
-			
-			echo '
-			<div class="fc"></div>';
-			
-			echo '
-		</div>
-		<div class="bar_top"></div>
-	</div><br />';
-}
-?>
-		</td>
-	</tr>
 </table>
 
 <?php
