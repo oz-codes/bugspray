@@ -80,6 +80,7 @@ img
 #header
 {
 	padding:8px;
+	margin-bottom:8px;
 }
 
 #header hgroup
@@ -164,13 +165,27 @@ img
 	color:#fff;
 }
 
-/* content */
+/* fluid layout, fixed sidebar! :o BIG THANKS TO http://www.webmasterworld.com/css/3544816.htm */
 
-#content_wrapper
+#content_wrap
 {
-	background:#fff;
-	margin-top:8px;
+	float:left;
+	width:100%;
+	min-width:500px;
+	margin-right:-288px;
+	background:#fff url('sidebar.png') repeat-y top right;
 }
+#content
+{
+	margin-right:289px;
+	padding:16px;
+}
+#sidebar
+{
+	float:left;
+	width:256px;
+	padding:16px;
+} 
 
 /* footer */
 
@@ -330,27 +345,6 @@ td
 	border-bottom:1px solid #fff;
 	color:#000;
 	font-size:13px;
-}
-
-/* tables for pages involving a sidebar... should only have one <tr> */
-
-.sidetbl
-{
-	width:100%;
-}
-
-.sidetbl tr:first-child td.left
-{
-	vertical-align:top;
-	padding:16px;
-}
-
-.sidetbl tr:first-child td.right
-{
-	width:256px;
-	vertical-align:top;
-	padding:16px;
-	background:#eee;
 }
 
 /* tables for forms */

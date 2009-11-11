@@ -115,19 +115,17 @@ function template_top($hi)
 				<div class="fc"></div>
 			</header>
 			
-			<div id="content_wrapper">
-				<aside id="nojs">
-					<div class="ibox_error">
-						Hey there, looks like <strong>you have JavaScript disabled</strong>.
-						bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
-						If you're an admin you'll need to have it on.
-					</div>
-					<script type="text/javascript">$("#nojs").css({'display':'none'});</script>
-				</aside>
-				<table class="sidetbl">
-					<tr>
-						<td class="left">
-							<section id="content">
+			<div id="content_wrap">
+				<section id="content">
+					<aside id="nojs">
+						<div class="ibox_error">
+							Hey there, looks like <strong>you have JavaScript disabled</strong>.
+							bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
+							If you're an admin you'll need to have it on.
+						</div>
+						<script type="text/javascript">$("#nojs").css({'display':'none'});</script>
+					</aside>
+				
 <?php
 }
 
@@ -153,16 +151,12 @@ function template_bottom()
 			$q .= ' queries';
 	}
 ?>
-							</section>
-						</td>
-						<td class="right">
-							<aside id="sidebar">
-								Soon, things will exist here
-							</aside>
-						</td>
-					</tr>
-				</table>
+				</section>
 			</div>
+			<aside id="sidebar">
+				Soon, things will exist here
+			</aside>
+			<div style="clear:both;"></div>
 			
 			<footer id="footer">
 				powered by bugspray | version 0.1-dev | <?php echo $t; ?> seconds | <?php echo $q; ?>
