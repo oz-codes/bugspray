@@ -452,6 +452,38 @@ function timeago($timestamp,$html5=true)
 	}
 }
 
+function footerinfo($want)
+{
+	global $db_queries, $starttime;
+	
+	$ret = '';
+	switch ($want)
+	{
+		case 'time':
+			$mtime = explode(' ', microtime());
+			$totaltime = $mtime[0] + $mtime[1] - $starttime;
+			$ret = sprintf('%.3f',$totaltime).' seconds';
+			break;
+		case 'queries':
+			if (!isset($db_queries))
+			{
+				$ret = '0 queries';
+			}
+			else
+			{
+				$ret = $db_queries;
+				
+				if ($ret == 1)
+					$ret .= ' query';
+				else
+					$ret .= ' queries';
+			}
+			break;
+	}
+	
+	return $ret;
+}
+
 function parsebbcode($string)
 {	
 	$original = array(

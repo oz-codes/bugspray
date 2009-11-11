@@ -131,25 +131,6 @@ function template_top($hi)
 
 function template_bottom()
 {
-	global $db_queries, $starttime;
-	
-	$mtime = explode(' ', microtime());
-	$totaltime = $mtime[0] + $mtime[1] - $starttime;
-	$t = sprintf('%.3f',$totaltime);
-	
-	if (!isset($db_queries))
-	{
-		$q = '0 queries';
-	}
-	else
-	{
-		$q = $db_queries;
-		
-		if ($q == 1)
-			$q .= ' query';
-		else
-			$q .= ' queries';
-	}
 ?>
 				</section>
 			</div>
@@ -159,7 +140,7 @@ function template_bottom()
 			<div style="clear:both;"></div>
 			
 			<footer id="footer">
-				powered by bugspray | version 0.1-dev | <?php echo $t; ?> seconds | <?php echo $q; ?>
+				powered by bugspray | version 0.1-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
 			</footer>
 		</div>
 	</body>
