@@ -32,7 +32,7 @@ if (mysql_num_rows($result_issues_assigned) > 0)
 	while ($issue_assigned = mysql_fetch_array($result_issues_assigned))
 	{
 		echo '
-		<div class="fl" style="background:#ddd;font-weight:bold;padding:4px;width:16px;text-align:center;margin-right:8px;">'.$issue_assigned['num_comments'].'</div>
+		<div class="fl" style="background:#ddd;font-weight:bold;padding:4px 6px;width:16px;text-align:center;margin-right:8px;">'.$issue_assigned['num_comments'].'</div>
 		<div class="fl" style="margin-top:4px;"><a href="view_issue.php?id='.$issue_assigned['id'].'">'.$issue_assigned['name'].'</a></div>';
 	}
 	echo '<div class="fc"></div>
