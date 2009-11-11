@@ -293,11 +293,21 @@ input[type=submit]
 
 /* avatars (duh?) */
 
-.avatar
+.avatar, .avatarlarge
 {
 	border:2px solid #444;
+}
+
+.avatar
+{
 	width:16px;
 	height:16px;
+}
+
+.avatarlarge
+{
+	width:24px;
+	height:24px;
 }
 
 #user_wrapper .avatar
@@ -688,6 +698,49 @@ div.color_swatch
 	float: left;
 	cursor: pointer;
 	line-height: 12px;
+}
+
+/* profile overview */
+
+#profile_overview
+{
+	font-size:12px;
+}
+
+#profile_listing_wrap
+{
+	float:left;
+	width:512px;
+}
+
+#profile_listing
+{
+	margin:0px;
+}
+
+#profile_listing dt, #profile_listing dd
+{
+	float:left;
+}
+
+#profile_listing dt
+{
+	clear:both;
+	width:128px;
+	color:#aaa;
+}
+
+#profile_issues_num
+{
+	float:left;
+	font-size:32px;
+	margin-right:8px;
+}
+
+#profile_issues_heading
+{
+	float:left;
+	margin-top:6px;
 }
 
 /* no javascript lamers */
