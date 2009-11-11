@@ -51,6 +51,14 @@ ul
 	padding-left:32px;
 }
 
+/* horizontal lines */
+
+hr
+{
+	border:solid #888;
+	border-width:1px 0px 0px 0px;
+}
+
 /* apply palm to face, rub vigorously */
 
 img
@@ -165,7 +173,7 @@ img
 	color:#fff;
 }
 
-/* fluid layout, fixed sidebar! :o BIG THANKS TO http://www.webmasterworld.com/css/3544816.htm */
+/* content - BIG THANKS to http://www.webmasterworld.com/css/3544816.htm for the fluid+fixed combo CSS */
 
 #content_wrap
 {
@@ -180,12 +188,20 @@ img
 	margin-right:289px;
 	padding:16px;
 }
+
+/* sidebar */
+
 #sidebar
 {
 	float:left;
 	width:256px;
 	padding:16px;
-} 
+}
+
+#sidebar hr
+{
+	border-color:#aaa;
+}
 
 /* footer */
 
@@ -195,14 +211,6 @@ img
 	color:#fff;
 	font-size:10px;
 	padding:4px 8px;
-}
-
-/* horizontal lines */
-
-hr
-{
-	border:solid #888;
-	border-width:1px 0px 0px 0px;
 }
 
 /* float the boat */

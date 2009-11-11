@@ -135,7 +135,7 @@ function template_bottom()
 				</section>
 			</div>
 			<aside id="sidebar">
-				Soon, things will exist here
+				<?php template_sidebar(); ?>
 			</aside>
 			<div style="clear:both;"></div>
 			
@@ -146,5 +146,10 @@ function template_bottom()
 	</body>
 </html>
 <?php
+}
+
+function template_sidebar()
+{
+	include("sidebar.php");
 }
 ?>
