@@ -730,17 +730,20 @@ div.color_swatch
 	color:#aaa;
 }
 
-#profile_issues_num
+#profile_issues header .num
 {
 	float:left;
 	font-size:32px;
 	margin-right:8px;
+	position:relative;
+	top:-2px;
 }
 
-#profile_issues_heading
+#profile_issues header .label
 {
-	float:left;
-	margin-top:6px;
+	position:relative;
+	top:6px;
+	text-transform:lowercase;
 }
 
 /* no javascript lamers */

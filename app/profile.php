@@ -45,8 +45,14 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 
 <section id="profile_overview">
 	<div class="fl" id="profile_listing_wrap">
+		<?php
+			if ($profile['banned'])
+			{
+				echo '<span style="font-weight:bold;color:#f00">User is banned (ban is permanent until lifted; ban durations have not been implemented)</span><br />';
+			}
+		?>
 		<dl id="profile_listing">
-			<dt>Role</dt>
+			<dt>Group</dt>
 				<dd>
 					<?php echo $profile['group_name']; ?>
 				</dd>
@@ -89,8 +95,8 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 <section id="profile_issues">
 	<header>
 		<h3>
-			<span id="profile_issues_num"><?php echo $profile['num_posted_issues']; ?></span>
-			<span id="profile_issues_heading">issue<?php echo ($profile['num_posted_issues']!=1?'s':''); ?> posted</span>
+			<span class="label">Issue<?php echo ($profile['num_posted_issues']!=1?'s':''); ?> posted</span>
+			<span class="num"><?php echo $profile['num_posted_issues']; ?></span>
 		</h3>
 		<div class="fc"></div>
 	</header>
