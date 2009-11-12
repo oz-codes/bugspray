@@ -403,28 +403,28 @@ td
 	padding:4px;
 	font-size:12px;
 }
-.listingtbl td.comments
+.listingtbl .comments
 {
 	width:64px;
 }
-.listingtbl td.comments div, .listingtbl td.views div
+.listingtbl .comments div, .listingtbl .views div
 {
 	background:#ddd;
 	text-align:center;
 	padding:0px 8px 8px 8px;
 	font-size:11px;
 }
-.listingtbl td.comments div:first-child, .listingtbl td.views div:first-child
+.listingtbl .comments div:first-child, .listingtbl .views div:first-child
 {
 	padding:8px 8px 0px 8px;
 	font-size:15px;
 	font-weight:bold;
 }
-.listingtbl td.views
+.listingtbl .views
 {
 	width:48px;
 }
-.listingtbl td.views div
+.listingtbl .views div
 {
 	background:#f2f2f2;
 }
@@ -519,14 +519,33 @@ td
 	background-repeat:no-repeat;
 	background-position:bottom right;
 }
-.ibox_details td
+table.ibox_details td
 {
 	padding-left:8px;
 }
-.ibox_details td:first-child
+table.ibox_details td:first-child
 {
 	padding-left:0px !important;
 	border-right:1px solid #ccc;
+	font-weight:bold;
+}
+dl.ibox_details
+{
+	margin:0px;
+}
+dl.ibox_details dt
+{
+	float:left;
+	clear:left;
+	border-right:1px solid #ccc;
+	font-weight:bold;
+	padding-bottom:4px;
+}
+dl.ibox_details dd
+{
+	position:relative;
+	left:8px;
+	padding-bottom:4px;
 }
 
 .ibox_comment
@@ -716,30 +735,12 @@ div.color_swatch
 
 #profile_overview
 {
-	font-size:12px;
-}
-
-#profile_listing_wrap
-{
-	float:left;
-	width:512px;
-}
-
-#profile_listing
-{
-	margin:0px;
-}
-
-#profile_listing dt, #profile_listing dd
-{
-	float:left;
+	margin-bottom:16px;
 }
 
 #profile_listing dt
 {
-	clear:both;
 	width:128px;
-	color:#aaa;
 }
 
 #profile_issues header .num

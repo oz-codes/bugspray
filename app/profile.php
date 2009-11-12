@@ -44,53 +44,48 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 <div class="fc"></div>-->
 
 <section id="profile_overview">
-	<div class="fl" id="profile_listing_wrap">
-		<?php
-			if ($profile['banned'])
-			{
-				echo '<span style="font-weight:bold;color:#f00">User is banned (ban is permanent until lifted; ban durations have not been implemented)</span><br />';
-			}
-		?>
-		<dl id="profile_listing">
-			<dt>Group</dt>
-				<dd>
-					<?php echo $profile['group_name']; ?>
-				</dd>
-			<dt>Email</dt>
-				<dd>
-					<?php 
-						if ($profile['email_show'] || isadmin())
+	<?php
+		if ($profile['banned'])
+		{
+			echo '<span style="font-weight:bold;color:#f00">User is banned (ban is permanent until lifted; ban durations have not been implemented)</span><br />';
+		}
+	?>
+	<dl id="profile_listing" class="ibox_details">
+		<dt>Group</dt>
+			<dd>
+				<?php echo $profile['group_name']; ?>
+			</dd>
+		<dt>Email</dt>
+			<dd>
+				<?php 
+					if ($profile['email_show'] || isadmin())
+					{
+						if (!$profile['email_show'])
 						{
-							if (!$profile['email_show'])
-							{
-								echo '<span style="font-style:italic;">'.$profile['email'].'</span>';
-							}
-							else
-							{
-								echo $profile['email'];
-							}
+							echo '<span style="font-style:italic;">'.$profile['email'].'</span>';
 						}
 						else
 						{
-							echo '<span style="font-style:italic;">(hidden)</span>';
+							echo $profile['email'];
 						}
-					?>
-				</dd>
-			<dt>Last seen</dt>
-				<dd>
-					not implemented
-				</dd>
-			<dt>Member since</dt>
-				<dd>
-					<?php echo timehtml5($profile['when_registered']); ?>
-				</dd>
-		</dl>
-		<div class="fc"></div>
-	</div>
+					}
+					else
+					{
+						echo '<span style="font-style:italic;">(hidden)</span>';
+					}
+				?>
+			</dd>
+		<dt>Last seen</dt>
+			<dd>
+				not implemented
+			</dd>
+		<dt>Member since</dt>
+			<dd>
+				<?php echo timehtml5($profile['when_registered']); ?>
+			</dd>
+	</dl>
 	<div class="fc"></div>
 </section>
-
-<hr />
 
 <section id="profile_issues">
 	<header>
@@ -102,8 +97,6 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 	</header>
 	[todo: grab the listing!]
 </section>
-
-<hr />
 
 <?php
 template_bottom();
