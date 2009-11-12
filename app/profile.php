@@ -95,7 +95,7 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 <section id="profile_issues">
 	<header>
 		<h3>
-			<span class="label">Issue<?php echo ($profile['num_posted_issues']!=1?'s':''); ?> posted</span>
+			<span class="label">Issue(s) posted</span>
 			<span class="num"><?php echo $profile['num_posted_issues']; ?></span>
 		</h3>
 		<div class="fc"></div>
