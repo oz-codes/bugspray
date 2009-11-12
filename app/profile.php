@@ -44,12 +44,6 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 <div class="fc"></div>-->
 
 <section id="profile_overview">
-	<?php
-		if ($profile['banned'])
-		{
-			echo '<span style="font-weight:bold;color:#f00">User is banned (ban is permanent until lifted; ban durations have not been implemented)</span><br />';
-		}
-	?>
 	<dl id="profile_listing" class="ibox_details">
 		<dt>Group</dt>
 			<dd>
@@ -85,6 +79,12 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 			</dd>
 	</dl>
 	<div class="fc"></div>
+	<?php
+		if ($profile['banned'])
+		{
+			echo '<div class="ibox_error" style="width:768px;margin-top:4px;padding:4px 8px;">User is banned (ban is permanent until lifted; ban durations have not been implemented)</div>';
+		}
+	?>
 </section>
 
 <section id="profile_issues">
