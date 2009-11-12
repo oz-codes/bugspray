@@ -45,7 +45,7 @@ else
 ?>
 
 <br />
-<small>[TODO: Show only for those who are admins/can be assigned to proj's]</small>
+<small>[TODO: Show only for those who can be assigned to proj's]</small>
 
 <hr />
 
