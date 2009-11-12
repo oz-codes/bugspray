@@ -291,20 +291,20 @@ input[type=submit]
 	width:512px;
 }
 
-/* avatars (duh?) */
+/* avatars (for a <div> wrapping the image) */
 
-.avatar, .avatarlarge
+.avatar, .avatar_large
 {
 	border:2px solid #444;
 }
 
-.avatar
+.avatar, .avatar img
 {
 	width:16px;
 	height:16px;
 }
 
-.avatarlarge
+.avatar_large, .avatar_large img
 {
 	width:24px;
 	height:24px;
@@ -700,7 +700,19 @@ div.color_swatch
 	line-height: 12px;
 }
 
-/* profile overview */
+/* profile */
+
+#profile_header .avatar_large
+{
+	float:left;
+	margin-right:8px;
+}
+
+#profile_header .heading
+{
+	float:left;
+	margin-top:2px;
+}
 
 #profile_overview
 {

@@ -29,11 +29,11 @@ $id = escape_smart($_GET['u']);
 $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users LEFT JOIN groups ON groups.id = users.group WHERE users.id = '$id'");
 ?>
 
-<header>
-	<div class="fl" style="border:3px solid #777;width:24px;height:24px;margin-right:8px;">
-		<img src="<?php echo getav($id); ?>" style="width:24px;height:24px;" />
+<header id="profile_header">
+	<div class="avatar_large">
+		<img src="<?php echo getav($id); ?>" />
 	</div>
-	<div class="fl" style="margin-top:2px;">
+	<div class="heading">
 		<h2><?php echo $profile['username']; ?>'s Profile</h2>
 	</div>
 	<div class="fc"></div>
@@ -82,7 +82,7 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 				</dd>
 			<dt>Member since</dt>
 				<dd>
-					blah
+					<?php echo timehtml5($profile['when_registered']); ?>
 				</dd>
 		</dl>
 		<div class="fc"></div>
