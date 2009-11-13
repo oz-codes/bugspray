@@ -34,7 +34,7 @@ if (!isset($_GET['s']))
 	echo '
 	<h3>Listing</h3>
 
-	To change the colour of a category, just click the colour. It\'s that simple.
+	To change the colour of a category, just click the colour. <b>Not implemented</b>
 
 	<br />
 	<br />';
