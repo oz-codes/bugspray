@@ -368,21 +368,33 @@ function escape_smart($value)
 }
 
 function timehtml5($timestamp,$innerhtml='[nothingatall]')
-{	
+{
+	// for errors
+	$timestampin = $timestamp;
+	
+	// is the timestamp a string instead of proper time object?
 	if (gettype($timestamp) == 'string')
 	{
 		$timestamp = strtotime($timestamp);
 	}
 	
+	// is the timestamp invalid?
+	if ($timestamp <= 0) // php 5.1.0 returns FALSE, earlier returns -1
+	{
+		return 'Invalid timestamp (provided: '.$timestampin.')';
+	}
+	
+	// html5 format
 	$datetime = date(DATE_W3C,$timestamp);
 	
+	// output the readied tag
 	if ($innerhtml != '[nothingatall]')
 	{
 		return '<time datetime="'.$datetime.'">'.$innerhtml.'</time>';
 	}
 	else
 	{
-		return '<time datetime="'.$datetime.'"></time>';
+		return '<time datetime="'.$datetime.'">'.date(DATE_RSS,$timestamp).'</time>';
 	}
 }
 
