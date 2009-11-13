@@ -90,16 +90,7 @@ function template_top($hi)
 				<div id="user_wrapper">
 					<div id="user_left">
 						<div class="avatar">
-							<?php
-							echo '<img src="';
-							
-							if (isloggedin())
-								echo getav($_SESSION['uid']);
-							else
-								echo 'img/guest.png';
-							
-							echo '" alt="" />';
-							?>
+							<?php echo '<img src="'.(isloggedin()?getav($_SESSION['uid']):'img/guest.png').'" alt="" />'; ?>
 						</div>
 					</div>
 					<div id="user_right">
