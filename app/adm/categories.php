@@ -41,8 +41,6 @@ if (!isset($_GET['s']))
 
 	$result_categories = db_query("SELECT * FROM categories");
 
-	$cidarr = array();
-
 	while ($category = mysql_fetch_array($result_categories))
 	{
 		echo '
@@ -58,8 +56,6 @@ if (!isset($_GET['s']))
 			</div>
 			<div class="fc"></div>
 		</div>';
-		
-		$cidarr[] = $category['id'];
 	}
 
 	// some javascript for managing all this stuff...
