@@ -95,7 +95,26 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 		</h3>
 		<div class="fc"></div>
 	</header>
-	[todo: grab the listing!]
+	<?php
+	$result_issues_profile = db_query("SELECT * FROM issues WHERE author = '$id' ORDER BY num_comments DESC");
+	if (mysql_num_rows($result_issues_profile) > 0)
+	{
+		echo '<div style="font-size:12px;">';
+		while ($issue_profile = mysql_fetch_array($result_issues_profile))
+		{
+			echo '
+			<div class="fl" style="background:#ddd;font-weight:bold;padding:4px 6px;width:16px;text-align:center;margin-right:8px;">'.$issue_profile['num_comments'].'</div>
+			<div class="fl" style="margin-top:4px;"><a href="view_issue.php?id='.$issue_profile['id'].'">'.$issue_profile['name'].'</a></div>';
+		}
+		echo '<div class="fc"></div>
+		</div>';
+	}
+	else
+	{
+		echo 'Well, obviously nothing to see here!';
+	}
+	?>
+	<small>[todo: larger listing style - inbetween main listing size and sidebar size]</small>
 </section>
 
 <?php
