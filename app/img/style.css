@@ -755,8 +755,9 @@ div.color_swatch
 #profile_issues header .label
 {
 	position:relative;
-	top:6px;
+	top:4px;
 	text-transform:lowercase;
+	font-size:17px;
 }
 
 /* no javascript lamers */
