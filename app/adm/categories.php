@@ -47,12 +47,12 @@ if (!isset($_GET['s']))
 	{
 		echo '
 		<div class="colorlist">
-			<input id="cat'.$category['id'].'" type="text" name="cat'.$category['id'].'" value="#'.$category['color'].'" />
+			<input id="cat'.$category['id'].'" class="catcol" type="text" name="cat'.$category['id'].'" value="#'.$category['color'].'" />
 			<label for="cat'.$category['id'].'">'.$category['name'].'</label>
 			<div class="a">
 				<a href="#">(<s>list</s>)</a>
-				<a href="javascript:void(0)" onclick="stringform(\'Rename category \\\''.str_replace("'","\'",$category['name']).'\\\'\',\''.$uri.'&amp;s=rename&amp;id='.$category['id'].'\')">(rename)</a>
-				<a href="javascript:void(0)" onclick="confirmurl(\'Delete category \\\''.str_replace("'","\'",$category['name']).'\\\'\',\''.$uri.'&amp;s=delete&amp;id='.$category['id'].'\',true);">(delete)</a>
+				<a href="javascript:void(0)" class="rnm">(rename)</a>
+				<a href="javascript:void(0)" class="del">(delete)</a>
 				<br />
 				linked projects: all <a href="#">(<s>change</s>)</a>
 			</div>
@@ -62,27 +62,52 @@ if (!isset($_GET['s']))
 		$cidarr[] = $category['id'];
 	}
 
-	echo '
+	// some javascript for managing all this stuff...
+	?>
 	<script type="text/javascript">
-	$.fn.colorPicker.defaultColors = [
-		"FF3F3F","FF7F7F","FFBFBF",
-		"FF3FFF","FF7FFF","FFBFFF",
-		"FFB23F","FFCC7F","FFE5BF",
-		"FFFF3F","FFFF7F","FFFFBF",
-		"3FBFFF","7FD4FF","BFE9FF",
-		"3FFFFF","7FFFFF","BFFFFF",
-		"7FFF3F","AAFF7F","D4FFBF",
-		"7F66FF","947FFF","C9BFFF"
-	];';
+		// the colour picker
+		$.fn.colorPicker.defaultColors = [
+			"FF3F3F","FF7F7F","FFBFBF",
+			"FF3FFF","FF7FFF","FFBFFF",
+			"FFB23F","FFCC7F","FFE5BF",
+			"FFFF3F","FFFF7F","FFFFBF",
+			"3FBFFF","7FD4FF","BFE9FF",
+			"3FFFFF","7FFFFF","BFFFFF",
+			"7FFF3F","AAFF7F","D4FFBF",
+			"7F66FF","947FFF","C9BFFF"
+		];
+		$(".catcol").colorPicker();
 
-	foreach ($cidarr as $cid)
-	{
-		echo '
-		$("#cat'.$cid.'").colorPicker();';
-	}
-
-	echo '
-	</script>';
+		// category management buttons
+		$(".colorlist .rnm").bind('click',function(e) {
+			target = e.currentTarget;
+			while (!$(target).hasClass('colorlist'))
+			{
+				target = target.parentNode;
+			}
+			
+			stringform(
+				'Rename category "' + $(target).find("label").text() + '"',
+				'<?php echo $uri; ?>&s=rename&id=' + $(target).find("label").attr("for").replace('cat','')
+			);
+		});
+		
+		$(".colorlist .del").bind('click',function(e) {
+			target = e.currentTarget;
+			while (!$(target).hasClass('colorlist'))
+			{
+				target = target.parentNode;
+			}
+			
+			confirmurl(
+				'Delete category "' + $(target).find("label").text() + '"',
+				'<?php echo $uri; ?>&s=delete&id=' + $(target).find("label").attr("for").replace('cat',''),
+				true
+			);
+		});
+	
+	</script>
+	<?php
 }
 else
 {
