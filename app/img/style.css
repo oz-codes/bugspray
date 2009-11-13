@@ -792,6 +792,7 @@ div.color_swatch
 
 #nojs
 {
+	display:block;
 	font-size:11px;
 	text-align:center;
 	margin-bottom:16px;
