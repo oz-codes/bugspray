@@ -28,15 +28,19 @@
 $result_issues_assigned = db_query("SELECT * FROM issues WHERE assign = '{$_SESSION['uid']}' ORDER BY when_opened ASC");
 if (mysql_num_rows($result_issues_assigned) > 0)
 {
-	echo '<div style="font-size:12px;">';
+	echo '
+	<ul class="issuelist_small">';
 	while ($issue_assigned = mysql_fetch_array($result_issues_assigned))
 	{
 		echo '
-		<div class="fl" style="background:#ddd;font-weight:bold;padding:4px 6px;width:16px;text-align:center;margin-right:8px;">'.$issue_assigned['num_comments'].'</div>
-		<div class="fl" style="margin-top:4px;"><a href="view_issue.php?id='.$issue_assigned['id'].'">'.$issue_assigned['name'].'</a></div>';
+		<li>
+			<div class="comments">'.$issue_assigned['num_comments'].'</div>
+			<div class="title"><a href="view_issue.php?id='.$issue_assigned['id'].'">'.$issue_assigned['name'].'</a></div>
+			<div class="fc"></div>
+		</li>';
 	}
-	echo '<div class="fc"></div>
-	</div>';
+	echo '
+	</ul>';
 }
 else
 {

@@ -384,84 +384,6 @@ td
 	font-weight:bold;
 }
 
-/* tables for the regular listing of issues */
-
-.listingtbl
-{
-	width:100%;
-}
-.listingtbl hr
-{
-	border-style:dotted;
-}
-.listingtbl a
-{
-	font-weight:bold;
-}
-.listingtbl td
-{
-	padding:4px;
-	font-size:12px;
-}
-.listingtbl .comments
-{
-	width:64px;
-}
-.listingtbl .comments div, .listingtbl .views div
-{
-	background:#ddd;
-	text-align:center;
-	padding:0px 8px 8px 8px;
-	font-size:11px;
-}
-.listingtbl .comments div:first-child, .listingtbl .views div:first-child
-{
-	padding:8px 8px 0px 8px;
-	font-size:15px;
-	font-weight:bold;
-}
-.listingtbl .views
-{
-	width:48px;
-}
-.listingtbl .views div
-{
-	background:#f2f2f2;
-}
-.listingtbl .upper
-{
-	padding-bottom:1px;
-}
-.listingtbl .lower
-{
-	border-top:1px dotted #ccc;
-	padding-top:3px;
-}
-.listingtbl .left
-{
-	float:left;
-}
-.listingtbl .right
-{
-	float:right;
-}
-.listingtbl tr.closed, .listingtbl tr.closed a
-{
-	color:#999;
-}
-.listingtbl tr.closed .cat
-{
-	color:#000;
-}
-.listingtbl .upper .left a:first-child
-{
-	font-size:16px;
-}
-.listingtbl .upper .right
-{
-	margin-top:3px;
-}
-
 /* tables for the watchlist */
 
 .watchlisttbl td
@@ -486,6 +408,111 @@ td
 .linklisttbl tr:first-child td
 {
 	padding-top:0px !important;
+}
+
+/* issue listing - large - uses tables */
+
+.issuelist_large
+{
+	width:100%;
+}
+.issuelist_large hr
+{
+	border-style:dotted;
+}
+.issuelist_large a
+{
+	font-weight:bold;
+}
+.issuelist_large td
+{
+	padding:4px;
+	font-size:12px;
+}
+.issuelist_large .comments
+{
+	width:64px;
+}
+.issuelist_large .comments div, .issuelist_large .views div
+{
+	background:#ddd;
+	text-align:center;
+	padding:0px 8px 8px 8px;
+	font-size:11px;
+}
+.issuelist_large .comments div:first-child, .issuelist_large .views div:first-child
+{
+	padding:8px 8px 0px 8px;
+	font-size:15px;
+	font-weight:bold;
+}
+.issuelist_large .views
+{
+	width:48px;
+}
+.issuelist_large .views div
+{
+	background:#f2f2f2;
+}
+.issuelist_large .upper
+{
+	padding-bottom:1px;
+}
+.issuelist_large .lower
+{
+	border-top:1px dotted #ccc;
+	padding-top:3px;
+}
+.issuelist_large .left
+{
+	float:left;
+}
+.issuelist_large .right
+{
+	float:right;
+}
+.issuelist_large tr.closed, .issuelist_large tr.closed a
+{
+	color:#999;
+}
+.issuelist_large tr.closed .cat
+{
+	color:#000;
+}
+.issuelist_large .upper .left a:first-child
+{
+	font-size:16px;
+}
+.issuelist_large .upper .right
+{
+	margin-top:3px;
+}
+
+/* issue listing - small - uses uls */
+
+.issuelist_small
+{
+	list-style:none;
+	margin:0px;
+	padding:0px;
+	font-size:12px;
+}
+
+.issuelist_small .comments
+{
+	float:left;
+	background:#ddd;
+	font-weight:bold;
+	padding:4px 6px;
+	width:16px;
+	text-align:center;
+	margin-right:8px;
+}
+
+.issuelist_small .title
+{
+	float:left;
+	margin-top:4px;
 }
 
 /* little category labels */

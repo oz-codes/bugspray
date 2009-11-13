@@ -44,7 +44,7 @@ template_top('issues');
 	<div class="fc"></div>
 </div>
 
-<table class="listingtbl">
+<table class="issuelist_large">
 <?php
 // thanks to najmeddine for the mind-bursting sql http://stackoverflow.com/questions/1575673/mysql-limit-on-a-left-join
 $result_issues = db_query("
