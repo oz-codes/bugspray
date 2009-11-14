@@ -1,6 +1,7 @@
 /*
  * bugspray theme - Classic Floral
  * Copyright (c) a2h 2009
+ * Silk icons by Mark James - http://www.famfamfam.com/lab/icons/silk/
  * 
  * A FORMAT FOR MAKING YOUR OWN THEMES WILL BE INTRODUCED LATER ON
  *
@@ -150,6 +151,7 @@ img
 	height:16px;
 	-moz-border-radius:0px !important;
 	-webkit-border-radius:0px !important;
+	border-radius:0px !important;
 }
 #user_wrapper
 {
@@ -249,6 +251,7 @@ input[type=text], input[type=password], textarea, select
 	background:#fff url('bg/form.png') repeat-x;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
+	border-radius:3px;
 	padding:4px;
 }
 
@@ -264,6 +267,7 @@ button, input[type=submit], input[type=button]
 	cursor:pointer;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
+	border-radius:3px;
 }
 
 button img
@@ -523,6 +527,7 @@ td
 	padding:1px 2px;
 	-moz-border-radius:2px;
 	-webkit-border-radius:2px;
+	border-radius:2px;
 }
 
 /* infoboxes */
@@ -725,11 +730,15 @@ div.color_picker
 
 div#color_selector
 {
-	width: 110px;
-	position: absolute;
-	border: 1px solid #598FEF;
-	background-color: #EFEFEF;
-	padding: 2px;
+	width:110px;
+	position:absolute;
+	background:#eee;
+	border:1px solid #ccc;
+	-moz-box-shadow:2px 2px 3px rgba(0,0,0,0.75);
+	-webkit-box-shadow:2px 2px 3px rgba(0,0,0,0.75);
+	box-shadow:2px 2px 3px rgba(0,0,0,0.75);
+	padding:2px;
+	z-index:999;
 }
 
 div#color_custom {width: 100%; float:left }
