@@ -367,10 +367,10 @@ function escape_smart($value)
 	return $value;
 }
 
-function timehtml5($timestamp,$innerhtml='[nothingatall]')
+function timehtml5($timestamp,$pubdate=false,$innerhtml='[nothingatall]')
 {
-	// for errors
-	$timestampin = $timestamp;
+	// for reference
+	$timestamporig = $timestamp;
 	
 	// is the timestamp a string instead of proper time object?
 	if (gettype($timestamp) == 'string')
@@ -381,7 +381,7 @@ function timehtml5($timestamp,$innerhtml='[nothingatall]')
 	// is the timestamp invalid?
 	if ($timestamp <= 0) // php 5.1.0 returns FALSE, earlier returns -1
 	{
-		return 'Invalid timestamp (provided: '.$timestampin.')';
+		return 'Invalid timestamp (provided: '.$timestamporig.')';
 	}
 	
 	// html5 format
@@ -390,15 +390,15 @@ function timehtml5($timestamp,$innerhtml='[nothingatall]')
 	// output the readied tag
 	if ($innerhtml != '[nothingatall]')
 	{
-		return '<time datetime="'.$datetime.'">'.$innerhtml.'</time>';
+		return '<time'.($pubdate?' pubdate':'').' datetime="'.$datetime.'">'.$innerhtml.'</time>';
 	}
 	else
 	{
-		return '<time datetime="'.$datetime.'">'.date(DATE_RSS,$timestamp).'</time>';
+		return '<time'.($pubdate?' pubdate':'').' datetime="'.$datetime.'">'.$timestamporig.'</time>';
 	}
 }
 
-function timeago($timestamp,$html5=true)
+function timeago($timestamp,$pubdate=false)
 {
 	// original function written by Thomaschaaf - http://stackoverflow.com/questions/11/how-do-i-calculate-relative-time
 	
@@ -454,14 +454,7 @@ function timeago($timestamp,$html5=true)
         $ret = $years <= 1 ? "1 year ago" : $years . " years ago";
     }
 	
-	if (!$html5)
-	{
-		return $ret;
-	}
-	else
-	{
-		return timehtml5($timestamp,$ret);
-	}
+	return timehtml5($timestamp,$pubdate,$ret);
 }
 
 function footerinfo($want)
