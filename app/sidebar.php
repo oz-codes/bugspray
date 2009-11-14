@@ -32,10 +32,11 @@ if (mysql_num_rows($result_issues_assigned) > 0)
 	<ul class="issuelist_small">';
 	while ($issue_assigned = mysql_fetch_array($result_issues_assigned))
 	{
+		$nameshort = strlen($issue_assigned['name']) > 16 ? substr($issue_assigned['name'],0,30).'...' : $issue_assigned['name'];
 		echo '
 		<li>
 			<div class="comments">'.$issue_assigned['num_comments'].'</div>
-			<div class="title"><a href="view_issue.php?id='.$issue_assigned['id'].'">'.$issue_assigned['name'].'</a></div>
+			<div class="title"><a href="view_issue.php?id='.$issue_assigned['id'].'" title="'.$issue_assigned['name'].'">'.$nameshort.'</a></div>
 			<div class="fc"></div>
 		</li>';
 	}
