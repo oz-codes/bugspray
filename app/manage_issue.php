@@ -68,39 +68,47 @@ if (isadmin())
 		
 		echo '<br /><br /><a href="index.php">Go to issue index</a>';
 	}
-	/*elseif (isset($_GET['assign']))
-	{
-		$u = escape_smart($_GET['assign']);
-		
-		$query = db_query("UPDATE issues SET assign='$u' WHERE id='$i'");
-		if ($query) { echo 'Assigned issue succesfully!'; } else { mysql_error(); }
-		
-		echo '<br />';
-		
-		if ($u == -1)
-			$s = 0;
-		else
-			$s = 1;
-		
-		$query2 = db_query("UPDATE issues SET status=$s WHERE id='$i'");
-		if ($query2) { echo 'Set status sucessfully!'; } else { mysql_error(); }
-		
-		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
-	}*/
 	elseif (isset($_GET['status']))
 	{
+		// general vars
 		$s = escape_smart($_POST['st']);
 		
+		// first, the status
 		$query = db_query("UPDATE issues SET status='$s' WHERE id='$i'");
-		if ($query) { echo 'Set status successfully!'; } else { mysql_error(); }
+		if ($query) { echo 'Set status successfully!<br />'; } else { mysql_error(); }
 		
-		echo '<br />';
+		// custom stuff, whoooooo
+		$custom = '';
 		
-		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Status changed to \'".getstatusnm($s)."\' ***',NOW(),'status')");
+		$assign = escape_smart($_POST['st1a']) == $_POST['st1a'] ? $_POST['st1a'] : false;
+		if ($assign)
+		{
+			if ($assign == -1)
+			{
+				$uassigned = 'nobody';
+			}
+			else
+			{
+				$uassigned = 'user id '.$assign; // need to find a way to get the display name w/o becoming incorrect when it changes
+			}
+			
+			$queryassign = db_query("UPDATE issues SET assign='$assign' WHERE id='$i'");
+			if ($queryassign)
+			{
+				echo 'Assigned issue succesfully!<br />';
+				$custom .= ', assigned to '.$uassigned;
+			}
+			else { mysql_error(); }
+		}
+		
+		$custom = escape_smart($custom);
+		
+		// and finally the comment
+		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Status changed to \'".getstatusnm($s)."\'$custom ***',NOW(),'status')");
 		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'");
-		if ($query2 && $query3) { echo 'Comment added succesfully!'; } else { mysql_error(); }
+		if ($query2 && $query3) { echo 'Comment added succesfully!<br />'; } else { mysql_error(); }
 		
-		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
+		echo '<br /><a href="view_issue.php?id='.$i.'">Go back</a>';
 	}
 	else
 	{

@@ -110,11 +110,17 @@ $issue = mysql_fetch_array($result_issues);
 		<td>
 			<?php
 				// get list of assignable users
-				$assignsarr = array(array(0,'nobody'),array(0,'----------------------'));
+				$assignsarr = array(array(-1,'nobody'),array(-1,'----------------------'));
 				$result_userproject = db_query("SELECT * FROM assigns_userproject WHERE projectid = ".$issue['project']);
 				while ($assign = mysql_fetch_array($result_userproject))
 				{
-					$assignsarr[] = array($assign['userid'],str_replace('"',"\'",getunm($assign['userid'])));
+					$enableme = $assign['userid'] == $issue['assign'] ? true : false;
+					
+					$assignsarr[] = array(
+						$assign['userid'],
+						str_replace('"',"\'",getunm($assign['userid'])),
+						$enableme
+					);
 				}
 				$assigns = str_replace('"',"'",json_encode($assignsarr));
 				

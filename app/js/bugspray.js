@@ -64,7 +64,12 @@ function changestatus(id,status,assigns)
 	var a;
 	for (var i in assigns)
 	{
-		a += '<option value="'+assigns[i][0]+'">'+assigns[i][1]+'</option>';
+		var selected;
+		if (assigns[i][2])
+		{
+			selected = ' selected="selected"';
+		}
+		a += '<option value="'+assigns[i][0]+'"'+selected+'>'+assigns[i][1]+'</option>';
 	}
 	
 	// show it	
@@ -73,7 +78,7 @@ function changestatus(id,status,assigns)
 		content:'Hello! You can change the status of this issue here; just select an option.<br /><br />\
 		<form id="st" method="post" action="manage_issue.php?id='+id+'&status">\
 			<input type="radio" name="st" value="0" id="st0" /> <label for="st0">Open</label> <br />\
-			<input type="radio" name="st" value="1" id="st1" /> <label for="st1">Assigned to</label> <select id="st1a">'+a+'</select> (doesn\'t work right now)<br />\
+			<input type="radio" name="st" value="1" id="st1" /> <label for="st1">Assigned to</label> <select name="st1a" id="st1a">'+a+'</select><br />\
 			<input type="radio" name="st" value="2" id="st2" /> <label for="st2">Resolved</label> <br />\
 			<input type="radio" name="st" value="3" id="st3" /> <label for="st3">Duplicate of</label> <input type="text" id="st3a" /> (doesn\'t work right now) <br />\
 			<input type="radio" name="st" value="4" id="st4" /> <label for="st4">By design</label> <br />\
