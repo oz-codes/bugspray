@@ -34,8 +34,7 @@ if (!isset($_GET['s']))
 	echo '
 	<h3>Listing</h3>
 	
-	<button type="button" onclick="stringform(\'Add a category\',\''.$uri.'&amp;s=add\')"><img src="img/btn/add.png" alt="" />Add a category</button>
-	<small>[you can\'t set the colour yet or actually add]</small>
+	<button type="button" onclick="stringform(\'Add a category\',\''.$uri.'&amp;s=add\',{col:true})"><img src="img/btn/add.png" alt="" />Add a category</button>
 	
 	<br />
 	<br />
@@ -117,10 +116,10 @@ else
 	{
 		case 'add':
 			echo '<h3>Adding category</h3>';
-			/*$n = escape_smart($_POST['str']);
-			$query = db_query("INSERT INTO categories (name) VALUES ('$n')");
-			if ($query) { echo 'Added succesfully!'; } else { mysql_error(); }*/
-			echo 'Not implemented';
+			$n = escape_smart($_POST['str']);
+			$c = escape_smart(str_replace('#','',$_POST['col']));
+			$query = db_query("INSERT INTO categories (name,color) VALUES ('$n','$c')");
+			if ($query) { echo 'Added succesfully!'; } else { mysql_error(); }
 			break;
 		case 'rename':
 			echo '<h3>Renaming category</h3>';
