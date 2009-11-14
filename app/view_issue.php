@@ -35,6 +35,8 @@ $issue = mysql_fetch_array($result_issues);
 
 ?>
 
+<article>
+
 <h2>Viewing issue "<?php echo getissnm($id); ?>"</h2>
 
 <table class="ibox_details">
@@ -51,7 +53,7 @@ $issue = mysql_fetch_array($result_issues);
 			<b>Opened on</b>
 		</td>
 		<td>
-			<?php echo $issue['when_opened']; ?>
+			<?php echo timehtml5($issue['when_opened'],true); ?>
 		</td>
 	</tr>
 	<tr>
@@ -180,19 +182,19 @@ while ($comment = mysql_fetch_array($result_comments))
 	$y=1;
 	
 	echo '
-	<div id="comment_'.$comment['id'].'" class="ibox_comment"' . ( $comment['type'] != '' ? ' style="background-image:url(img/bgcom/'.$comment['type'].'.png);"' : '' ) . '>
+	<article id="comment_'.$comment['id'].'" class="ibox_comment"' . ( $comment['type'] != '' ? ' style="background-image:url(img/bgcom/'.$comment['type'].'.png);"' : '' ) . '>
 		<table>
 			<tr>
 				<td class="left">
 					'.getuinfo($comment['author'],false).'
 				</td>
 				<td class="right">
-					<div class="time">Posted on '.$comment['when_posted'].'</div>
+					<div class="time">Posted on '.timehtml5($comment['when_posted'],true).'</div>
 					<div class="mono">'.parsebbcode($comment['content']).'</div>
 				</td>
 			</tr>
 		</table>
-	</div>';
+	</article>';
 }
 
 if ($y == 0)
@@ -238,6 +240,8 @@ else
 	echo 'Discussion has been closed.';
 }
 ?>
+
+</article>
 
 <?php
 }
