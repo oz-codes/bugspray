@@ -588,10 +588,6 @@ dl.ibox_details dd
 	background-repeat:no-repeat;
 	background-position:bottom right;
 }
-.ibox_comment .mono
-{
-	width:614px; /* value obtained from firebug */
-}
 .ibox_comment td
 {
 	vertical-align:top;
@@ -612,6 +608,10 @@ dl.ibox_details dd
 {
 	color:#777;
 	font-size:10px;
+}
+.ibox_comment .mono
+{
+	width:608px;
 }
 
 .ibox_alert
