@@ -122,18 +122,25 @@ function confirmurl(title,url,permanent)
 
 function stringform(title,url,custom)
 {
+	// form action url
 	var a = '';
 	if (url)
 	{
 		a = ' action="'+url+'"';
 	}
 	
+	// extra components
+	if (!custom)
+	{
+		custom = {};
+	}
 	var extra = '';	
 	if (custom.col)
 	{
 		extra += '<div style="float:left;">Pick a colour:</div><div style="float:left;padding-left:8px;margin-bottom:2px;"><input type="text" value="#7fd4ff" id="amwndcustomcol" name="col" /></div><br />';
 	}
 	
+	// show the actual window
 	$.amwnd({
 		title:title,
 		content:'<form id="st" method="post"'+a+'>'+extra+'<div style="clear:both;">Enter the value: <input type="text" name="str" /></div><input type="hidden" name="sub" /></form>',
@@ -141,11 +148,13 @@ function stringform(title,url,custom)
 		closer:'cancel'
 	});
 	
+	// initialise any custom stuff
 	if (custom.col)
 	{
 		$("#amwndcustomcol").colorPicker();
 	}
 	
+	// and make sure the form submits!
 	$("#amwnd_ok").bind('click',function() {
 		$("#st").submit();
 	});
