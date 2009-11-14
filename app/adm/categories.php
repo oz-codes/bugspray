@@ -33,6 +33,12 @@ if (!isset($_GET['s']))
 {
 	echo '
 	<h3>Listing</h3>
+	
+	<button type="button" onclick="stringform(\'Add a category\',\''.$uri.'&amp;s=add\')"><img src="img/btn/add.png" alt="" />Add a category</button>
+	<small>[you can\'t set the colour yet or actually add]</small>
+	
+	<br />
+	<br />
 
 	To change the colour of a category, just click the colour. <b>Not implemented</b>
 
