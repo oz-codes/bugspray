@@ -494,25 +494,25 @@ function parsebbcode($string)
 	$original = array(
 		'/\n/',
 		'/&/',
-		'/(\[(noparse|NOPARSE)\])(.+)(\[\/(noparse|NOPARSE)\])/e',
-		'/(\[[Bb]\])(.+)(\[\/[Bb]\])/',
-		'/(\[[Ii]\])(.+)(\[\/[Ii]\])/',
-		'/(\[[Uu]\])(.+)(\[\/[Uu]\])/',
-		'/(\[[Ss]\])(.+)(\[\/[Ss]\])/',
-		'/(\[(url|URL)=)(.+)(\])(.+)(\[\/(url|URL)\])/',
-		'/(\[(url|URL)\])(.+)(\[\/(url|URL)\])/'
+		'/\[noparse\](.*?)\[\/noparse\]/ise',
+		'/\[b\](.*?)\[\/b\]/is',
+		'/\[i\](.*?)\[\/i\]/is',
+		'/\[u\](.*?)\[\/u\]/is',
+		'/\[s\](.*?)\[\/s\]/is',
+		'/\[url=(.*?)\](.*?)\[\/url\]/is',
+		'/\[url\](.*?)\[\/url\]/is'
 	);
 
 	$replaces = array(
 		'<br />',
 		'&amp;',
-		'str_replace(array("[","]"),array("&#91;","&#93;"),\'\\3\')',
-		'<b>\\2</b>',
-		'<i>\\2</i>',
-		'<span style="text-decoration:underline;">\\2</span>',
-		'<del>\\2</del>',
-		'<a href="\\3">\\5</a>',
-		'<a href="\\3">\\3</a>'
+		'str_replace(array("[","]"),array("&#91;","&#93;"),\'\\1\')',
+		'<b>\\1</b>',
+		'<i>\\1</i>',
+		'<span style="text-decoration:underline;">\\1</span>',
+		'<del>\\1</del>',
+		'<a href="\\1">\\2</a>',
+		'<a href="\\1">\\1</a>'
 	);
 
 	$ret = preg_replace($original,$replaces,$string);
