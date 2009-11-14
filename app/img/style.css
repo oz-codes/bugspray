@@ -534,8 +534,8 @@ td
 
 .ibox_generic, .ibox_details, .ibox_comment, .ibox_alert, .ibox_error
 {
-	background:#eee;
-	border:1px solid #ccc;
+	background:#f5f5f5;
+	border:1px solid #ddd;
 	padding:8px;
 }
 
@@ -558,7 +558,7 @@ table.ibox_details td
 table.ibox_details td:first-child
 {
 	padding-left:0px !important;
-	border-right:1px solid #ccc;
+	border-right:1px solid #ddd;
 	font-weight:bold;
 }
 dl.ibox_details
@@ -569,7 +569,7 @@ dl.ibox_details dt
 {
 	float:left;
 	clear:left;
-	border-right:1px solid #ccc;
+	border-right:1px solid #ddd;
 	font-weight:bold;
 	padding-bottom:4px;
 }
@@ -597,7 +597,7 @@ dl.ibox_details dd
 {
 	width:128px;
 	min-width:128px;
-	border-right:1px solid #ccc;
+	border-right:1px solid #ddd;
 }
 .ibox_comment .right
 {
