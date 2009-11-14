@@ -120,7 +120,7 @@ function confirmurl(title,url,permanent)
 	});
 }
 
-function stringform(title,url)
+function stringform(title,url,custom)
 {
 	var a = '';
 	if (url)
@@ -128,12 +128,24 @@ function stringform(title,url)
 		a = ' action="'+url+'"';
 	}
 	
+	var extra = '';	
+	if (custom.col)
+	{
+		extra += '<div style="float:left;">Pick a colour:</div><div style="float:left;padding-left:8px;margin-bottom:2px;"><input type="text" value="#7fd4ff" id="amwndcustomcol" name="col" /></div><br />';
+	}
+	
 	$.amwnd({
 		title:title,
-		content:'<form id="st" method="post"'+a+'>Enter the value: <input type="text" name="str" /><input type="hidden" name="sub" /></form>',
+		content:'<form id="st" method="post"'+a+'>'+extra+'<div style="clear:both;">Enter the value: <input type="text" name="str" /></div><input type="hidden" name="sub" /></form>',
 		buttons:['ok','cancel'],
 		closer:'cancel'
 	});
+	
+	if (custom.col)
+	{
+		$("#amwndcustomcol").colorPicker();
+	}
+	
 	$("#amwnd_ok").bind('click',function() {
 		$("#st").submit();
 	});
