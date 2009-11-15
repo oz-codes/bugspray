@@ -25,7 +25,12 @@
 
 <h3>Issues assigned to you</h3>
 <?php
-$result_issues_assigned = db_query("SELECT * FROM issues WHERE assign = '{$_SESSION['uid']}' ORDER BY when_opened ASC");
+if (isloggedin())
+	$assignsearch = $_SESSION['uid'];
+else
+	$assignsearch = -1;
+
+$result_issues_assigned = db_query("SELECT * FROM issues WHERE assign = '$assignsearch' ORDER BY when_opened ASC");
 if (mysql_num_rows($result_issues_assigned) > 0)
 {
 	echo '
@@ -45,7 +50,7 @@ if (mysql_num_rows($result_issues_assigned) > 0)
 }
 else
 {
-	echo 'Nothing is assigned to you...';
+	echo 'Nothing is assigned to you...<br />';
 }
 ?>
 
