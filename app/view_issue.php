@@ -23,7 +23,7 @@
  */
 
 include("functions.php");
-template_top('issues');
+$page->setType('issues');
 
 $id = escape_smart($_GET['id']);
 
@@ -32,12 +32,12 @@ $result_issues = db_query("SELECT * FROM issues WHERE id = '$id' LIMIT 1");
 if (mysql_num_rows($result_issues))
 {
 $issue = mysql_fetch_array($result_issues);
-
+$page->setTitle($issue['name']);
 ?>
 
 <article>
 
-<h2>Viewing issue "<?php echo getissnm($id); ?>"</h2>
+<h2>Viewing issue "<?php echo $issue['name']; ?>"</h2>
 
 <table class="ibox_details">
 	<tr>
@@ -253,6 +253,7 @@ else
 }
 else
 {
+	$page->setTitle('Error');
 	echo 'That issue doesn\'t exist!';
 }
 

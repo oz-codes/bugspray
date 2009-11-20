@@ -23,6 +23,8 @@
  */
 
 include("functions.php");
+$page->setType('issues');
+$page->setTitle('Issue list');
 ?>
 
 <h2 class="fl">Issue list</h2>

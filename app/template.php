@@ -49,11 +49,17 @@ class PageBuilder
 	
 	function PageBuilder()
 	{
-		/* */
+		$this->title = 'bugspray';
 	}
 	
-	function setTitle($title) {
-		$this->title = $title;
+	function setTitle($title)
+	{
+		$this->title = 'bugspray &bull; ' . $title;
+	}
+	
+	function setType($type)
+	{
+		$this->type = $type;
 	}
 	
 	function startBody()
@@ -68,7 +74,7 @@ class PageBuilder
 	
 	function getMenu()
 	{
-		return array(
+		$menu = array(
 			array(
 				'id' => 'issues',
 				'name' => 'Issues',
@@ -94,6 +100,18 @@ class PageBuilder
 				'url' => 'admin.php'
 			),
 		);
+		for ($i=0;$i<sizeof($menu);$i++)
+		{
+			if ($menu[$i]['id'] == $this->type)
+			{
+				$menu[$i]['selected'] = true;
+			}
+			else
+			{
+				$menu[$i]['selected'] = false;
+			}
+		}
+		return $menu;
 	}
 	
 	function showContent()

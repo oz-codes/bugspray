@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>bugspray</title>
+		<title><?php echo $this->title; ?></title>
 		<link rel="stylesheet" type="text/css" href="img/style.css" />
 		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery.colorPicker.js"></script>
@@ -22,9 +22,12 @@
 				<nav>
 					<ul>
 						<?php
-						foreach ($this->getMenu() as $link)
+						foreach ($this->getMenu() as $item)
 						{
-							echo '<li id="menu_'.$link['id'].'"'.($hi==$link['id']?' class="sel"':'').'><a href="'.(isset($link['url'])?$link['url']:'javascript:void(0)').'">'.(isset($link['url'])?'':'<s>').''.$link['name'].''.(isset($link['url'])?'':'</s>').'</a></li>';
+							echo '
+							<li id="menu_'.$item['id'].'"'.($item['selected']?' class="sel"':'').'>
+								<a href="'.(isset($item['url'])?$item['url']:'javascript:void(0)').'">'.(isset($item['url'])?'':'<s>').''.$item['name'].''.(isset($item['url'])?'':'</s>').'</a>
+							</li>';
 						}
 						?>
 					</ul>
