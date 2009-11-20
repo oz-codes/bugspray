@@ -25,7 +25,8 @@
 include("functions.php");
 $page->setType('account');
 
-$id = escape_smart($_GET['u']);
+$id = isset($_GET['u']) ? escape_smart($_GET['u']) : $_SESSION['uid'];
+
 $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users LEFT JOIN groups ON groups.id = users.group WHERE users.id = '$id'");
 
 $page->setTitle($profile['username'].'\'s Profile');
