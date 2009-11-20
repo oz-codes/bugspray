@@ -26,7 +26,7 @@ include("functions.php");
 $page->setType('activity');
 $page->setTitle('Activity');
 ?>
-<h2>Activity</h2>
+<h2>Recent activity</h2>
 
 <b>Logging has only been implemented for adding issues right now.</b><br /><br />
 
