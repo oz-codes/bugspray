@@ -31,9 +31,8 @@ session_start();
 include("settings.php");
 include("template.php");
 
-$con = mysql_connect($mysql_server,$mysql_username,$mysql_password);
-if (!$con) { die(mysql_error()); }
-mysql_select_db($mysql_database, $con);
+$con = mysql_connect($mysql_server,$mysql_username,$mysql_password) or die(mysql_error());
+mysql_select_db($mysql_database,$con);
 
 $islogged = true;
 
@@ -336,7 +335,7 @@ function isadmin()
 		$q = query_uid($_SESSION['uid']);
 		$g = $q['group'];
 		
-		$q2 = db_query_single("SELECT global_admin FROM groups WHERE id = $g");
+		$q2 = db_query_single("SELECT global_admin FROM groups WHERE id = '$g'");
 		return $q2[0];
 	}
 	else
