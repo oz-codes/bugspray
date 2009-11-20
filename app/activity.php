@@ -23,10 +23,10 @@
  */
 
 include("functions.php");
-$page->setType('log');
-$page->setTitle('Event log');
+$page->setType('activity');
+$page->setTitle('Activity');
 ?>
-<h2>Event log</h2>
+<h2>Activity</h2>
 
 <b>Logging has only been implemented for adding issues right now.</b><br /><br />
 
