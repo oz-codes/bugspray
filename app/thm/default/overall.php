@@ -57,10 +57,12 @@
 			
 			<div id="content_wrap">
 				<section id="content">
-					<noscript id="nojs" class="ibox_error">
-						Hey there, looks like <strong>you have JavaScript disabled</strong>.
-						bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
-						If you're an admin you'll need to have it on.
+					<noscript id="nojs">
+						<div class="ibox_error">
+							Hey there, looks like <strong>you have JavaScript disabled</strong>.
+							bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
+							If you're an admin you'll need to have it on.
+						</div>
 					</noscript>
 					<?php echo $this->showContent(); ?>
 				</section>
@@ -68,7 +70,7 @@
 			<aside id="sidebar">
 				<?php $this->showSidebar(); ?>
 			</aside>
-			<div style="clear:both;"></div>
+			<div class="fc"></div>
 			
 			<footer id="footer">
 				powered by bugspray | version 0.1-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
