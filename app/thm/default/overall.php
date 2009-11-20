@@ -72,6 +72,11 @@
 			</aside>
 			<div class="fc"></div>
 			
+			<script type="text/javascript">
+				// fix the content height smaller than sidebar height issue (FIND A BETTER SOLUTION!)
+				$("#content").css({'min-height':$("#sidebar").height()+'px'});
+			</script>
+			
 			<footer id="footer">
 				powered by bugspray | version 0.1-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
 			</footer>
