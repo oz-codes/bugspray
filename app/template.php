@@ -22,122 +22,96 @@
  *
  */
 
-function template_top($hi)
-{
-?>
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>bugspray</title>
-		<link rel="stylesheet" type="text/css" href="img/style.css" />
-		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-		<script type="text/javascript" src="js/jquery.colorPicker.js"></script>
-		<script type="text/javascript" src="js/jquery.amwnd.js"></script>
-		<script type="text/javascript" src="js/html5.js"></script>
-		<script type="text/javascript" src="js/bugspray.js"></script>
-	</head>
-	
-	<body>		
-		<div id="fade"></div>
-		
-		<div id="global_wrapper">
-			<header id="header">
-				<hgroup class="logo">
-					<h1><a href="index.php"><img src="img/logo.png" alt="bugspray" /></a></h1>
-				</hgroup>
-				<nav>
-					<ul>
-						<?php
-						// preparation for the template system
-						$menu = array(
-							array(
-								'id' => 'issues',
-								'name' => 'Issues',
-								'url' => 'index.php'
-							),
-							array(
-								'id' => 'projects',
-								'name' => 'Projects'
-							),
-							array(
-								'id' => 'activity',
-								'name' => 'Activity',
-								'url' => 'activity.php'
-							),
-							array(
-								'id' => 'help',
-								'name' => 'Help'
-							),
-							array(
-								'id' => 'admin',
-								'name' => 'Admin',
-								'show' => isadmin(),
-								'url' => 'admin.php'
-							),
-						);
-						foreach ($menu as $link)
-						{
-							echo '<li id="menu_'.$link['id'].'"'.($hi==$link['id']?' class="sel"':'').'><a href="'.(isset($link['url'])?$link['url']:'javascript:void(0)').'">'.(isset($link['url'])?'':'<s>').''.$link['name'].''.(isset($link['url'])?'':'</s>').'</a></li>';
-						}
-						?>
-					</ul>
-					<div class="fc"></div>
-				</nav>
-				<form id="search_wrapper">
-					<input type="text" name="search" />
-				</form>
-				<div id="user_wrapper">
-					<div id="user_left">
-						<div class="avatar">
-							<?php echo '<img src="'.(isloggedin()?getav($_SESSION['uid']):'img/guest.png').'" alt="" />'; ?>
-						</div>
-					</div>
-					<div id="user_right">
-						<?php
-						if (isloggedin())
-							echo '<b>'.$_SESSION['username'].'</b> | <a href="profile.php">profile</a> | <a href="user_logout.php">logout</a>';
-						else
-							echo '<b>Guest</b> | <a href="user_login.php">login</a> | <a href="user_register.php">register</a>';
-						?>
-					</div>
-					<div class="fc"></div>
-				</div>
-				<div class="fc"></div>
-			</header>
-			
-			<div id="content_wrap">
-				<section id="content">
-					<noscript id="nojs" class="ibox_error">
-						Hey there, looks like <strong>you have JavaScript disabled</strong>.
-						bugspray's going to be using a lot of JavaScript, but that's when development hits a later stage.
-						If you're an admin you'll need to have it on.
-					</noscript>
-				
-<?php
-}
+$page = new PageBuilder;
+$page->startBody();
+register_shutdown_function('template_bottom2');
 
+function template_top()
+{
+	/* */
+}
 function template_bottom()
 {
-?>
-				</section>
-			</div>
-			<aside id="sidebar">
-				<?php template_sidebar(); ?>
-			</aside>
-			<div style="clear:both;"></div>
-			
-			<footer id="footer">
-				powered by bugspray | version 0.1-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
-			</footer>
-		</div>
-	</body>
-</html>
-<?php
+	/* */
 }
 
-function template_sidebar()
+function template_bottom2()
 {
-	include("sidebar.php");
+	global $page;
+	$page->endBody();
+	echo $page->render("thm/default/overall.php");
 }
+
+// http://ianburris.com/tutorials/oophp-template-engine/
+class PageBuilder
+{
+	private $title, $content;
+	
+	function PageBuilder()
+	{
+		/* */
+	}
+	
+	function setTitle($title) {
+		$this->title = $title;
+	}
+	
+	function startBody()
+	{
+		ob_start();
+	}
+	
+	function endBody()
+	{
+		$this->content = ob_get_clean();
+	}
+	
+	function getMenu()
+	{
+		return array(
+			array(
+				'id' => 'issues',
+				'name' => 'Issues',
+				'url' => 'index.php'
+			),
+			array(
+				'id' => 'projects',
+				'name' => 'Projects'
+			),
+			array(
+				'id' => 'activity',
+				'name' => 'Activity',
+				'url' => 'activity.php'
+			),
+			array(
+				'id' => 'help',
+				'name' => 'Help'
+			),
+			array(
+				'id' => 'admin',
+				'name' => 'Admin',
+				'show' => isadmin(),
+				'url' => 'admin.php'
+			),
+		);
+	}
+	
+	function showContent()
+	{
+		echo $this->content;
+	}
+	
+	function showSidebar()
+	{
+		include("sidebar.php");
+	}
+	
+	function render($path)
+	{
+		ob_start();
+		include($path);
+		return ob_get_clean();
+	}
+}
+
 ?>

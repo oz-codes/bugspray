@@ -23,7 +23,6 @@
  */
 
 include("functions.php");
-template_top('issues');
 ?>
 
 <h2 class="fl">Issue list</h2>
@@ -112,7 +111,3 @@ while ($issue = mysql_fetch_array($result_issues))
 }
 ?>
 </table>
-
-<?php
-template_bottom();
-?>
