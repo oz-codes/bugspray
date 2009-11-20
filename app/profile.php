@@ -54,21 +54,28 @@ $page->setTitle($profile['username'].'\'s Profile');
 			</dd>
 		<dt>Email</dt>
 			<dd>
-				<?php 
-					if ($profile['email_show'] || isadmin())
+				<?php
+					if ($profile['email'] != '')
 					{
-						if (!$profile['email_show'])
+						if ($profile['email_show'] || isadmin())
 						{
-							echo '<span style="font-style:italic;">'.$profile['email'].'</span>';
+							if (!$profile['email_show'])
+							{
+								echo '<span style="font-style:italic;">'.$profile['email'].'</span>';
+							}
+							else
+							{
+								echo $profile['email'];
+							}
 						}
 						else
 						{
-							echo $profile['email'];
+							echo '<span style="font-style:italic;">(hidden)</span>';
 						}
 					}
 					else
 					{
-						echo '<span style="font-style:italic;">(hidden)</span>';
+						echo '<span style="font-style:italic;">(none)</span>';
 					}
 				?>
 			</dd>
