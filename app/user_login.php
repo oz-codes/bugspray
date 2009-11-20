@@ -23,11 +23,11 @@
  */
 
 include("functions.php");
+$page->setType('account');
+$page->setTitle('Login');
 
 if (!isset($_POST['sub']))
-{
-	template_top('user');
-	
+{	
 	echo '<h2>Login</h2>';
 	
 	echo '
@@ -69,18 +69,13 @@ else
 			setcookie("bs_uid", $_SESSION['uid'], time()+60*60*24*100, "/");
 		}
 		
-		// now show the message
-		template_top('user');
-		
+		// now show the message		
 		echo '<script type="text/javascript">$("#menu_admin").hide();$("#menu_admin").fadeIn();</script>';
 		echo 'You have been logged in.<br /><br /><a href="index.php">Go to your dashboard?</a>';
 	}
 	else
 	{
-		template_top('user');
 		echo 'Could not log you in. Check your credidentials?';
 	}
 }
-
-template_bottom();
 ?>

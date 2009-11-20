@@ -23,10 +23,11 @@
  */
 
 include("functions.php");
+$page->setType('account');
+$page->setTitle('Logout');
 
 if (!isloggedin())
 {
-	template_top('user');
 	echo 'Congratulations, you have just created a paradox. A black hole is currently being formed behind you.';
 }
 else
@@ -48,11 +49,7 @@ else
 	$_SESSION = array();
 	session_destroy();
 	
-	template_top('user');
-	
 	// congraulations, you have helped destroy ze vorld!
 	echo 'You have been logged out.<br /><br /><small>[todo maybe: an ajax version]</small>';
 }
-
-template_bottom();
 ?>

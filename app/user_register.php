@@ -23,7 +23,8 @@
  */
 
 include("functions.php");
-template_top('user');
+$page->setType('account');
+$page->setTitle('Register');
 
 echo '<h2>Register</h2>';
 
@@ -202,8 +203,6 @@ if ($error || !isset($_POST['subregister']))
 		<input type="submit" name="sub" value="Register" />
 	</form>';
 }
-
-template_bottom();
 
 function outputerrors($arr)
 {
