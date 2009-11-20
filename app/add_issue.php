@@ -25,7 +25,8 @@
 // if possible make this more like the reg/login forms or at least introduce similarities to this or them
 
 include("functions.php");
-template_top('issues');
+$page->setType('issues');
+$page->setTitle('Add an issue');
 ?>
 
 <h2>Add an issue</h2>
@@ -127,6 +128,4 @@ else
 	}
 }
 }
-
-template_bottom();
 ?>

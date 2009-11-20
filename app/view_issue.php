@@ -256,6 +256,4 @@ else
 	$page->setTitle('Error');
 	echo 'That issue doesn\'t exist!';
 }
-
-template_bottom();
 ?>

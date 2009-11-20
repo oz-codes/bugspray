@@ -23,10 +23,12 @@
  */
 
 include("functions.php");
-template_top('account');
+$page->setType('account');
 
 $id = escape_smart($_GET['u']);
 $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users LEFT JOIN groups ON groups.id = users.group WHERE users.id = '$id'");
+
+$page->setTitle($profile['username'].'\'s Profile');
 ?>
 
 <header id="profile_header">
@@ -116,7 +118,3 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 	?>
 	<small>[todo: larger listing style - inbetween main listing size and sidebar size]</small>
 </section>
-
-<?php
-template_bottom();
-?>
