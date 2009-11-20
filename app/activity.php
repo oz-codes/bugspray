@@ -23,8 +23,8 @@
  */
 
 include("functions.php");
-template_top('log');
-
+$page->setType('log');
+$page->setTitle('Event log');
 ?>
 <h2>Event log</h2>
 
