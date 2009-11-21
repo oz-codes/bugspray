@@ -25,6 +25,12 @@
 include("functions.php");
 $page->setType('issues');
 $page->setTitle('Issue list');
+
+if (isset($_GET['installerdone']) && is_dir('install'))
+{
+	$page->addCSS('install/installer.css');
+	include("install/index.php");
+}
 ?>
 
 <h2 class="fl">Issue list</h2>

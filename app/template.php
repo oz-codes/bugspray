@@ -24,16 +24,7 @@
 
 $page = new PageBuilder;
 $page->startBody();
-register_shutdown_function('template_bottom2');
-
-function template_top()
-{
-	/* */
-}
-function template_bottom()
-{
-	/* */
-}
+register_shutdown_function('template_bottom2'); // need a new name or have the code in a better place
 
 function template_bottom2()
 {
@@ -45,11 +36,17 @@ function template_bottom2()
 // http://ianburris.com/tutorials/oophp-template-engine/
 class PageBuilder
 {
-	private $title, $content;
+	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre;
 	
 	function PageBuilder()
 	{
 		$this->title = 'bugspray';
+		$this->addCSS('img/style.css');
+		$this->addJS('js/jquery-1.3.2.min.js');
+		$this->addJS('js/jquery.colorPicker.js');
+		$this->addJS('js/jquery.amwnd.js');
+		$this->addJS('js/html5.js');
+		$this->addJS('js/bugspray.js');
 	}
 	
 	function setTitle($title)
@@ -72,6 +69,26 @@ class PageBuilder
 		$this->content = ob_get_clean();
 	}
 	
+	function addCSS($path)
+	{
+		$this->stylesheets[] = $path;
+	}
+	
+	function addJS($path)
+	{
+		$this->javascripts[] = $path;
+	}
+	
+	function addBodyPre($content)
+	{
+		$this->bodypre .= $content;
+	}
+	
+	function outputBodyPre()
+	{
+		echo $this->bodypre;
+	}
+	
 	function getMenu()
 	{
 		include("menu.php");
@@ -90,12 +107,24 @@ class PageBuilder
 		return $menu;
 	}
 	
-	function showContent()
+	function outputHead()
+	{
+		foreach ($this->stylesheets as $stylesheet)
+		{
+			echo '<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />';
+		}
+		foreach ($this->javascripts as $javascript)
+		{
+			echo '<script type="text/javascript" src="'.$javascript.'"></script>';
+		}
+	}
+	
+	function outputContent()
 	{
 		echo $this->content;
 	}
 	
-	function showSidebar()
+	function outputSidebar()
 	{
 		include("sidebar.php");
 	}

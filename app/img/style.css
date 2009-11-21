@@ -742,7 +742,7 @@ div#color_selector
 	-webkit-box-shadow:2px 2px 3px rgba(0,0,0,0.75);
 	box-shadow:2px 2px 3px rgba(0,0,0,0.75);
 	padding:2px;
-	z-index:999;
+	z-index:9;
 }
 
 div#color_custom {width: 100%; float:left }

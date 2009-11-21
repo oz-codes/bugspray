@@ -3,15 +3,12 @@
 	<head>
 		<meta charset="UTF-8">
 		<title><?php echo $this->title; ?></title>
-		<link rel="stylesheet" type="text/css" href="img/style.css" />
-		<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-		<script type="text/javascript" src="js/jquery.colorPicker.js"></script>
-		<script type="text/javascript" src="js/jquery.amwnd.js"></script>
-		<script type="text/javascript" src="js/html5.js"></script>
-		<script type="text/javascript" src="js/bugspray.js"></script>
+		<?php $this->outputHead(); ?>
 	</head>
 	
-	<body>		
+	<body>
+		<?php $this->outputBodyPre(); ?>
+		
 		<div id="fade"></div>
 		
 		<div id="global_wrapper">
@@ -64,11 +61,11 @@
 							If you're an admin you'll need to have it on.
 						</div>
 					</noscript>
-					<?php echo $this->showContent(); ?>
+					<?php $this->outputContent(); ?>
 				</section>
 			</div>
 			<aside id="sidebar">
-				<?php $this->showSidebar(); ?>
+				<?php $this->outputSidebar(); ?>
 			</aside>
 			<div class="fc"></div>
 			
