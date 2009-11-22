@@ -36,7 +36,7 @@ function template_bottom2()
 // http://ianburris.com/tutorials/oophp-template-engine/
 class PageBuilder
 {
-	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre;
+	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false;
 	
 	function PageBuilder()
 	{
@@ -47,6 +47,11 @@ class PageBuilder
 		$this->addJS('js/jquery.amwnd.js');
 		$this->addJS('js/html5.js');
 		$this->addJS('js/bugspray.js');
+	}
+	
+	function disableTemplate()
+	{
+		$this->disabled = true;
 	}
 	
 	function setTitle($title)
@@ -131,9 +136,16 @@ class PageBuilder
 	
 	function render($path)
 	{
-		ob_start();
-		include($path);
-		return ob_get_clean();
+		if ($this->disabled)
+		{
+			return $this->content;
+		}
+		else
+		{
+			ob_start();
+			include($path);
+			return ob_get_clean();
+		}
 	}
 }
 

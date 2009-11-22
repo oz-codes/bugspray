@@ -23,14 +23,13 @@
  */
 
 include("functions.php");
+$page->disableTemplate();
 
 $arr = array();
 
 if (!isset($_POST['cont']))
 {
-	template_top('issues');
 	echo 'This page does nothing on its own. Move along...';
-	template_bottom();
 }
 else
 {
