@@ -23,7 +23,6 @@
  */
 
 include("functions.php");
-template_top('issues');
 
 $a = escape_smart(getuid($_SESSION['username']));
 $i = escape_smart($_GET['id']);
@@ -119,6 +118,4 @@ else
 {
 	echo 'You do not have sufficient privileges to access this page.';
 }
-
-template_bottom();
 ?>
