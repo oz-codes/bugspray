@@ -39,15 +39,13 @@ if (isset($_GET['installerdone']) && is_dir('install'))
 </div>
 <div class="fc"></div>
 
-<div class="ibox_alert">About the tabs... the "All" tab will be removed later on when the other tabs are implemented if there aren't some good reasons for it staying.</div>
-<br />
-
+<small>[todo: default tab should be open]</small>
 <div class="tabs">
 	<a href="#" class="sel">All</a>
 	<a href="#" class="notyet">Open</a>
 	<a href="#" class="notyet">Assigned</a>
 	<a href="#" class="notyet">Resolved</a>
-	<a href="#" class="notyet">Closed(?)</a>
+	<a href="#" class="notyet">Declined</a>
 	<div class="fc"></div>
 </div>
 
