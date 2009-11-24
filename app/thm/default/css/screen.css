@@ -397,13 +397,32 @@ td
 	font-weight:bold;
 }
 
-/* tables for the watchlist */
+/* the watchlist */
 
-.watchlisttbl td
+.watchlist h3, .watchlist nav
 {
-	padding:0px 8px 2px 0px;
+	float:left;
 }
-.watchlisttbl a
+.watchlist nav
+{
+	margin-left:4px;
+}
+.watchlist article
+{
+	margin:2px 0px 0px 6px;
+	font-size:12px;
+}
+.watchlist article .type,
+.watchlist article .user,
+.watchlist article .details
+{
+	float:left;
+}
+.watchlist article .type
+{
+	margin:2px 8px 0px 0px;
+}
+.watchlist article a
 {
 	font-weight:bold;
 }
