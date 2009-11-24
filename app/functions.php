@@ -58,6 +58,22 @@ function db_query_single($query)
 	return $array;
 }
 
+function db_query_toarray($query)
+{
+	$result = db_query($query);
+	$ret = array();
+	$num_rows = mysql_num_rows($result);
+	$num_fields = mysql_num_fields($result);
+	for ($i=0;$i<$num_rows;$i++)
+	{
+		for ($j=0;$j<$num_fields;$j++)
+		{
+			$ret[$i][mysql_field_name($result,$j)] = mysql_result($result,$i,mysql_field_name($result,$j));
+		}
+	}
+	return $ret;
+}
+
 function logwhencmp($a,$b)
 {
     if ($a['when'] == $b['when'])
@@ -201,36 +217,71 @@ function getissnm($id)
 	return $q[0];
 }
 
+function getstatuses()
+{
+	global $statuseslist;
+	
+	if (!$statuseslist)
+	{
+		$statuseslist = db_query_toarray("SELECT * FROM statuses");
+	}
+	
+	return $statuseslist;
+}
+
 function getstatusnm($id)
 {
-	switch ($id)
+	$statuses = getstatuses();
+	return $statuses[$id]['name'];
+}
+
+function getstatustype($id)
+{
+	$statuses = getstatuses();
+	switch ($statuses[$id]['type'])
 	{
 		case 0: return 'open'; break;
 		case 1: return 'assigned'; break;
-		case 2: return 'resolved'; break;
-		case 3: return 'duplicate'; break;
-		case 4: return 'bydesign'; break;
-		case 5: return 'declined'; break;
-		case 6: return 'nonissue'; break;
-		case 7: return 'spam'; break;
-		default: return '?'; break;
+		case 2: return 'solved'; break;
+		case 3: return 'declined'; break;
 	}
 }
 
-function issueclosed($id)
+function issuecol($status,$comments,$lastactivity)
 {
-	switch ($id)
+	if (gettype($lastactivity) == 'string')
 	{
-		case 0: return false; break;
-		case 1: return false; break;
-		case 2: return false; break;
-		case 3: return true; break;
-		case 4: return true; break;
-		case 5: return true; break;
-		case 6: return true; break;
-		case 7: return true; break;
-		default: return false; break;
+		$lastactivity = strtotime($lastactivity);
 	}
+	
+	$delta = time() - $lastactivity;
+	$daysago = floor($delta / ( 60 * 60 * 24 ));
+	
+	if (getstatustype($status) == 'declined')
+	{
+		$col = 'rgb(48,48,48)';
+	}
+	elseif (getstatustype($status) == 'solved')
+	{
+		$col = 'rgb(128,255,64)';
+	}
+	else
+	{
+		if ($comments > 0)
+		{
+			$green = round(255-128*($daysago/30));
+			if ($green < 128)
+				$green = 128;
+			
+			$col = 'rgb(255,'.$green.',0)';
+		}
+		else
+		{
+			$col = 'rgb(242,72,72)';
+		}
+	}
+	
+	return $col;
 }
 
 function isexistinguser($uname,$pwd)

@@ -142,3 +142,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `num_posted_comments` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE `statuses` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`type` INT NOT NULL ,
+`name` VARCHAR( 24 ) NOT NULL
+) ENGINE = MYISAM ;
+
+INSERT INTO `statuses` (`id`, `type`, `name`) VALUES (NULL, '0', 'open'), (NULL, '1', 'assigned'), (NULL, '2', 'resolved'), (NULL, '3', 'duplicate'), (NULL, '3', 'declined'), (NULL, '3', 'bydesign'), (NULL, '3', 'nonissue'), (NULL, '3', 'spam');
