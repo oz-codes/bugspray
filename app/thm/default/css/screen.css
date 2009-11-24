@@ -1,17 +1,15 @@
 /*
- * bugspray theme - Classic Floral
+ * bugspray theme - Classic Floral - Version 0.1-dev
  * Copyright (c) a2h 2009
  * Silk icons by Mark James - http://www.famfamfam.com/lab/icons/silk/
- * 
- * A FORMAT FOR MAKING YOUR OWN THEMES WILL BE INTRODUCED LATER ON
- *
  */
 
 /* main stuff */
 
 body
 {
-	background:url('bg/main.png');
+	background:url('../img/bg/main.png');
+	margin:8px;
 }
 body,td
 {
@@ -72,7 +70,7 @@ img
 	position:absolute;
 	top:0px;
 	left:0px;
-	background:url('bg/fade.png');
+	background:url('../img/bg/fade.png');
 	width:100%;
 	height:128px;
 	z-index:-1;
@@ -80,7 +78,7 @@ img
 
 #global_wrapper
 {
-	background:url('bg/wrapper.png');
+	background:url('../img/bg/wrapper.png');
 	padding:8px;
 }
 
@@ -125,7 +123,7 @@ img
 }
 #header nav .sel
 {
-	background:url('bg/menusel.png');
+	background:url('../img/bg/menusel.png');
 }
 #header nav ul li a
 {
@@ -135,7 +133,7 @@ img
 #search_wrapper
 {
 	float:right;
-	background:url('bg/menusel2.png');
+	background:url('../img/bg/menusel2.png');
 	color:#fff;
 	padding:8px;
 	height:20px;
@@ -146,7 +144,7 @@ img
 	border:0px;
 	font-size:11px;
 	padding:2px;
-	background:#fff url('search.png') no-repeat right;
+	background:#fff url('../img/search.png') no-repeat right;
 	width:142px;
 	height:16px;
 	-moz-border-radius:0px !important;
@@ -156,7 +154,7 @@ img
 #user_wrapper
 {
 	float:right;
-	background:url('bg/menusel2.png');
+	background:url('../img/bg/menusel2.png');
 	color:#fff;
 	padding:8px;
 	height:20px;
@@ -183,7 +181,7 @@ img
 	width:100%;
 	min-width:500px;
 	margin-right:-288px;
-	background:#fff url('sidebar.png') repeat-y top right;
+	background:#fff url('../img/sidebar.png') repeat-y top right;
 }
 #content
 {
@@ -248,7 +246,7 @@ input[type=text], input[type=password], textarea, select
 	border:1px solid #bbb;
 	font-size:13px;
 	font-family:helvetica,arial,sans-serif;
-	background:#fff url('bg/form.png') repeat-x;
+	background:#fff url('../img/bg/form.png') repeat-x;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 	border-radius:3px;
@@ -258,7 +256,7 @@ input[type=text], input[type=password], textarea, select
 button, input[type=submit], input[type=button]
 {
 	height:24px;
-	background:url('btn/grad.png');
+	background:url('../img/btn/grad.png');
 	border:1px solid #bebebe;
 	padding:0px 4px;
 	font-family:verdana;
@@ -554,7 +552,7 @@ td
 
 .ibox_details
 {
-	background-image:url(bgcom/details.png);
+	background-image:url('../img/bgcom/details.png');
 	background-repeat:no-repeat;
 	background-position:bottom right;
 }
@@ -667,19 +665,19 @@ dl.ibox_details dd
 }
 .bar_bottom .gray
 {
-	background:url('graph/bar_bottom_gray.png');
+	background:url('../img/graph/bar_bottom_gray.png');
 }
 .bar_bottom .red
 {
-	background:url('graph/bar_bottom_red.png');
+	background:url('../img/graph/bar_bottom_red.png');
 }
 .bar_bottom .green
 {
-	background:url('graph/bar_bottom_green.png');
+	background:url('../img/graph/bar_bottom_green.png');
 }
 .bar_bottom .blue
 {
-	background:url('graph/bar_bottom_blue.png');
+	background:url('../img/graph/bar_bottom_blue.png');
 }
 .bar_top
 {
@@ -691,7 +689,7 @@ dl.ibox_details dd
 }
 .ibox_generic .bar_top
 {
-	background:url('graph/bar_top_ibox_gen.png');
+	background:url('../img/graph/bar_top_ibox_gen.png');
 }
 
 /* small text */
@@ -737,7 +735,7 @@ div.color_picker
 	width: 16px;
 	padding: 0 !important;
 	border: 1px solid #ccc;
-	background: url(arrow.gif) no-repeat top right;
+	background: url('../img/arrow.gif') no-repeat top right;
 	cursor: pointer;
 	line-height: 16px;
 }
