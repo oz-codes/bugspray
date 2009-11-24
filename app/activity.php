@@ -97,6 +97,3 @@ while ($project = mysql_fetch_array($result_projects))
 	}
 }
 ?>
-<?php
-template_bottom();
-?>
