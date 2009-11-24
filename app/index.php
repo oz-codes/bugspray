@@ -147,7 +147,7 @@ $page->setPage(
 	'issue_list.php',
 	array(
 		'status_tabs' => $status_tabs,
-		'result_issues' => $issues
+		'issues' => $result_issues
 	)
 );
 ?>

@@ -86,14 +86,16 @@ $page->setTitle($issue['name']);
 		</td>
 		<td>
 			<?php
-				if ($issue['assign'] != 0)
+				if ($issue['assign'] > 0)
 				{
 					echo getuinfo($issue['assign']);
 				}
 				else
 				{
-					echo '
-					<div class="fl" style="margin-right:4px;"><img src="img/alert/exclaim.png" alt="" /></div><div class="fl">unassigned</div>';
+					if ($issue['status'] != 3)
+						echo '<div class="fl" style="margin-right:4px;"><img src="img/alert/exclaim.png" alt="" /></div><div class="fl">unassigned</div>';
+					else
+						echo 'nobody';
 				}
 			?>
 			<div class="fc"></div>
