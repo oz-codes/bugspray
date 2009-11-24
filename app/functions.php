@@ -165,7 +165,7 @@ function getuinfo($id,$clear=true)
 {
 	return '
 	<div class="avatar fl" style="margin-right:4px;"><img src="'.getav($id).'" alt="" /></div>
-	<a href="profile.php?u='.$id.'" class="username'.getubanned($id)?' banned':''.'" style="position:relative;top:2px;">'.getunm($id).'</a>
+	<a href="profile.php?u='.$id.'" class="username'.(getubanned($id)?' banned':'').'" style="position:relative;top:2px;">'.getunm($id).'</a>
 	'.($clear?'<div class="fc"></div>':'');
 }
 
