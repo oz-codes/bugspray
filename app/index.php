@@ -39,13 +39,12 @@ if (isset($_GET['installerdone']) && is_dir('install'))
 </div>
 <div class="fc"></div>
 
-<small>[todo: default tab should be open]</small>
 <div class="tabs">
-	<a href="#" class="sel">All</a>
 	<a href="#" class="notyet">Open</a>
 	<a href="#" class="notyet">Assigned</a>
 	<a href="#" class="notyet">Resolved</a>
 	<a href="#" class="notyet">Declined</a>
+	<a href="#" class="sel">All</a>
 	<div class="fc"></div>
 </div>
 
@@ -69,21 +68,54 @@ LEFT JOIN ( SELECT c1.issue, c1.author, c1.when_posted
 ");
 while ($issue = mysql_fetch_array($result_issues))
 {
-	// last comment
+	// last comment and age
 	if ($issue['commentauthor'] > 0)
 	{
 		$lastcomment = '
 		'.timeago($issue['commentposted']).'
 		<a href="profile.php?u='.$issue['commentauthor'].'">'.getunm($issue['commentauthor'],false).'</a>';
+		
+		$age = $issue['commentposted'];
 	}
 	else
 	{
 		$lastcomment = $issue['poster'].' N/A';
+		
+		$age = $issue['when_opened'];
+	}
+	
+	// determine the colour of the listing
+	if (issueclosed($issue['status']))
+	{
+		$issuecol = 'rgb(48,48,48)';
+	}
+	elseif (issuesolved($issue['status']))
+	{
+		$issuecol = 'rgb(128,255,64)';
+	}
+	else
+	{
+		if ($issue['num_comments'] > 0)
+		{
+			$daysago = daysago($age);
+			$green = round(255-128*($daysago/30));
+			if ($green < 128)
+				$green = 128;
+			
+			$issuecol = 'rgb(255,'.$green.',0)';
+		}
+		else
+		{
+			$issuecol = 'rgb(242,72,72)';
+		}
 	}
 	
 	// the entry
 	echo '
-	<tr'.(issueclosed($issue['status']) ? ' class="closed"':'').'>
+	<tr'.(issueclosed($issue['status'])?' class="closed"':'').'>
+		<td class="col">
+			<div style="background:'.$issuecol.';"></div>
+		</td>
 		<td class="comments">
 			<div>'.$issue['num_comments'].'</div>
 			<div>comment'.($issue['num_comments']==1?'':'s').'</div>

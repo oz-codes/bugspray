@@ -428,18 +428,34 @@ td
 {
 	font-weight:bold;
 }
+.issuelist_large .closed a
+{
+	color:#999;
+}
 .issuelist_large td
 {
-	padding:4px;
+	padding:4px 0px;
 	font-size:12px;
+}
+.issuelist_large .col
+{
+	width:8px;
+}
+.issuelist_large .col div
+{
+	width:8px;
+	height:48px;
 }
 .issuelist_large .comments
 {
 	width:64px;
 }
+.issuelist_large .comments div
+{
+	background:#e5e5e5;
+}
 .issuelist_large .comments div, .issuelist_large .views div
 {
-	background:#ddd;
 	text-align:center;
 	padding:0px 8px 8px 8px;
 	font-size:11px;
@@ -452,11 +468,7 @@ td
 }
 .issuelist_large .views
 {
-	width:48px;
-}
-.issuelist_large .views div
-{
-	background:#f2f2f2;
+	width:46px;
 }
 .issuelist_large .upper
 {
@@ -475,14 +487,6 @@ td
 {
 	float:right;
 }
-.issuelist_large tr.closed, .issuelist_large tr.closed a
-{
-	color:#999;
-}
-.issuelist_large tr.closed .cat
-{
-	color:#000;
-}
 .issuelist_large .upper .left a:first-child
 {
 	font-size:16px;
@@ -490,6 +494,10 @@ td
 .issuelist_large .upper .right
 {
 	margin-top:3px;
+}
+.issuelist_large .main
+{
+	padding-left:4px;
 }
 
 /* issue listing - small - uses uls */
@@ -546,10 +554,13 @@ td
 
 .ibox_details
 {
-	width:768px;
 	background-image:url(bgcom/details.png);
 	background-repeat:no-repeat;
 	background-position:bottom right;
+}
+table.ibox_details
+{
+	width:100%;
 }
 table.ibox_details td
 {
@@ -582,7 +593,6 @@ dl.ibox_details dd
 
 .ibox_comment
 {
-	width:752px;
 	margin-bottom:16px;
 	/* this stuff is set in php */
 	background-repeat:no-repeat;
