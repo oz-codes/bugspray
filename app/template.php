@@ -22,31 +22,37 @@
  *
  */
 
-$page = new PageBuilder;
-$page->startBody();
-register_shutdown_function('template_bottom2'); // need a new name or have the code in a better place
+// define the locations of everything
+$theme = 'default';
+$location['theme']  = "thm/$theme";
+$location['images'] = "thm/$theme/img";
+$location['styles'] = "thm/$theme/css";
 
-function template_bottom2()
-{
-	global $page;
-	$page->endBody();
-	echo $page->render("thm/default/overall.php");
-}
+// set up everything
+$page = new PageBuilder($location);
+register_shutdown_function(array($page,'outputAll'));
 
 // http://ianburris.com/tutorials/oophp-template-engine/
 class PageBuilder
 {
-	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false;
+	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $location;
 	
-	function PageBuilder()
+	function PageBuilder($location)
 	{
+		// outside stuff
+		$this->location = $location;
+		
+		// default stuff to output header
 		$this->title = 'bugspray';
-		$this->addCSS('img/style.css');
+		$this->addCSS($this->location['styles'].'/screen.css');
 		$this->addJS('js/jquery-1.3.2.min.js');
 		$this->addJS('js/jquery.colorPicker.js');
 		$this->addJS('js/jquery.amwnd.js');
 		$this->addJS('js/html5.js');
 		$this->addJS('js/bugspray.js');
+		
+		// start capturing the content
+		ob_start();
 	}
 	
 	function disableTemplate()
@@ -62,16 +68,6 @@ class PageBuilder
 	function setType($type)
 	{
 		$this->type = $type;
-	}
-	
-	function startBody()
-	{
-		ob_start();
-	}
-	
-	function endBody()
-	{
-		$this->content = ob_get_clean();
 	}
 	
 	function addCSS($path)
@@ -114,13 +110,15 @@ class PageBuilder
 	
 	function outputHead()
 	{
+		echo '<title>'.$this->title.'</title>'."\n";
+		
 		foreach ($this->stylesheets as $stylesheet)
 		{
-			echo '<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />';
+			echo "\t\t".'<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />'."\n";
 		}
 		foreach ($this->javascripts as $javascript)
 		{
-			echo '<script type="text/javascript" src="'.$javascript.'"></script>';
+			echo "\t\t".'<script type="text/javascript" src="'.$javascript.'"></script>'."\n";
 		}
 	}
 	
@@ -134,7 +132,14 @@ class PageBuilder
 		include("sidebar.php");
 	}
 	
-	function render($path)
+	function setPage($page,$variables=array())
+	{
+		extract($variables,EXTR_SKIP);
+		$location = $this->location;
+		include($this->location['theme'].'/'.$page);
+	}
+	
+	function build()
 	{
 		if ($this->disabled)
 		{
@@ -143,9 +148,19 @@ class PageBuilder
 		else
 		{
 			ob_start();
-			include($path);
+			$location = $this->location;
+			include($this->location['theme'].'/overall.php');
 			return ob_get_clean();
 		}
+	}
+	
+	function outputAll()
+	{
+		// stop capturing everything
+		$this->content = ob_get_clean();
+		
+		// build the page
+		echo $this->build();
 	}
 }
 

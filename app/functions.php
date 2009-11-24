@@ -58,7 +58,7 @@ function db_query_single($query)
 	return $array;
 }
 
-function db_query_toarray($query)
+function db_query_toarray($query,$properid=false)
 {
 	$result = db_query($query);
 	$ret = array();
@@ -68,7 +68,12 @@ function db_query_toarray($query)
 	{
 		for ($j=0;$j<$num_fields;$j++)
 		{
-			$ret[$i][mysql_field_name($result,$j)] = mysql_result($result,$i,mysql_field_name($result,$j));
+			if ($properid)
+				$ai = $i+1;
+			else
+				$ai = $i;
+			
+			$ret[$ai][mysql_field_name($result,$j)] = mysql_result($result,$i,mysql_field_name($result,$j));
 		}
 	}
 	return $ret;
@@ -223,7 +228,7 @@ function getstatuses()
 	
 	if (!$statuseslist)
 	{
-		$statuseslist = db_query_toarray("SELECT * FROM statuses");
+		$statuseslist = db_query_toarray("SELECT * FROM statuses",true);
 	}
 	
 	return $statuseslist;
@@ -242,7 +247,7 @@ function getstatustype($id)
 	{
 		case 0: return 'open'; break;
 		case 1: return 'assigned'; break;
-		case 2: return 'solved'; break;
+		case 2: return 'resolved'; break;
 		case 3: return 'declined'; break;
 	}
 }
@@ -261,7 +266,7 @@ function issuecol($status,$comments,$lastactivity)
 	{
 		$col = 'rgb(48,48,48)';
 	}
-	elseif (getstatustype($status) == 'solved')
+	elseif (getstatustype($status) == 'resolved')
 	{
 		$col = 'rgb(128,255,64)';
 	}

@@ -26,32 +26,77 @@ include("functions.php");
 $page->setType('issues');
 $page->setTitle('Issue list');
 
+// installer completion screen
 if (isset($_GET['installerdone']) && is_dir('install'))
 {
 	$page->addCSS('install/installer.css');
 	include("install/index.php");
 }
-?>
 
-<h2 class="fl">Issue list</h2>
-<div class="fr">
-	<button type="button" onclick="location.href='add_issue.php'"><img src="img/btn/add.png" alt="" />Add an issue</button>
-</div>
-<div class="fc"></div>
+// current status
+$curstatus = $_GET['status'];
 
-<div class="tabs">
-	<a href="#" class="notyet">Open</a>
-	<a href="#" class="notyet">Assigned</a>
-	<a href="#" class="notyet">Resolved</a>
-	<a href="#" class="notyet">Declined</a>
-	<a href="#" class="sel">All</a>
-	<div class="fc"></div>
-</div>
+// restrict the status
+$whereclause = '';
+if ($curstatus != -1)
+{
+	if (!isset($_GET['status']))
+		$curstatus = 0;
+	
+	$wherests = array();
+	foreach (getstatuses() as $status)
+	{
+		if ($status['type'] == $curstatus)
+		{
+			$wherests[] = $status['id'];
+		}
+	}
+	if (count($wherests) > 0)
+	{
+		$whereclause = 'WHERE (';
+		$i = 0;
+		foreach ($wherests as $st)
+		{
+			if ($i > 0)
+				$whereclause .= ' OR';
+			$whereclause .= ' issues.status = '.$st;
+			$i++;
+		}
+		$whereclause .= ')';
+	}
+}
 
-<table class="issuelist_large">
-<?php
+// status tabs
+$status_tabs = array(
+	array(
+		'name' => 'Open',
+		'url' => 'index.php',
+		'sel' => $curstatus == 0 ? true : false
+	),
+	array(
+		'name' => 'Assigned',
+		'url' => 'index.php?status=1',
+		'sel' => $curstatus == 1 ? true : false
+	),
+	array(
+		'name' => 'Resolved',
+		'url' => 'index.php?status=2',
+		'sel' => $curstatus == 2 ? true : false
+	),
+	array(
+		'name' => 'Declined',
+		'url' => 'index.php?status=3',
+		'sel' => $curstatus == 3 ? true : false
+	),
+	array(
+		'name' => 'All',
+		'url' => 'index.php?status=-1',
+		'sel' => $curstatus == -1 ? true : false
+	)
+);
+
 // thanks to najmeddine for the mind-bursting sql http://stackoverflow.com/questions/1575673/mysql-limit-on-a-left-join
-$result_issues = db_query("
+$result_issues = db_query_toarray("
    SELECT issues.*, 
 		  comments.author AS commentauthor, 
 		  comments.when_posted AS commentposted
@@ -64,88 +109,45 @@ LEFT JOIN ( SELECT c1.issue, c1.author, c1.when_posted
 		  GROUP BY issue) c3
 			on c1.issue = c3.issue and c1.when_posted = c3.max_when_posted
 		  ) AS comments ON issues.id=comments.issue
+	$whereclause
  ORDER BY COALESCE(commentposted, issues.when_opened) DESC
 ");
-while ($issue = mysql_fetch_array($result_issues))
+
+// extra variables
+$count = count($result_issues);
+for ($i=0;$i<$count;$i++)
 {
-	// last comment and age
-	if ($issue['commentauthor'] > 0)
+	// last comment
+	if ($result_issues[$i]['commentauthor'] > 0)
 	{
-		$lastcomment = '
-		'.timeago($issue['commentposted']).'
-		<a href="profile.php?u='.$issue['commentauthor'].'">'.getunm($issue['commentauthor'],false).'</a>';
-		
-		$age = $issue['commentposted'];
+		$result_issues[$i]['lastcomment'] = '
+		'.timeago($result_issues[$i]['commentposted']).'
+		<a href="profile.php?u='.$result_issues[$i]['commentauthor'].'">'.getunm($result_issues[$i]['commentauthor'],false).'</a>';
 	}
 	else
 	{
 		$lastcomment = $issue['poster'].' N/A';
-		
-		$age = $issue['when_opened'];
 	}
 	
-	// determine the colour of the listing
-	if (issueclosed($issue['status']))
+	// age
+	if ($result_issues[$i]['commentauthor'] > 0)
 	{
-		$issuecol = 'rgb(48,48,48)';
-	}
-	elseif (issuesolved($issue['status']))
-	{
-		$issuecol = 'rgb(128,255,64)';
+		$age = $result_issues[$i]['commentposted'];
 	}
 	else
 	{
-		if ($issue['num_comments'] > 0)
-		{
-			$daysago = daysago($age);
-			$green = round(255-128*($daysago/30));
-			if ($green < 128)
-				$green = 128;
-			
-			$issuecol = 'rgb(255,'.$green.',0)';
-		}
-		else
-		{
-			$issuecol = 'rgb(242,72,72)';
-		}
+		$age = $result_issues[$i]['when_opened'];
 	}
 	
-	// the entry
-	echo '
-	<tr'.(issueclosed($issue['status'])?' class="closed"':'').'>
-		<td class="col">
-			<div style="background:'.$issuecol.';"></div>
-		</td>
-		<td class="comments">
-			<div>'.$issue['num_comments'].'</div>
-			<div>comment'.($issue['num_comments']==1?'':'s').'</div>
-		</td>
-		<td class="views">
-			<div>?</div>
-			<div>views</div>
-		</td>
-		<td class="main">
-			<div class="upper">
-				<div class="left">
-					<a href="view_issue.php?id='.$issue['id'].'">'.$issue['name'].'</a>
-					in <a href="#">'.getprojnm($issue['project']).'</a>
-				</div>
-				<div class="right">
-					<b>tagged as</b> '.getcattag($issue['category']).'
-				</div>
-				<div class="fc"></div>
-			</div>
-			
-			<div class="lower">
-				<div class="left">
-					'.getuinfo($issue['author']).'
-				</div>
-				<div class="right">
-					<b>last</b> '.$lastcomment.'
-				</div>
-			</div>
-		</td>
-	</tr>';
+	// determine the colour of the listing
+	$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'],$result_issues[$i]['num_comments'],$age);
 }
+
+$page->setPage(
+	'issue_list.php',
+	array(
+		'status_tabs' => $status_tabs,
+		'result_issues' => $result_issues
+	)
+);
 ?>
-</table>

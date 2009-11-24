@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title><?php echo $this->title; ?></title>
 		<?php $this->outputHead(); ?>
 	</head>
 	
@@ -14,7 +13,7 @@
 		<div id="global_wrapper">
 			<header id="header">
 				<hgroup class="logo">
-					<h1><a href="index.php"><img src="img/logo.png" alt="bugspray" /></a></h1>
+					<h1><a href="index.php"><img src="<?php echo $location['theme']; ?>/img/logo.png" alt="bugspray" /></a></h1>
 				</hgroup>
 				<nav>
 					<ul>
@@ -36,7 +35,7 @@
 				<div id="user_wrapper">
 					<div id="user_left">
 						<div class="avatar">
-							<?php echo '<img src="'.(isloggedin()?getav($_SESSION['uid']):'img/guest.png').'" alt="" />'; ?>
+							<?php echo '<img src="'.(isloggedin() ? getav($_SESSION['uid']) : $location['theme'].'/img/guest.png').'" alt="" />'; ?>
 						</div>
 					</div>
 					<div id="user_right">
