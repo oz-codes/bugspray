@@ -164,8 +164,8 @@ function getuemail($id)
 function getuinfo($id,$clear=true)
 {
 	return '
-	<div class="avatar fl" style="margin-right:4px;"><img src="'.(getubanned($id)?'img/avban.png':getav($id)).'" alt="" /></div>
-	<a href="profile.php?u='.$id.'" style="font-size:12px;position:relative;top:2px;'.(getubanned($id)?'color:#999;':'').'">'.getunm($id).'</a>
+	<div class="avatar fl" style="margin-right:4px;"><img src="'.getav($id).'" alt="" /></div>
+	<a href="profile.php?u='.$id.'" class="username'.getubanned($id)?' banned':''.'" style="position:relative;top:2px;">'.getunm($id).'</a>
 	'.($clear?'<div class="fc"></div>':'');
 }
 

@@ -317,6 +317,17 @@ input[type=submit]
 	border-color:#555;
 }
 
+/* usernames in general */
+
+.username
+{
+	font-size:12px;
+}
+.username.banned
+{
+	color:#999;
+}
+
 /* NO, you tables, I don't want your crappy 1990's ways */
 
 table
