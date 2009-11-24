@@ -12,7 +12,7 @@
 </div>
 
 <table class="issuelist_large">
-	<?php foreach ($result_issues as $issue): ?>
+	<?php foreach ($issues as $issue): ?>
 	<tr<?php echo $issue['closed'] ? ' class="closed"' : ''; ?>>
 		<td class="col">
 			<div style="background:<?php echo $issue['status_color']; ?>"></div>
