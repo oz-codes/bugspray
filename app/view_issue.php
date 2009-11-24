@@ -129,38 +129,12 @@ $page->setTitle($issue['name']);
 				
 				// lock/unlock discussion
 				if (!$issue['discussion_closed'])
-					echo '<button type="button" onclick="this.blur();confirmurl(\'Lock discussion\',false,\'manage_issue.php?id='.$id.'&amp;lock\')"><img src="img/btn/lock.png" />Lock discussion</button> ';
+					echo '<button type="button" onclick="this.blur();confirmurl(\'Lock discussion\',\'manage_issue.php?id='.$id.'&amp;lock\',false)"><img src="img/btn/lock.png" />Lock discussion</button> ';
 				else
-					echo '<button type="button" onclick="this.blur();confirmurl(\'Unlock discussion\',false,\'manage_issue.php?id='.$id.'&amp;lock\')"><img src="img/btn/unlock.png" />Unlock discussion</button> ';
+					echo '<button type="button" onclick="this.blur();confirmurl(\'Unlock discussion\',\'manage_issue.php?id='.$id.'&amp;lock\',false)"><img src="img/btn/unlock.png" />Unlock discussion</button> ';
 				
 				// delete issue
 				echo '<button type="button" onclick="this.blur();confirmurl(\'Delete issue\',\'manage_issue.php?id='.$id.'&amp;delete\',true);"><img src="img/btn/delete.png" />Delete issue</button>';
-				
-				// status changing
-				/*switch ($issue['status'])
-				{
-					case 0:
-					case 1:
-						echo '
-						<img src="img/btn/close_discussion.png" alt="Close issue" onclick="extendbtn_close(this,'.$id.',\'manage_issue.php\');" />
-						<img src="img/btn/mark_solved.png" alt="Mark solved" onclick="extendbtn_confirm(this,\'manage_issue.php?id='.$id.'&amp;marksolved\');" />';
-						break;
-					
-					case 2:
-						echo '
-						<img src="img/btn/reopen_issue.png" alt="Reopen issue" onclick="extendbtn_reopen(this,'.$id.',\'manage_issue.php\');" />';
-						break;
-					
-					case 3:
-						echo '
-						<img src="img/btn/unmark_solved.png" alt="Unmark solved" onclick="extendbtn_confirm(this,\'manage_issue.php?id='.$id.'&amp;unmarksolved\');" />';
-						break;
-					
-					default:
-						echo '
-						Either you\'ve found a bug in bug<b>spray</b> or someone has been messing around in the database!';
-						break;
-				}*/
 			?>
 		</td>
 	</tr>
