@@ -137,6 +137,7 @@ class PageBuilder
 		extract($variables,EXTR_SKIP);
 		$location = $this->location;
 		include($this->location['theme'].'/'.$page);
+		echo "\n";
 	}
 	
 	function build()
