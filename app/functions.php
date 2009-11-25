@@ -163,10 +163,12 @@ function getuemail($id)
 
 function getuinfo($id,$clear=true)
 {
-	return '
+	$string = '
 	<div class="avatar fl" style="margin-right:4px;"><img src="'.getav($id).'" alt="" /></div>
 	<a href="profile.php?u='.$id.'" class="username'.(getubanned($id)?' banned':'').'" style="position:relative;top:2px;">'.getunm($id).'</a>
 	'.($clear?'<div class="fc"></div>':'');
+	
+	return str_replace(array("\n","\r","\t"),'',$string);
 }
 
 function getubanned($id)
