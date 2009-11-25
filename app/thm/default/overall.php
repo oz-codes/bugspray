@@ -8,8 +8,6 @@
 	<body>
 		<?php $this->outputBodyPre(); ?>
 		
-		<div id="fade"></div>
-		
 		<div id="global_wrapper">
 			<header id="header">
 				<hgroup class="logo">
@@ -17,15 +15,15 @@
 				</hgroup>
 				<nav>
 					<ul>
-						<?php
-						foreach ($this->getMenu() as $item)
-						{
-							echo '
-							<li id="menu_'.$item['id'].'"'.($item['selected']?' class="sel"':'').'>
-								<a href="'.(isset($item['url'])?$item['url']:'javascript:void(0)').'">'.(isset($item['url'])?'':'<s>').''.$item['name'].''.(isset($item['url'])?'':'</s>').'</a>
-							</li>';
-						}
-						?>
+					<?php
+					foreach ($this->getMenu() as $item)
+					{
+						echo '
+						<li id="menu_'.$item['id'].'"'.($item['selected']?' class="sel"':'').'>
+							<a href="'.(isset($item['url'])?$item['url']:'javascript:void(0)').'">'.(isset($item['url'])?'':'<s>').''.$item['name'].''.(isset($item['url'])?'':'</s>').'</a>
+						</li>';
+					}
+					?>
 					</ul>
 					<div class="fc"></div>
 				</nav>
@@ -60,7 +58,9 @@
 							If you're an admin you'll need to have it on.
 						</div>
 					</noscript>
-					<?php $this->outputContent(); ?>
+<!-- content start -->
+<?php $this->outputContent(); ?>
+<!-- content end -->
 				</section>
 			</div>
 			<aside id="sidebar">
@@ -70,7 +70,7 @@
 			
 			<script type="text/javascript">
 				// fix the content height smaller than sidebar height issue (FIND A BETTER SOLUTION!)
-				$("#content").css({'min-height':$("#sidebar").height()+'px'});
+				ch();function ch(){$("#content").css({'min-height':($(window).height()-153)+'px'})}setInterval(ch,1000);
 			</script>
 			
 			<footer id="footer">

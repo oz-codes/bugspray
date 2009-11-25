@@ -10,6 +10,7 @@ body
 {
 	background:url('../img/bg/main.png');
 	margin:8px;
+	text-align:center;
 }
 body,td
 {
@@ -65,21 +66,13 @@ img
 	border:none;
 }
 
-#fade
-{
-	position:absolute;
-	top:0px;
-	left:0px;
-	background:url('../img/bg/fade.png');
-	width:100%;
-	height:128px;
-	z-index:-1;
-}
-
 #global_wrapper
 {
 	background:url('../img/bg/wrapper.png');
 	padding:8px;
+	text-align:left;
+	margin:0px auto;
+	max-width:1440px;
 }
 
 /* header */
@@ -464,6 +457,7 @@ td
 {
 	padding:4px 0px;
 	font-size:12px;
+	vertical-align:middle;
 }
 .issuelist_large .col
 {
@@ -570,11 +564,14 @@ td
 
 .ibox_generic, .ibox_details, .ibox_comment, .ibox_alert, .ibox_error
 {
-	background:#f5f5f5;
-	border:1px solid #ddd;
 	padding:8px;
 }
 
+.ibox_generic, .ibox_details
+{
+	background:#f5f5f5;
+	border:1px solid #ddd;
+}
 .ibox_generic em
 {
 	color:#777;
@@ -639,17 +636,13 @@ dl.ibox_details dd
 }
 .ibox_comment .right
 {
-	width:608px;
 	padding-left:8px;
 }
 .ibox_comment .time
 {
 	color:#777;
 	font-size:10px;
-}
-.ibox_comment .mono
-{
-	width:608px;
+	padding-bottom:2px;
 }
 
 .ibox_alert
