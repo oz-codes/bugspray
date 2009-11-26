@@ -407,6 +407,11 @@ elseif ($_POST['act'] == 'mysqlinstall')
 	$dumpstr = fread($dumpfile,filesize('dump.sql'));
 	$dumparr = explode(";\r\n",$dumpstr);
 	
+	if (count($dumparr) < 3)
+	{
+		$dumparr = explode(";\n",$dumpstr);
+	}
+	
 	fclose($dumpfile);
 
 	$arr['success'] = true;
