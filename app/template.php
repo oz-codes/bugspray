@@ -136,7 +136,14 @@ class PageBuilder
 	{
 		extract($variables,EXTR_SKIP);
 		$location = $this->location;
-		include($this->location['theme'].'/'.$page);
+		if (!file_exists($this->location['theme'].'/'.$page))
+		{
+			include('thm/default/'.$page);
+		}
+		else
+		{
+			include($this->location['theme'].'/'.$page);
+		}
 		echo "\n";
 	}
 	
