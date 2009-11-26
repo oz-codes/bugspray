@@ -127,7 +127,7 @@ INSERT INTO `projects` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(24) NOT NULL,
-  `displayname` varchar(24) NOT NULL,
+  `displayname` varchar(24) DEFAULT NULL,
   `password` varchar(128) NOT NULL,
   `password_salt` varchar(128) NOT NULL,
   `group` int(11) NOT NULL DEFAULT '1',
