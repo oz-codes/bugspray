@@ -126,7 +126,7 @@ for ($i=0;$i<$count;$i++)
 	}
 	else
 	{
-		$lastcomment = $issue['poster'].' N/A';
+		$result_issues[$i]['lastcomment'] = $issue['poster'].' N/A';
 	}
 	
 	// age
