@@ -107,6 +107,11 @@
 				<tr>
 					<td class="left">
 						<?php echo getuinfo($comment['author'],false); ?>
+						<div class="fc" style="padding-top:4px;">
+							<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />
+							<img src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
+							<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />
+						</div>
 					</td>
 					<td class="right">
 						<div class="time">Posted on <?php echo timehtml5($comment['when_posted'],true); ?></div>
