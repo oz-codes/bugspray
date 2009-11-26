@@ -161,11 +161,24 @@ function getuemail($id)
 	return $q['email'];
 }
 
-function getuinfo($id,$clear=true)
+function getuinfo($info,$clear=true)
 {
+	if (gettype($info) == 'array')
+	{
+		$id = $info['id'];
+		$av = $info['avatar'];
+		$unm = $info['username'];
+	}
+	else
+	{
+		$id = $info;
+		$av = getav($id);
+		$unm = getunm($id);
+	}
+	
 	$string = '
-	<div class="avatar fl" style="margin-right:4px;"><img src="'.getav($id).'" alt="" /></div>
-	<a href="profile.php?u='.$id.'" class="username'.(getubanned($id)?' banned':'').'" style="position:relative;top:2px;">'.getunm($id).'</a>
+	<div class="avatar fl" style="margin-right:4px;"><img src="'.$av.'" alt="" /></div>
+	<a href="profile.php?u='.$id.'" class="username'.(getubanned($id)?' banned':'').'" style="position:relative;top:2px;">'.$unm.'</a>
 	'.($clear?'<div class="fc"></div>':'');
 	
 	return str_replace(array("\n","\r","\t"),'',$string);
