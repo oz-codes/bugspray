@@ -258,13 +258,7 @@ function getstatusnm($id)
 function getstatustype($id)
 {
 	$statuses = getstatuses();
-	switch ($statuses[$id]['type'])
-	{
-		case 0: return 'open'; break;
-		case 1: return 'assigned'; break;
-		case 2: return 'resolved'; break;
-		case 3: return 'declined'; break;
-	}
+	return $statuses[$id]['type'];
 }
 
 function issuecol($status,$comments,$lastactivity)

@@ -143,10 +143,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
-CREATE TABLE `statuses` (
-`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`type` INT NOT NULL ,
-`name` VARCHAR( 24 ) NOT NULL
-) ENGINE = MYISAM ;
 
-INSERT INTO `statuses` (`id`, `type`, `name`) VALUES (NULL, '0', 'open'), (NULL, '1', 'assigned'), (NULL, '2', 'resolved'), (NULL, '3', 'duplicate'), (NULL, '3', 'declined'), (NULL, '3', 'bydesign'), (NULL, '3', 'nonissue'), (NULL, '3', 'spam');
+CREATE TABLE IF NOT EXISTS `statuses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('open','assigned','resolved','declined') NOT NULL,
+  `name` varchar(24) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+
+
+INSERT INTO `statuses` (`id`, `type`, `name`) VALUES
+(1, 'open', 'open'),
+(2, 'assigned', 'assigned'),
+(3, 'resolved', 'resolved'),
+(4, 'declined', 'duplicate'),
+(5, 'declined', 'declined'),
+(6, 'declined', 'bydesign'),
+(7, 'declined', 'nonissue'),
+(8, 'declined', 'spam');
