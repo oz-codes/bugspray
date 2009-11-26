@@ -564,7 +564,8 @@ function parsebbcode($string)
 		'/\[u\](.*?)\[\/u\]/is',
 		'/\[s\](.*?)\[\/s\]/is',
 		'/\[url=(.*?)\](.*?)\[\/url\]/is',
-		'/\[url\](.*?)\[\/url\]/is'
+		'/\[url\](.*?)\[\/url\]/is',
+		'/\[img\](.*?)\[\/img\]/is',
 	);
 
 	$replaces = array(
@@ -576,7 +577,8 @@ function parsebbcode($string)
 		'<span style="text-decoration:underline;">\\1</span>',
 		'<del>\\1</del>',
 		'<a href="\\1">\\2</a>',
-		'<a href="\\1">\\1</a>'
+		'<a href="\\1">\\1</a>',
+		'<img src="\\1" alt="" />'
 	);
 
 	$ret = preg_replace($original,$replaces,$string);
