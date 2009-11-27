@@ -22,6 +22,9 @@
  *
  */
 
+// temporary
+$sitename = 'my unnamed issue tracker';
+
 // define the locations of everything
 $theme = 'default';
 $location['theme']  = "thm/$theme";
@@ -35,11 +38,14 @@ register_shutdown_function(array($page,'outputAll'));
 // http://ianburris.com/tutorials/oophp-template-engine/
 class PageBuilder
 {
-	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $location;
+	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $sitename, $location;
 	
 	function PageBuilder($location)
 	{
+		global $sitename;
+		
 		// outside stuff
+		$this->sitename = $sitename;
 		$this->location = $location;
 		
 		// default stuff to output header
@@ -62,7 +68,8 @@ class PageBuilder
 	
 	function setTitle($title)
 	{
-		$this->title = 'bugspray &bull; ' . $title;
+		global $sitename;
+		$this->title = $title . ' | ' . $this->sitename;
 	}
 	
 	function setType($type)

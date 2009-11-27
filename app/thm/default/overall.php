@@ -12,7 +12,7 @@
 			<header id="header">
 				<header class="top">
 					<div class="bg"></div>
-					<h1><a href="index.php">my unnamed issue tracker</a></h1>
+					<h1><a href="index.php"><?php echo $this->sitename; ?></a></h1>
 					<div id="user_wrapper">
 						<?php if (isloggedin()): ?>
 						<div id="user_left">
