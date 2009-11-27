@@ -6,8 +6,8 @@ $menu = array(
 		'url' => 'index.php'
 	),
 	array(
-		'id' => 'projects',
-		'name' => 'Projects'
+		'id' => 'milestones',
+		'name' => 'Milestones'
 	),
 	array(
 		'id' => 'activity',
@@ -21,7 +21,7 @@ $menu = array(
 	array(
 		'id' => 'admin',
 		'name' => 'Admin',
-		'show' => isadmin(),
+		'hide' => !isadmin(),
 		'url' => 'admin.php'
 	),
 );
