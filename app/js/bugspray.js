@@ -22,6 +22,11 @@
  */
 
 $(document).ready(function() {
+	$("input.unsel").focus(function(){
+		$(this).removeClass('unsel');
+		$(this).attr({'value':''});
+	});
+	
 	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
 	$("form.ajax").submit(function(e) {
 		formelm = this;
