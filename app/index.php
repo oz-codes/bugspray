@@ -38,10 +38,10 @@ $curstatus = $_GET['status'];
 
 // restrict the status
 $whereclause = '';
-if ($curstatus != -1)
+if ($curstatus != 'all')
 {
 	if (!isset($_GET['status']))
-		$curstatus = 0;
+		$curstatus = 'open';
 	
 	$wherests = array();
 	foreach (getstatuses() as $status)
@@ -71,27 +71,27 @@ $status_tabs = array(
 	array(
 		'name' => 'Open',
 		'url' => 'index.php',
-		'sel' => $curstatus == 0 ? true : false
+		'sel' => $curstatus == 'open' ? true : false
 	),
 	array(
 		'name' => 'Assigned',
-		'url' => 'index.php?status=1',
-		'sel' => $curstatus == 1 ? true : false
+		'url' => 'index.php?status=assigned',
+		'sel' => $curstatus == 'assigned' ? true : false
 	),
 	array(
 		'name' => 'Resolved',
-		'url' => 'index.php?status=2',
-		'sel' => $curstatus == 2 ? true : false
+		'url' => 'index.php?status=resolved',
+		'sel' => $curstatus == 'resolved' ? true : false
 	),
 	array(
 		'name' => 'Declined',
-		'url' => 'index.php?status=3',
-		'sel' => $curstatus == 3 ? true : false
+		'url' => 'index.php?status=declined',
+		'sel' => $curstatus == 'declined' ? true : false
 	),
 	array(
 		'name' => 'All',
-		'url' => 'index.php?status=-1',
-		'sel' => $curstatus == -1 ? true : false
+		'url' => 'index.php?status=all',
+		'sel' => $curstatus == 'all' ? true : false
 	)
 );
 
