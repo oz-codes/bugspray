@@ -10,14 +10,38 @@
 		
 		<div id="global_wrapper">
 			<header id="header">
-				<hgroup class="logo">
-					<h1><a href="index.php"><img src="<?php echo $location['theme']; ?>/img/logo.png" alt="bugspray" /></a></h1>
-				</hgroup>
+				<header class="top">
+					<div class="bg"></div>
+					<h1><a href="index.php">my unnamed issue tracker</a></h1>
+					<div id="user_wrapper">
+						<?php if (isloggedin()): ?>
+						<div id="user_left">
+							<div class="avatar">
+								<img src="<?php echo getav($_SESSION['uid']); ?>" alt="" />
+							</div>
+						</div>
+						<div id="user_right">
+							<b><?php echo $_SESSION['username']; ?></b> | <a href="profile.php">profile</a> | <a href="user_logout.php">logout</a>
+						</div>
+						<div class="fc"></div>
+						<?php else: ?>
+						<form action="user_login.php" method="post">
+							<input type="text" name="uname" value="username" class="unsel" />
+							<input type="password" name="pwd" value="password" class="unsel" />
+							<input type="submit" name="sub" value="login" />
+							<input type="button" value="register" onclick="location.href='user_register.php'" />
+							<div class="fc"></div>
+						</form>
+						<?php endif; ?>
+					</div>
+					<div class="fc"></div>
+				</header>
 				<nav>
 					<ul>
 					<?php
 					foreach ($this->getMenu() as $item)
 					{
+						if (!$item['hide'])
 						echo '
 						<li id="menu_'.$item['id'].'"'.($item['selected']?' class="sel"':'').'>
 							<a href="'.(isset($item['url'])?$item['url']:'javascript:void(0)').'">'.(isset($item['url'])?'':'<s>').''.$item['name'].''.(isset($item['url'])?'':'</s>').'</a>
@@ -27,26 +51,6 @@
 					</ul>
 					<div class="fc"></div>
 				</nav>
-				<form id="search_wrapper">
-					<input type="text" name="search" />
-				</form>
-				<div id="user_wrapper">
-					<div id="user_left">
-						<div class="avatar">
-							<?php echo '<img src="'.(isloggedin() ? getav($_SESSION['uid']) : $location['theme'].'/img/guest.png').'" alt="" />'; ?>
-						</div>
-					</div>
-					<div id="user_right">
-						<?php
-						if (isloggedin())
-							echo '<b>'.$_SESSION['username'].'</b> | <a href="profile.php">profile</a> | <a href="user_logout.php">logout</a>';
-						else
-							echo '<b>Guest</b> | <a href="user_login.php">login</a> | <a href="user_register.php">register</a>';
-						?>
-					</div>
-					<div class="fc"></div>
-				</div>
-				<div class="fc"></div>
 			</header>
 			
 			<div id="content_wrap">
@@ -70,7 +74,7 @@
 			
 			<script type="text/javascript">
 				// fix the content height smaller than sidebar height issue (FIND A BETTER SOLUTION!)
-				ch();function ch(){$("#content").css({'min-height':($(window).height()-153)+'px'})}setInterval(ch,1000);
+				ch();function ch(){$("#content").css({'min-height':($(window).height()-168)+'px'})}setInterval(ch,1000);
 			</script>
 			
 			<footer id="footer">

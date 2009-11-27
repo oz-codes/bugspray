@@ -102,12 +102,12 @@
 	<section>
 		<h3>Comments</h3>
 		<?php foreach ($comments as $comment): ?>
-		<article id="comment_<?php echo $comment['id']; ?>" class="ibox_comment"<?php $comment['type'] != '' ? ' style="background-image:url(img/bgcom/'.$comment['type'].'.png);"' : ''; ?>>
+		<article id="comment_<?php echo $comment['id']; ?>" class="ibox_comment<?php echo $comment['type'] != '' ? ' moderation' : ''; ?>">
 			<table>
 				<tr>
 					<td class="left">
 						<?php echo getuinfo($comment['author'],false); ?>
-						<div class="fc" style="padding-top:4px;">
+						<div class="actions">
 							<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />
 							<img src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
 							<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />

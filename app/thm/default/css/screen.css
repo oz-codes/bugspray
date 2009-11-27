@@ -1,5 +1,5 @@
 /*
- * bugspray theme - Classic Floral - Version 0.1-dev
+ * bugspray theme - Green Slate - Version 0.1-dev
  * Copyright (c) a2h 2009
  * Silk icons by Mark James - http://www.famfamfam.com/lab/icons/silk/
  * Mico icons (WIP) by a2h - no site currently
@@ -10,8 +10,9 @@
 body
 {
 	background:url('../img/bg/main.png');
-	margin:8px;
+	margin:0px 8px 8px 8px;
 	text-align:center;
+	color:#222;
 }
 body,td
 {
@@ -69,10 +70,9 @@ img
 
 #global_wrapper
 {
-	background:url('../img/bg/wrapper.png');
-	padding:8px;
 	text-align:left;
 	margin:0px auto;
+	width:90%;
 	max-width:1440px;
 }
 
@@ -80,79 +80,55 @@ img
 
 #header
 {
-	padding:8px;
-	margin-bottom:8px;
+	padding:0px 8px 0px 8px;
 }
 
-#header hgroup
+#header .top .bg
 {
-	float:left;
+	position:absolute;
+	top:0px;
+	left:0px;
+	background:url('../img/bg/top.png');
+	width:100%;
+	height:48px;
+	z-index:-1;
 }
 
-#header hgroup h1
+#header .top
+{
+	padding:8px;
+	height:32px;
+}
+
+#header .top h1
 {
 	margin:0px;
-	height:36px;
-	overflow:hidden;
-}
-
-#header nav
-{
-	color:#fff;
 	float:left;
-	padding-top:4px;
 }
 
-#header nav ul
-{
-	list-style:none;
-	padding:0px;
-	margin:0px;
-}
-#header nav ul li
-{
-	float:left;
-	margin:0px 16px;
-	padding:4px;
-}
-#header nav .sel
-{
-	background:url('../img/bg/menusel.png');
-}
-#header nav ul li a
+#header .top h1 a
 {
 	color:#fff;
 }
 
-#search_wrapper
-{
-	float:right;
-	background:url('../img/bg/menusel2.png');
-	color:#fff;
-	padding:8px;
-	height:20px;
-	margin-left:8px;
-}
-#search_wrapper input
-{
-	border:0px;
-	font-size:11px;
-	padding:2px;
-	background:#fff url('../img/search.png') no-repeat right;
-	width:142px;
-	height:16px;
-	-moz-border-radius:0px !important;
-	-webkit-border-radius:0px !important;
-	border-radius:0px !important;
-}
+
+/* user box */
+
 #user_wrapper
 {
 	float:right;
-	background:url('../img/bg/menusel2.png');
 	color:#fff;
-	padding:8px;
-	height:20px;
+	height:24px;
+	margin-top:3px;
 }
+
+/* user box (logged in users) */
+
+#user_left, #user_right
+{
+	margin-top:2px;
+}
+
 #user_left
 {
 	float:left;
@@ -167,6 +143,96 @@ img
 	color:#fff;
 }
 
+/* user box (logged out users) */
+
+#user_wrapper form
+{
+	margin-top:2px;
+}
+
+#user_wrapper input.unsel
+{
+	color:#ccc;
+}
+
+#user_wrapper input
+{
+	outline:0;
+	border:0px;
+	font-size:11px;
+	-moz-border-radius:0px !important;
+	-webkit-border-radius:0px !important;
+	border-radius:0px !important;
+	float:left;
+	margin-left:1px;
+}
+
+#user_wrapper input[type=text], #user_wrapper input[type=password]
+{
+	width:124px;
+	padding:2px;
+	height:16px;
+}
+
+#user_wrapper input[type=submit], #user_wrapper input[type=button]
+{
+	width:64px;
+	height:20px;
+	background:#ddd;
+	text-shadow:none;
+	
+	padding-bottom:2px;
+	line-height:20px;
+}
+
+/* navigation */
+
+#header nav
+{
+	color:#fff;
+	clear:both;
+	padding-top:16px;
+}
+
+#header nav ul
+{
+	list-style:none;
+	padding:0px;
+	margin:0px;
+	height:32px;
+}
+#header nav li
+{
+	float:left;
+	margin:0px 8px;
+	padding:8px 0px 0px 0px;
+	width:128px;
+	text-align:center;
+	font-size:14px;
+	height:24px;
+	text-shadow:0px 1px 0px #8fb749;
+	background:url('../img/bg/menubtn.png') no-repeat;
+}
+#header nav li.right
+{
+	float:right;
+}
+#header nav li a
+{
+	color:#fff;
+}
+#header nav .sel
+{
+	background:url('../img/bg/menusel.png');
+	text-shadow:0px 1px 0px #eee;
+	position:relative;
+	z-index:3;
+}
+#header nav .sel a
+{
+	color:#000;
+}
+
 /* content - BIG THANKS to http://www.webmasterworld.com/css/3544816.htm for the fluid+fixed combo CSS */
 
 #content_wrap
@@ -176,6 +242,9 @@ img
 	min-width:500px;
 	margin-right:-288px;
 	background:#fff url('../img/sidebar.png') repeat-y top right;
+	-moz-box-shadow:0px 0px 6px rgba(0,0,0,0.5);
+	-webkit-box-shadow:0px 0px 6px rgba(0,0,0,0.5);
+	box-shadow:0px 0px 6px rgba(0,0,0,0.5);
 }
 #content
 {
@@ -619,10 +688,12 @@ dl.ibox_details dd
 
 .ibox_comment
 {
-	margin-bottom:16px;
-	/* this stuff is set in php */
-	background-repeat:no-repeat;
-	background-position:bottom right;
+	margin-bottom:8px;
+}
+.ibox_comment .actions
+{
+	clear:both;
+	padding-top:4px;
 }
 .ibox_comment td
 {
@@ -643,19 +714,30 @@ dl.ibox_details dd
 {
 	color:#777;
 	font-size:10px;
-	padding-bottom:2px;
+}
+.ibox_comment.moderation
+{
+	background:#f0f0f0;
+}
+.ibox_comment.moderation .actions
+{
+	display:none;
+}
+.ibox_comment.moderation .cont
+{
+	font-size:10px;
 }
 
 .ibox_alert
 {
 	background:#ffd;
-	border-color:#bb9;
+	border:1px solid #bb9;
 }
 
 .ibox_error
 {
 	background:#fdd;
-	border-color:#b99;
+	border:1px solid #b99;
 }
 
 .biglabels .ibox_error
