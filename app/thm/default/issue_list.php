@@ -29,7 +29,7 @@
 			<div class="upper">
 				<div class="left">
 					<a href="view_issue.php?id=<?php echo $issue['id']; ?>"><?php echo $issue['name']; ?></a>
-					in <a href="#"><?php echo getprojnm($issue['project']); ?></a>
+					&laquo; <a href="#"><?php echo getprojnm($issue['project']); ?></a>
 				</div>
 				<div class="right">
 					<b>tagged as</b> <?php echo getcattag($issue['category']); ?>
