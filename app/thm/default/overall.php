@@ -74,7 +74,7 @@
 			
 			<script type="text/javascript">
 				// fix the content height smaller than sidebar height issue (FIND A BETTER SOLUTION!)
-				ch();function ch(){$("#content").css({'min-height':($(window).height()-168)+'px'})}setInterval(ch,1000);
+				ch();function ch(){$("#content").css({'min-height':($(window).height()-184)+'px'})}setInterval(ch,1000);
 			</script>
 			
 			<footer id="footer">

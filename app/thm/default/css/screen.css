@@ -241,7 +241,7 @@ img
 	float:left;
 	width:100%;
 	min-width:500px;
-	margin-right:-288px;
+	margin-right:-304px;
 	background:#fff url('../img/sidebar.png') repeat-y top right;
 	-moz-box-shadow:0px 0px 6px rgba(0,0,0,0.5);
 	-webkit-box-shadow:0px 0px 6px rgba(0,0,0,0.5);
@@ -249,8 +249,8 @@ img
 }
 #content
 {
-	margin-right:289px;
-	padding:16px;
+	margin-right:305px;
+	padding:24px;
 }
 
 /* sidebar */
@@ -259,7 +259,7 @@ img
 {
 	float:left;
 	width:256px;
-	padding:16px;
+	padding:24px;
 }
 
 #sidebar hr
@@ -274,7 +274,7 @@ img
 	margin-top:8px;
 	color:#fff;
 	font-size:10px;
-	padding:4px 8px;
+	padding:4px 16px;
 }
 
 /* float the boat */
