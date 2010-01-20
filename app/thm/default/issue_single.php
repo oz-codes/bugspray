@@ -39,7 +39,7 @@
 					{
 						$issue['assigns'][$i] = str_replace('"',"\'",$issue['assigns'][$i]);
 					}
-					$assigns = str_replace('"',"'",json_encode($issue['assigns']));
+					$assigns = json_encode($issue['assigns']);
 				?>
 				
 				<button type="button" id="manage_status">
@@ -106,11 +106,13 @@
 			<table>
 				<tr>
 					<td class="left">
-						<?php echo getuinfo($comment['author'],false); ?>
+						<div class="username">
+							<?php echo getuinfo($comment['author'],false); ?>
+						</div>
 						<div class="actions">
-							<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />
-							<img src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
-							<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />
+							<!--<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />-->
+							<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
+							<!--<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />-->
 						</div>
 					</td>
 					<td class="right">
@@ -133,7 +135,7 @@
 		<form action="add_comment.php" method="post" class="ajax">
 			<input type="hidden" name="id" value="<?php echo $issue['id']; ?>" />
 			<small>You can use BBcode here, like [b] and [url]. If you don't want something to be parsed, use [noparse]!</small><br />
-			<textarea rows="6" style="width:600px;" name="cont"></textarea>
+			<textarea rows="6" style="width:600px;" name="cont" id="comment_form"></textarea>
 			<?php if ($issue['discussion_closed']): ?>
 			<div style="margin:4px 0px;">
 				<div class="fl" style="margin-right:4px;"><img src="<?php echo $location['images']; ?>/alert/exclaim.png" alt="" /></div>

@@ -1,6 +1,6 @@
-/*
+/**
  * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -18,7 +18,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 $(document).ready(function() {
@@ -61,6 +60,27 @@ $(document).ready(function() {
 		
 		e.preventDefault();
 	});
+	
+	// comment actions
+	if ($(".comment_quote").length) // bleh, any random one can do
+	{
+		$(".comment_quote").click(function() {
+			// get the comment element
+			var elm = $(this);
+			while (elm.get(0).tagName.toLowerCase() != 'article') // maybe check for class
+			{
+				elm = elm.parent();
+			}
+			
+			// get the comment id
+			var id = $(elm).attr('id').replace(/[^0-9]/g, '');
+			
+			// the code above won't be used for now yet but it's nice to have them ready
+			// especially as this doesn't grab bbcode
+			
+			$("#comment_form").append('[quote=' + $(elm).find('.username a').text() + ']' + $(elm).find('.cont').text() + '[/quote]');
+		});
+	}
 });
 
 function changestatus(id,status,assigns)

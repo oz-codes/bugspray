@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * bugspray issue tracking software
  * Copyright (c) 2009 a2h - http://a2h.uni.cc/
  * 
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 // important stuff here
@@ -150,9 +149,14 @@ function getunm($id,$link=false)
 	$q = query_uid($id);
 	
 	if ($q['displayname'] == '')
-		return '<a href="profile.php?u='.$id.'">' . $q['username'] . '</a>';
+		$ret = $q['username'];
 	else
-		return '<a href="profile.php?u='.$id.'">' . $q['displayname'] . '</a>';
+		$ret = $q['displayname'];
+	
+	if ($link)
+		return '<a href="profile.php?u='.$id.'">' . $ret . '</a>';
+	else
+		return $ret;
 }
 
 function getuemail($id)
@@ -566,6 +570,8 @@ function parsebbcode($string)
 		'/\[url=(.*?)\](.*?)\[\/url\]/is',
 		'/\[url\](.*?)\[\/url\]/is',
 		'/\[img\](.*?)\[\/img\]/is',
+		'/\[quote=(.*?)\](.*?)\[\/quote\]/is',
+		'/\[quote\](.*?)\[\/quote\]/is',
 	);
 
 	$replaces = array(
@@ -578,7 +584,9 @@ function parsebbcode($string)
 		'<del>\\1</del>',
 		'<a href="\\1">\\2</a>',
 		'<a href="\\1">\\1</a>',
-		'<img src="\\1" alt="" />'
+		'<img src="\\1" alt="" />',
+		'<small>Quote from \\1:</small><blockquote>\\2</blockquote>',
+		'<small>Quote:</small><blockquote>\\1</blockquote>'
 	);
 
 	$ret = preg_replace($original,$replaces,$string);
