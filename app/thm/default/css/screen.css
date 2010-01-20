@@ -211,7 +211,7 @@ img
 	text-align:center;
 	font-size:14px;
 	height:24px;
-	text-shadow:0px 1px 0px #8fb749;
+	text-shadow:0px -1px 0px #8fb749;
 	background:url('../img/bg/menubtn.png') no-repeat;
 }
 #header nav li.right
@@ -225,7 +225,7 @@ img
 #header nav .sel
 {
 	background:url('../img/bg/menusel.png');
-	text-shadow:0px 1px 0px #eee;
+	text-shadow:0px -1px 0px #eee;
 	position:relative;
 	z-index:3;
 }
