@@ -102,7 +102,7 @@
 	<section>
 		<h3>Comments</h3>
 		<?php foreach ($comments as $comment): ?>
-		<article id="comment_<?php echo $comment['id']; ?>" class="ibox_comment<?php echo $comment['type'] != '' ? ' moderation' : ''; ?>">
+		<article id="comment_<?php echo $comment['id']; ?>" class="comment<?php echo $comment['type'] != '' ? ' moderation' : ''; ?>">
 			<table>
 				<tr>
 					<td class="left">
