@@ -22,8 +22,8 @@
 			<div>comment<?php echo $issue['num_comments'] == 1 ? '' : 's'; ?></div>
 		</td>
 		<td class="views">
-			<div>?</div>
-			<div>views</div>
+			<div><?php echo $issue['num_views']; ?></div>
+			<div>view<?php echo $issue['num_views'] == 1 ? '' : 's'; ?></div>
 		</td>
 		<td class="main">
 			<div class="upper">

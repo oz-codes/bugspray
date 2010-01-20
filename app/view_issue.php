@@ -1,7 +1,7 @@
 <?php
-/*
+/**
  * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+ * Copyright (c) 2009-2010 a2h
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 include("functions.php");
@@ -33,6 +32,9 @@ if (mysql_num_rows($result_issues))
 {
 	$issue = mysql_fetch_array($result_issues);
 	$page->setTitle($issue['name']);
+	
+	// add to views
+	db_query("UPDATE issues SET num_views = num_views + 1 WHERE id = '$id'");
 	
 	// who is the issue assigned to?
 	if ($issue['assign'] > 0)

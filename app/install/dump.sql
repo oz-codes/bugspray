@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `issues` (
   `status` int(11) NOT NULL,
   `assign` int(11) NOT NULL DEFAULT '0',
   `num_comments` int(11) NOT NULL,
+  `num_views` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
