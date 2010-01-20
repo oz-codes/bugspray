@@ -145,14 +145,14 @@ function getav($id)
 	return $q['avatar_location'];
 }
 
-function getunm($id)
+function getunm($id,$link=false)
 {	
 	$q = query_uid($id);
 	
 	if ($q['displayname'] == '')
-		return $q['username'];
+		return '<a href="profile.php?u='.$id.'">' . $q['username'] . '</a>';
 	else
-		return $q['displayname'];
+		return '<a href="profile.php?u='.$id.'">' . $q['displayname'] . '</a>';
 }
 
 function getuemail($id)
