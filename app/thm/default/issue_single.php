@@ -120,7 +120,9 @@
 						<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
 						<!--<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />-->
 						<?php endif; ?>
+						<?php if ($comment['author'] == $_SESSION['uid'] || isadmin()): ?>
 						<img class="comment_delete" src="<?php echo $location['images']; ?>/btnmini/delete.png" alt="" />
+						<?php endif; ?>
 					</td>
 				</tr>
 			</table>
