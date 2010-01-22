@@ -37,7 +37,7 @@ $(document).ready(function() {
 			data: $(formelm).serialize(),
 			dataType: 'json',
 			success: function(data) {
-				window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? delay = 250 : delay = 0;
+				delay = window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? 250 : 0;
 				
 				setTimeout(function() {
 					$(formelm).find(".loadimg").hide();
