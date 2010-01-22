@@ -1,7 +1,7 @@
 <?php
-/*
+/**
  * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+ * Copyright (c) 2009-2010 a2h
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 include("functions.php");
@@ -79,7 +78,7 @@ if (isadmin())
 		// custom stuff, whoooooo
 		$custom = '';
 		
-		$assign = escape_smart($_POST['st1a']) == $_POST['st1a'] ? $_POST['st1a'] : false;
+		$assign = escape_smart($_POST['st2a']) == $_POST['st2a'] ? $_POST['st2a'] : false;
 		if ($assign)
 		{
 			if ($assign == -1)

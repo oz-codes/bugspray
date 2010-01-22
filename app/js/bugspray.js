@@ -103,7 +103,7 @@ function changestatus(id,status,assigns)
 		content:'Hello! You can change the status of this issue here; just select an option.<br /><br />\
 		<form id="st" method="post" action="manage_issue.php?id='+id+'&status">\
 			<input type="radio" name="st" value="1" id="st1" /> <label for="st1">Open</label> <br />\
-			<input type="radio" name="st" value="2" id="st2" /> <label for="st2">Assigned to</label> <select name="st2a" id="st1a">'+a+'</select><br />\
+			<input type="radio" name="st" value="2" id="st2" /> <label for="st2">Assigned to</label> <select name="st2a" id="st2a">'+a+'</select><br />\
 			<input type="radio" name="st" value="3" id="st3" /> <label for="st3">Resolved</label> <br />\
 			<input type="radio" name="st" value="4" id="st4" /> <label for="st4">Duplicate of</label> <input type="text" id="st4a" /> (doesn\'t work right now) <br />\
 			<input type="radio" name="st" value="5" id="st5" /> <label for="st5">By design</label> <br />\
