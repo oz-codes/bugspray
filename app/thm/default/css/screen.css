@@ -747,6 +747,21 @@ dl.ibox_details dd
 {
 	width:13px;
 }
+.comment .actions img
+{
+	opacity:0.1;
+	filter:alpha(opacity=10);
+}
+.comment:hover .actions img
+{
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+.comment:hover .actions img:hover
+{
+	opacity:1;
+	filter:alpha(opacity=100);
+}
 .comment.moderation
 {
 	background:#f0f0f0;
