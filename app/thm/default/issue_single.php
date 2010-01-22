@@ -105,20 +105,22 @@
 		<article id="comment_<?php echo $comment['id']; ?>" class="comment<?php echo $comment['type'] != '' ? ' moderation' : ''; ?>">
 			<table>
 				<tr>
-					<td class="left">
+					<td class="user">
 						<div class="username">
 							<?php echo getuinfo($comment['author'],false); ?>
 						</div>
-						<div class="actions">
-							<!--<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />-->
-							<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
-							<!--<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />-->
-							<img class="comment_delete" src="<?php echo $location['images']; ?>/btnmini/delete.png" alt="" />
-						</div>
 					</td>
-					<td class="right">
+					<td class="main">
 						<div class="time">Posted on <?php echo timehtml5($comment['when_posted'],true); ?></div>
 						<div class="cont"><?php echo parsebbcode($comment['content']); ?></div>
+					</td>
+					<td class="actions">
+						<?php if ($comment['type'] == ''): ?>
+						<!--<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />-->
+						<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
+						<!--<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />-->
+						<?php endif; ?>
+						<img class="comment_delete" src="<?php echo $location['images']; ?>/btnmini/delete.png" alt="" />
 					</td>
 				</tr>
 			</table>

@@ -719,33 +719,37 @@ dl.ibox_details dd
 	clear:both;
 	padding-top:4px;
 }
+.comment table
+{
+	width:100%;
+}
 .comment td
 {
 	vertical-align:top;
 	word-wrap:break-word;
 }
-.comment .left
+.comment .user
 {
 	width:128px;
 	min-width:128px;
 	border-right:1px solid #ddd;
 }
-.comment .right
+.comment .main
 {
 	padding-left:8px;
 }
-.comment .time
+.comment .main .time
 {
 	color:#777;
 	font-size:10px;
 }
+.comment .actions
+{
+	width:13px;
+}
 .comment.moderation
 {
 	background:#f0f0f0;
-}
-.comment.moderation .actions
-{
-	display:none;
 }
 .comment.moderation .cont
 {
