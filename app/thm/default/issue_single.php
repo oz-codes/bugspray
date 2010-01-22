@@ -113,6 +113,7 @@
 							<!--<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />-->
 							<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
 							<!--<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />-->
+							<img class="comment_delete" src="<?php echo $location['images']; ?>/btnmini/delete.png" alt="" />
 						</div>
 					</td>
 					<td class="right">
