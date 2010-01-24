@@ -24,88 +24,43 @@ $.fn.slideFadeOut = function(speed, easing, callback) {
 	return this.animate({opacity:'hide',height:'hide'}, speed, easing, callback);
 };
 
+function getNewComments()
+{
+	history.go();
+}
+
 $(document).ready(function() {
 	$("input.unsel").focus(function(){
 		$(this).removeClass('unsel');
 		$(this).attr({'value':''});
 	});
 	
-	// ajax amwnd
+	// ajax form loading image placeholders
 	$("#amwnd_btn").prepend(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
+	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
 	
-	// ajax forms
-	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');	
-	$("form.ajax").submit(function() {
-		var isamwnd = $(this).closest("#amwnd").length ? true : false;
-		var loadimg = isamwnd ? $("#amwnd .loadimg") : $(this).find(".loadimg");
-		
-		if (loadimg.length)
-		{
-			loadimg.show();
-		}
-		
-		$.ajax({
-			type: $(this).attr('method'),
-			url: $(this).attr('action'),
-			data: $(this).serialize(),
-			dataType: 'json',
-			success: function(data) {
-				delay = window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? 250 : 0;
-				
-				setTimeout(function() {
-					if (loadimg.length)
-					{
-						loadimg.hide();
-					}
-					
-					if (isamwnd)
-					{
-						// copied from amwnd code; change amwnd to allow outside code to close it etc
-						$("#amwnd").fadeOut($.fx.speeds._default);
-						setTimeout(function(){$("#amwnd_btn button").hide();}, $.fx.speeds._default);
-					}
-					
-					if (!data.success)
-					{
-						$.amwnd({
-							title: 'Error!',
-							content: data.message,
-							buttons: ['ok'],
-							closer: 'ok'
-						});
-					}
-					else
-					{
-						history.go();
-					}
-				}, delay);
-			}
-		});
-		
-		return false;
-	});
-	
-	// comment actions
-	if ($(".comment_quote").length) // bleh, any random one can do
+	// everything comments and not more, not less
+	if ($("#comment_form").length)
 	{
-		var cElm = function(elm) {
+		var caElm = function(elm) {
 			return $(elm).closest("article");
 		};
-		var cId = function(aelm) {
+		var caId = function(aelm) {
 			return $(cElm(aelm)).attr('id').replace(/[^0-9]/g, '');
 		};
 		
+		// comment actions
 		$(".comment_quote").click(function() {
-			var e = cElm(this);
+			var e = caElm(this);
 			// todo - grab bbcode instead of text
 			$("#comment_form").append('[quote=' + $(e).find('.username a').text() + ']' + $(e).find('.cont').text() + '[/quote]');
 		});
 		$(".comment_delete").click(function() {			
 			if (confirm('Make sure you want to delete this comment. It cannot be recovered.'))
 			{
-				var elm = cElm(this);
+				var elm = caElm(this);
 				$.ajax({
-					url: 'manage_issue.php?deletecomment&id=' + cId(elm),
+					url: 'manage_issue.php?deletecomment&id=' + caId(elm),
 					success: function(data) {						
 						if (data.success)
 						{
@@ -114,6 +69,41 @@ $(document).ready(function() {
 					}
 				});
 			}
+		});
+		
+		// comment adding
+		$("#comment_form").submit(function() {
+			$(this).find(".loadimg").show();
+			
+			$.ajax({
+				type: 'post',
+				url: 'add_comment.php',
+				data: $(this).serialize(),
+				dataType: 'json',
+				success: function(data) {
+					delay = window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? 250 : 0;
+					
+					setTimeout(function() {
+						$(this).find(".loadimg").hide();
+						
+						if (!data.success)
+						{
+							$.amwnd({
+								title: 'Error!',
+								content: data.message,
+								buttons: ['ok'],
+								closer: 'ok'
+							});
+						}
+						else
+						{
+							history.go();
+						}
+					}, delay);
+				}
+			});
+			
+			return false;
 		});
 	}
 });

@@ -112,7 +112,7 @@
 					</td>
 					<td class="main">
 						<div class="time">Posted on <?php echo timehtml5($comment['when_posted'],true); ?></div>
-						<div class="cont"><?php echo parsebbcode($comment['content']); ?></div>
+						<div class="content"><?php echo parsebbcode($comment['content']); ?></div>
 					</td>
 					<td class="actions">
 						<?php if ($comment['type'] == ''): ?>
@@ -137,7 +137,7 @@
 		<h3>Add a comment</h3>
 		<?php if (!$issue['discussion_closed'] || isadmin()): ?>
 		<?php if (isloggedin()): ?>
-		<form action="add_comment.php" method="post" class="ajax">
+		<form id="comment_form" class="ajax">
 			<input type="hidden" name="id" value="<?php echo $issue['id']; ?>" />
 			<small>You can use BBcode here, like [b] and [url]. If you don't want something to be parsed, use [noparse]!</small><br />
 			<textarea rows="6" style="width:600px;" name="cont" id="comment_form"></textarea>
