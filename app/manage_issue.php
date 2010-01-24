@@ -66,6 +66,25 @@ if (isadmin())
 		
 		echo '<br /><br /><a href="index.php">Go to issue index</a>';
 	}
+	elseif (isset($_GET['deletecomment']))
+	{
+		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
+		header('Content-type: application/json');
+		
+		$success = true;
+		if (is_numeric($i))
+		{
+			mysql_query("DELETE FROM comments WHERE id='$i'") or $success = false;
+		}
+		else
+		{
+			$success = false;
+		}
+		
+		echo json_encode(array(
+			'success' => $success
+		));
+	}
 	elseif (isset($_GET['status']))
 	{
 		// general vars

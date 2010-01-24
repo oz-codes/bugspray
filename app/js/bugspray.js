@@ -20,6 +20,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+jQuery.fn.slideFadeOut = function(speed, easing, callback) {
+	return this.animate({opacity:'hide',height:'hide'}, speed, easing, callback);
+};
+
 $(document).ready(function() {
 	$("input.unsel").focus(function(){
 		$(this).removeClass('unsel');
@@ -64,28 +68,35 @@ $(document).ready(function() {
 	// comment actions
 	if ($(".comment_quote").length) // bleh, any random one can do
 	{
-		var getCommentId = function(telm) {
-			// get the comment element
-			var elm = $(telm);
+		var cElm = function(aelm) {
+			var elm = $(aelm);
 			while (elm.get(0).tagName.toLowerCase() != 'article') // maybe check for class
 			{
 				elm = elm.parent();
 			}
-			
-			// get the comment id
-			return $(elm).attr('id').replace(/[^0-9]/g, '');
+			return elm;
+		};
+		var cId = function(aelm) {
+			return $(cElm(aelm)).attr('id').replace(/[^0-9]/g, '');
 		};
 		
 		$(".comment_quote").click(function() {
 			// todo - grab bbcode instead of text
 			$("#comment_form").append('[quote=' + $(elm).find('.username a').text() + ']' + $(elm).find('.cont').text() + '[/quote]');
 		});
-		$(".comment_delete").click(function() {
-			//alert(getCommentId(this));
-			
+		$(".comment_delete").click(function() {			
 			if (confirm('Make sure you want to delete this comment. It cannot be recovered.'))
 			{
-				alert('not implemented');
+				e = cElm(this);
+				$.ajax({
+					url: 'manage_issue.php?deletecomment&id=' + cId(e),
+					success: function(data) {						
+						if (data.success)
+						{
+							$(e).slideFadeOut();
+						}
+					}
+				});
 			}
 		});
 	}
