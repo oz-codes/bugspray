@@ -72,13 +72,8 @@ $(document).ready(function() {
 	// comment actions
 	if ($(".comment_quote").length) // bleh, any random one can do
 	{
-		var cElm = function(aelm) {
-			var elm = $(aelm);
-			while (elm.get(0).tagName.toLowerCase() != 'article') // maybe check for class
-			{
-				elm = elm.parent();
-			}
-			return elm;
+		var cElm = function(elm) {
+			return $(elm).closest("article");
 		};
 		var cId = function(aelm) {
 			return $(cElm(aelm)).attr('id').replace(/[^0-9]/g, '');
