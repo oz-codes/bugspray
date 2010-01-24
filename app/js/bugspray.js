@@ -87,13 +87,13 @@ $(document).ready(function() {
 		$(".comment_delete").click(function() {			
 			if (confirm('Make sure you want to delete this comment. It cannot be recovered.'))
 			{
-				var e = cElm(this);
+				var elm = cElm(this);
 				$.ajax({
-					url: 'manage_issue.php?deletecomment&id=' + cId(e),
+					url: 'manage_issue.php?deletecomment&id=' + cId(elm),
 					success: function(data) {						
 						if (data.success)
 						{
-							$(e).slideFadeOut();
+							$(elm).slideFadeOut();
 						}
 					}
 				});
@@ -118,9 +118,9 @@ function changestatus(id,status,assigns)
 	
 	// show it	
 	$.amwnd({
-		title:'Change status',
-		content:'Hello! You can change the status of this issue here; just select an option.<br /><br />\
-		<form id="st" method="post" action="manage_issue.php?id='+id+'&status" class="ajax">\
+		title: 'Change status',
+		content: 'Hello! You can change the status of this issue here; just select an option.<br /><br />\
+		<form id="st" method="post" action="manage_issue.php?id='+id+'&status">\
 			<input type="radio" name="st" value="1" id="st1" /> <label for="st1">Open</label> <br />\
 			<input type="radio" name="st" value="2" id="st2" /> <label for="st2">Assigned to</label> <select name="st2a" id="st2a">'+a+'</select><br />\
 			<input type="radio" name="st" value="3" id="st3" /> <label for="st3">Resolved</label> <br />\
@@ -136,8 +136,8 @@ function changestatus(id,status,assigns)
 				<textarea cols="60" rows="2" class="mono" id="notes"></textarea>\
 			</div>\
 		</form>',
-		buttons:['ok','cancel'],
-		closer:'cancel'
+		buttons: ['ok','cancel'],
+		closer: 'cancel'
 	});
 	
 	// which status is current?
