@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-jQuery.fn.slideFadeOut = function(speed, easing, callback) {
+$.fn.slideFadeOut = function(speed, easing, callback) {
 	return this.animate({opacity:'hide',height:'hide'}, speed, easing, callback);
 };
 
@@ -35,20 +35,36 @@ $(document).ready(function() {
 	
 	// ajax forms
 	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');	
-	$("form.ajax").submit(function(e) {
-		formelm = this;
-		$(formelm).find(".loadimg").show();
+	$("form.ajax").submit(function() {
+		var isamwnd = $(this).closest("#amwnd").length ? true : false;
+		var loadimg = isamwnd ? $("#amwnd .loadimg") : $(this).find(".loadimg");
+		
+		if (loadimg.length)
+		{
+			loadimg.show();
+		}
 		
 		$.ajax({
-			type: $(formelm).attr('method').toUpperCase(),
-			url: $(formelm).attr('action'),
-			data: $(formelm).serialize(),
+			type: $(this).attr('method'),
+			url: $(this).attr('action'),
+			data: $(this).serialize(),
 			dataType: 'json',
 			success: function(data) {
 				delay = window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? 250 : 0;
 				
 				setTimeout(function() {
-					$(formelm).find(".loadimg").hide();
+					if (loadimg.length)
+					{
+						loadimg.hide();
+					}
+					
+					if (isamwnd)
+					{
+						// copied from amwnd code; change amwnd to allow outside code to close it etc
+						$("#amwnd").fadeOut($.fx.speeds._default);
+						setTimeout(function(){$("#amwnd_btn button").hide();}, $.fx.speeds._default);
+					}
+					
 					if (!data.success)
 					{
 						$.amwnd({
@@ -66,7 +82,7 @@ $(document).ready(function() {
 			}
 		});
 		
-		e.preventDefault();
+		return false;
 	});
 	
 	// comment actions
@@ -120,7 +136,7 @@ function changestatus(id,status,assigns)
 	$.amwnd({
 		title: 'Change status',
 		content: 'Hello! You can change the status of this issue here; just select an option.<br /><br />\
-		<form id="st" method="post" action="manage_issue.php?id='+id+'&status">\
+		<form>\
 			<input type="radio" name="st" value="1" id="st1" /> <label for="st1">Open</label> <br />\
 			<input type="radio" name="st" value="2" id="st2" /> <label for="st2">Assigned to</label> <select name="st2a" id="st2a">'+a+'</select><br />\
 			<input type="radio" name="st" value="3" id="st3" /> <label for="st3">Resolved</label> <br />\
@@ -144,8 +160,36 @@ function changestatus(id,status,assigns)
 	$("#st"+status).attr({'checked':'checked'});
 	
 	// and when you click ok...
-	$("#amwnd_ok").bind('click',function() {
-		$("#st").submit();
+	$("#amwnd_ok").bind('click', function() {
+		$("#amwnd .loadimg").show();
+		
+		$.ajax({
+			type: 'post',
+			url: 'manage_issue.php?id=' + id + '&status',
+			data: $("#amwnd_content form").serialize(),
+			dataType: 'json',
+			success: function(data) {
+				delay = window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? 250 : 0;
+				
+				setTimeout(function() {
+					$("#amwnd .loadimg").hide();
+					
+					if (!data.success)
+					{
+						$.amwnd({
+							title: 'Error!',
+							content: data.message,
+							buttons: ['ok'],
+							closer: 'ok'
+						});
+					}
+					else
+					{
+						history.go();
+					}
+				}, delay);
+			}
+		});
 	});
 }
 
@@ -162,10 +206,10 @@ function confirmurl(title,url,permanent)
 	});
 	
 	$.amwnd({
-		title:title,
-		content:'Are you sure you want to do this?'+a,
-		buttons:['yes','no'],
-		closer:'no'
+		title: title,
+		content: 'Are you sure you want to do this?'+a,
+		buttons: ['yes','no'],
+		closer: 'no'
 	});
 }
 

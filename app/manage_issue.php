@@ -84,18 +84,23 @@ if (isadmin())
 			$success = false;
 		}
 		
+		// return
 		echo json_encode(array(
 			'success' => $success
 		));
 	}
 	elseif (isset($_GET['status']))
 	{
+		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
+		header('Content-type: application/json');
+		
+		$success = true;
+		
 		// general vars
 		$s = escape_smart($_POST['st']);
 		
 		// first, the status
-		$query = db_query("UPDATE issues SET status='$s' WHERE id='$i'");
-		if ($query) { echo 'Set status successfully!<br />'; } else { mysql_error(); }
+		$query = db_query("UPDATE issues SET status='$s' WHERE id='$i'") or $success = false;
 		
 		// custom stuff, whoooooo
 		$custom = '';
@@ -115,20 +120,26 @@ if (isadmin())
 			$queryassign = db_query("UPDATE issues SET assign='$assign' WHERE id='$i'");
 			if ($queryassign)
 			{
-				echo 'Assigned issue succesfully!<br />';
 				$custom .= ', assigned to '.$uassigned;
 			}
-			else { mysql_error(); }
+			else
+			{
+				$success = false;
+			}
 		}
 		
 		$custom = escape_smart($custom);
 		
 		// and finally the comment
-		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Status changed to \'".getstatusnm($s)."\'$custom ***',NOW(),'status')");
-		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'");
-		if ($query2 && $query3) { echo 'Comment added succesfully!<br />'; } else { mysql_error(); }
+		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Status changed to \'".getstatusnm($s)."\'$custom ***',NOW(),'status')") or $success = false;
+		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'") or $success = false;
 		
-		echo '<br /><a href="view_issue.php?id='.$i.'">Go back</a>';
+		// return
+		if (!$success) { $message = mysql_error(); }
+		echo json_encode(array(
+			'success' => $success,
+			'message' => $message
+		));
 	}
 	else
 	{
