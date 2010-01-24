@@ -81,13 +81,14 @@ $(document).ready(function() {
 		};
 		
 		$(".comment_quote").click(function() {
+			var e = cElm(this);
 			// todo - grab bbcode instead of text
-			$("#comment_form").append('[quote=' + $(elm).find('.username a').text() + ']' + $(elm).find('.cont').text() + '[/quote]');
+			$("#comment_form").append('[quote=' + $(e).find('.username a').text() + ']' + $(e).find('.cont').text() + '[/quote]');
 		});
 		$(".comment_delete").click(function() {			
 			if (confirm('Make sure you want to delete this comment. It cannot be recovered.'))
 			{
-				e = cElm(this);
+				var e = cElm(this);
 				$.ajax({
 					url: 'manage_issue.php?deletecomment&id=' + cId(e),
 					success: function(data) {						
