@@ -64,21 +64,29 @@ $(document).ready(function() {
 	// comment actions
 	if ($(".comment_quote").length) // bleh, any random one can do
 	{
-		$(".comment_quote").click(function() {
+		var getCommentId = function(telm) {
 			// get the comment element
-			var elm = $(this);
+			var elm = $(telm);
 			while (elm.get(0).tagName.toLowerCase() != 'article') // maybe check for class
 			{
 				elm = elm.parent();
 			}
 			
 			// get the comment id
-			var id = $(elm).attr('id').replace(/[^0-9]/g, '');
-			
-			// the code above won't be used for now yet but it's nice to have them ready
-			// especially as this doesn't grab bbcode
-			
+			return $(elm).attr('id').replace(/[^0-9]/g, '');
+		};
+		
+		$(".comment_quote").click(function() {
+			// todo - grab bbcode instead of text
 			$("#comment_form").append('[quote=' + $(elm).find('.username a').text() + ']' + $(elm).find('.cont').text() + '[/quote]');
+		});
+		$(".comment_delete").click(function() {
+			//alert(getCommentId(this));
+			
+			if (confirm('Make sure you want to delete this comment. It cannot be recovered.'))
+			{
+				alert('not implemented');
+			}
 		});
 	}
 });
