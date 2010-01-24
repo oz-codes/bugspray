@@ -74,7 +74,10 @@ if (isadmin())
 		$success = true;
 		if (is_numeric($i))
 		{
-			mysql_query("DELETE FROM comments WHERE id='$i'") or $success = false;
+			$arr = db_query_single("SELECT issue FROM comments WHERE id='$i'") or $success = false;
+			$ii = $arr[0];
+			db_query("UPDATE issues SET num_comments=num_comments-1 WHERE id=$ii") or $succes = false;
+			db_query("DELETE FROM comments WHERE id='$i'") or $success = false;
 		}
 		else
 		{
