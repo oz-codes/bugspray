@@ -30,7 +30,11 @@ $(document).ready(function() {
 		$(this).attr({'value':''});
 	});
 	
-	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
+	// ajax amwnd
+	$("#amwnd_btn").prepend(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
+	
+	// ajax forms
+	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');	
 	$("form.ajax").submit(function(e) {
 		formelm = this;
 		$(formelm).find(".loadimg").show();
@@ -121,7 +125,7 @@ function changestatus(id,status,assigns)
 	$.amwnd({
 		title:'Change status',
 		content:'Hello! You can change the status of this issue here; just select an option.<br /><br />\
-		<form id="st" method="post" action="manage_issue.php?id='+id+'&status">\
+		<form id="st" method="post" action="manage_issue.php?id='+id+'&status" class="ajax">\
 			<input type="radio" name="st" value="1" id="st1" /> <label for="st1">Open</label> <br />\
 			<input type="radio" name="st" value="2" id="st2" /> <label for="st2">Assigned to</label> <select name="st2a" id="st2a">'+a+'</select><br />\
 			<input type="radio" name="st" value="3" id="st3" /> <label for="st3">Resolved</label> <br />\
