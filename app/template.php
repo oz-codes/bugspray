@@ -1,7 +1,7 @@
 <?php
-/*
+/**
  * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 // temporary
@@ -27,12 +26,14 @@ $sitename = 'my unnamed issue tracker';
 
 // define the locations of everything
 $theme = 'default';
-$location['theme']  = "thm/$theme";
-$location['images'] = "thm/$theme/img";
-$location['styles'] = "thm/$theme/css";
+$location = array(
+	'theme'  => "thm/$theme",
+	'images' => "thm/$theme/img",
+	'styles' => "thm/$theme/css"
+);
 
 // set up everything
-$page = new PageBuilder($location);
+$page = new PageBuilder();
 register_shutdown_function(array($page,'outputAll'));
 
 // http://ianburris.com/tutorials/oophp-template-engine/
@@ -40,9 +41,9 @@ class PageBuilder
 {
 	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $sitename, $location;
 	
-	function PageBuilder($location)
+	function __construct()
 	{
-		global $sitename;
+		global $sitename, $location;
 		
 		// outside stuff
 		$this->sitename = $sitename;
@@ -61,43 +62,43 @@ class PageBuilder
 		ob_start();
 	}
 	
-	function disableTemplate()
+	public function disableTemplate()
 	{
 		$this->disabled = true;
 	}
 	
-	function setTitle($title)
+	public function setTitle($title)
 	{
 		global $sitename;
 		$this->title = $title . ' | ' . $this->sitename;
 	}
 	
-	function setType($type)
+	public function setType($type)
 	{
 		$this->type = $type;
 	}
 	
-	function addCSS($path)
+	public function addCSS($path)
 	{
 		$this->stylesheets[] = $path;
 	}
 	
-	function addJS($path)
+	public function addJS($path)
 	{
 		$this->javascripts[] = $path;
 	}
 	
-	function addBodyPre($content)
+	public function addBodyPre($content)
 	{
 		$this->bodypre .= $content;
 	}
 	
-	function outputBodyPre()
+	public function outputBodyPre()
 	{
 		echo $this->bodypre;
 	}
 	
-	function getMenu()
+	public function getMenu()
 	{
 		include("menu.php");
 		
@@ -115,7 +116,7 @@ class PageBuilder
 		return $menu;
 	}
 	
-	function outputHead()
+	public function outputHead()
 	{
 		echo '<title>'.$this->title.'</title>'."\n";
 		
@@ -129,17 +130,17 @@ class PageBuilder
 		}
 	}
 	
-	function outputContent()
+	public function outputContent()
 	{
 		echo $this->content;
 	}
 	
-	function outputSidebar()
+	public function outputSidebar()
 	{
 		include("sidebar.php");
 	}
 	
-	function setPage($page,$variables=array())
+	public function setPage($page,$variables=array())
 	{
 		extract($variables,EXTR_SKIP);
 		$location = $this->location;
@@ -154,7 +155,7 @@ class PageBuilder
 		echo "\n";
 	}
 	
-	function build()
+	private function build()
 	{
 		if ($this->disabled)
 		{
@@ -169,7 +170,7 @@ class PageBuilder
 		}
 	}
 	
-	function outputAll()
+	public function outputAll()
 	{
 		// stop capturing everything
 		$this->content = ob_get_clean();
