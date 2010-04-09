@@ -79,11 +79,6 @@ img
 
 /* header */
 
-#header
-{
-	padding:0px 8px 0px 8px;
-}
-
 #header .top .bg
 {
 	position:absolute;
@@ -205,7 +200,7 @@ img
 #header nav li
 {
 	float:left;
-	margin:0px 8px;
+	margin:0px 8px 0 0;
 	padding:8px 0px 0px 0px;
 	width:128px;
 	text-align:center;
