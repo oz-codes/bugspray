@@ -35,47 +35,73 @@ mysql_select_db($mysql_database,$con);
 
 $islogged = true;
 
+$debug_log = array();
+
 // constants
 $datetimenull = '0000-00-00 00:00:00';
 
 // functions begin here
-function db_query($query)
+function db_query($query, $purpose='<i>No purpose given</i>')
 {	
-	global $db_queries;
+	global $debug, $debug_log, $db_queries;
+	
 	$result = mysql_query($query);
 	
 	if ($result)
-		++$db_queries;
+	{
+		$db_queries++;
+	}
+	
+	if ($debug)
+	{
+		$debug_log[] = array(
+			'is_query' => true,
+			'success' => $result ? true : false,
+			'purpose' => $purpose
+		);
+	}
 	
 	return $result;
 }
 
-function db_query_single($query)
+function db_query_single($query, $purpose='<i>No purpose given</i>')
 {
 	if (strstr($query,"LIMIT 1")) { exit('fix this'); } // temporary line added after this function changed to what it is now
-	$array = mysql_fetch_array(db_query($query." LIMIT 1"));
-	return $array;
+	
+	$result = db_query($query." LIMIT 1", $purpose);
+	
+	if ($result)
+	{
+		$array = mysql_fetch_array($result);
+	}
+	
+	return $result ? $array : false;
 }
 
-function db_query_toarray($query,$properid=false)
+function db_query_toarray($query, $properid=false, $purpose='<i>No purpose given</i>')
 {
-	$result = db_query($query);
-	$ret = array();
-	$num_rows = mysql_num_rows($result);
-	$num_fields = mysql_num_fields($result);
-	for ($i=0;$i<$num_rows;$i++)
+	$result = db_query($query, $purpose);
+	
+	if ($result)
 	{
-		for ($j=0;$j<$num_fields;$j++)
+		$ret = array();
+		$num_rows = mysql_num_rows($result);
+		$num_fields = mysql_num_fields($result);
+		for ($i=0;$i<$num_rows;$i++)
 		{
-			if ($properid)
-				$ai = $i+1;
-			else
-				$ai = $i;
-			
-			$ret[$ai][mysql_field_name($result,$j)] = mysql_result($result,$i,mysql_field_name($result,$j));
+			for ($j=0;$j<$num_fields;$j++)
+			{
+				if ($properid)
+					$ai = $i+1;
+				else
+					$ai = $i;
+				
+				$ret[$ai][mysql_field_name($result,$j)] = mysql_result($result,$i,mysql_field_name($result,$j));
+			}
 		}
 	}
-	return $ret;
+	
+	return $result ? $ret : false;
 }
 
 function logwhencmp($a,$b)
@@ -89,11 +115,19 @@ function logwhencmp($a,$b)
 
 function query_uid($id)
 {
-	global $queries_uid;
+	global $debug, $debug_log, $queries_uid;
 	
 	if (!$queries_uid[$id])
 	{
-		$queries_uid[$id] = db_query_single("SELECT * FROM users WHERE id = $id");
+		$queries_uid[$id] = db_query_single("SELECT * FROM users WHERE id = $id", "Retrieving info for user id $id from database");
+	}
+	elseif ($debug)
+	{
+		$debug_log[] = array(
+			'is_query' => false,
+			'success' => true,
+			'purpose' => "Retrieving info for user id $id from memory"
+		);
 	}
 	
 	return $queries_uid[$id];
@@ -101,11 +135,19 @@ function query_uid($id)
 
 function query_acttypes($id)
 {
-	global $queries_acttypes;
+	global $debug, $debug_log, $queries_acttypes;
 	
 	if (!$queries_acttypes[$id])
 	{
-		$queries_acttypes[$id] = db_query_single("SELECT * FROM actiontypes WHERE id = $id");
+		$queries_acttypes[$id] = db_query_single("SELECT * FROM actiontypes WHERE id = $id", "Retrieving info for action type id $id from database");
+	}
+	elseif ($debug)
+	{
+		$debug_log[] = array(
+			'is_query' => false,
+			'success' => true,
+			'purpose' => "Retrieving info for action type id $id from memory"
+		);
 	}
 	
 	return $queries_acttypes[$id];
@@ -113,18 +155,26 @@ function query_acttypes($id)
 
 function query_cats($id) //meow
 {
-	global $queries_cats;
+	global $debug, $debug_log, $queries_cats;
 	
 	if (!$queries_cats[$id])
 	{
-		$queries_cats[$id] = db_query_single("SELECT * FROM categories WHERE id = $id");
+		$queries_cats[$id] = db_query_single("SELECT * FROM categories WHERE id = $id", "Retrieving info for category id $id from database");
+	}
+	elseif ($debug)
+	{
+		$debug_log[] = array(
+			'is_query' => false,
+			'success' => true,
+			'purpose' => "Retrieving info for category id $id from memory"
+		);
 	}
 	
 	return $queries_cats[$id];
 }
 
 function getuid($unm)
-{
+{	
 	if ($unm == $_SESSION['username'])
 	{
 		// added for sake of compatibility with old code; please don't use this function like this: getuid($_SESSION['username'])
@@ -133,7 +183,7 @@ function getuid($unm)
 	}
 	else
 	{
-		$q = db_query_single("SELECT id FROM users WHERE username = '$unm'");
+		$q = db_query_single("SELECT id FROM users WHERE username = '$unm'", "Retrieving username for user with id $id");
 		return $q[0];
 	}
 }
@@ -145,7 +195,7 @@ function getav($id)
 }
 
 function getunm($id,$link=false)
-{	
+{
 	$q = query_uid($id);
 	
 	if ($q['displayname'] == '')
@@ -231,13 +281,13 @@ function getcatnm($id)
 
 function getprojnm($id)
 {	
-	$q = db_query_single("SELECT name FROM projects WHERE id = $id");
+	$q = db_query_single("SELECT name FROM projects WHERE id = $id", "Retrieving info for project id $id from database");
 	return $q[0];
 }
 
 function getissnm($id)
 {	
-	$q = db_query_single("SELECT name FROM issues WHERE id = $id");
+	$q = db_query_single("SELECT name FROM issues WHERE id = $id", "Retrieving info for issue id $id from database");
 	return $q[0];
 }
 
@@ -247,7 +297,7 @@ function getstatuses()
 	
 	if (!$statuseslist)
 	{
-		$statuseslist = db_query_toarray("SELECT * FROM statuses",true);
+		$statuseslist = db_query_toarray("SELECT * FROM statuses", true, "Retrieving all status types from database");
 	}
 	
 	return $statuseslist;
@@ -302,13 +352,16 @@ function issuecol($status,$comments,$lastactivity)
 	return $col;
 }
 
-function isexistinguser($uname,$pwd)
+function isexistinguser($uname, $pwd, $isclient=false)
 {
 	global $path;
 	
 	$uname = escape_smart($uname);
 	
-	$result = db_query("SELECT * FROM users WHERE username = '$uname'");
+	$result = db_query(
+		"SELECT * FROM users WHERE username = '$uname'",
+		$isclient ? 'Checking whether the client is a logged in valid user' : 'Checking whether a given username/password matches a user'
+	);
 	
 	/* description of $hit:
 	 *  -1 more than one match of the username for some reason
@@ -372,7 +425,7 @@ function isloggedin()
 	if ($sessionactive)
 	{
 		// but is their user/pass pair correct?
-		if (isexistinguser($_SESSION['username'], $_SESSION['password']) == 2)
+		if (isexistinguser($_SESSION['username'], $_SESSION['password'], true) == 2)
 		{
 			// NO? gtfo
 			unset($_SESSION['username']);
@@ -404,12 +457,12 @@ function isadmin()
 		$q = query_uid($_SESSION['uid']);
 		$g = $q['group'];
 		
-		$q2 = db_query_single("SELECT global_admin FROM groups WHERE id = '$g'");
+		$q2 = db_query_single("SELECT global_admin FROM groups WHERE id = '$g'", "Checking whether the client is a logged in administrator");
 		return $q2[0];
 	}
 	else
 	{
-		return 0;
+		return false;
 	}
 }
 

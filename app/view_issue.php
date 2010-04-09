@@ -26,7 +26,7 @@ $page->setType('issues');
 
 $id = escape_smart($_GET['id']);
 
-$result_issues = db_query("SELECT * FROM issues WHERE id = '$id' LIMIT 1");
+$result_issues = db_query("SELECT * FROM issues WHERE id = '$id' LIMIT 1", "Retrieving info for issue $id from database");
 
 if (mysql_num_rows($result_issues))
 {
@@ -48,7 +48,7 @@ if (mysql_num_rows($result_issues))
 
 	// get list of assignable users
 	$assignsarr = array(array(-1,'nobody'),array(-1,'----------------------'));
-	$result_userproject = db_query("SELECT * FROM assigns_userproject WHERE projectid = ".$issue['project']);
+	$result_userproject = db_query("SELECT * FROM assigns_userproject WHERE projectid = " . $issue['project'], "Retrieving assigned users for issue $id from database");
 	while ($assign = mysql_fetch_array($result_userproject))
 	{
 		$enableme = $assign['userid'] == $issue['assign'] ? true : false;
@@ -62,7 +62,7 @@ if (mysql_num_rows($result_issues))
 	$issue['assigns'] = $assignsarr;
 	
 	// get the comments
-	$result_comments = db_query_toarray("SELECT * FROM comments WHERE issue = $id ORDER BY when_posted DESC");
+	$result_comments = db_query_toarray("SELECT * FROM comments WHERE issue = $id ORDER BY when_posted DESC", "Retrieving comments for issue $id from database");
 	
 	// output the page
 	$page->setPage(

@@ -131,8 +131,25 @@ class PageBuilder
 	}
 	
 	public function outputContent()
-	{
+	{		
 		echo $this->content;
+		
+		global $debug, $debug_log;
+		if ($debug)
+		{
+			$tqueries = 0;
+			echo "\n" . '<ul id="debug">';
+			foreach ($debug_log as $log)
+			{
+				if ($log['is_query'])
+				{
+					$tqueries++;
+				}
+				
+				echo '<li><b>' . ($log['is_query'] ? '+1' : '<span style="opacity:0.33;filter:alpha(opacity=33);">+0</span>') . ' = ' . $tqueries . '</b> ' . $log['purpose'] . '</li>';
+			}
+			echo '</ul>' . "\n";
+		}
 	}
 	
 	public function outputSidebar()
@@ -142,6 +159,8 @@ class PageBuilder
 	
 	public function setPage($page,$variables=array())
 	{
+		global $debug_log;
+		
 		extract($variables,EXTR_SKIP);
 		$location = $this->location;
 		if (!file_exists($this->location['theme'].'/'.$page))
@@ -157,6 +176,8 @@ class PageBuilder
 	
 	private function build()
 	{
+		global $debug_log;
+		
 		if ($this->disabled)
 		{
 			return $this->content;

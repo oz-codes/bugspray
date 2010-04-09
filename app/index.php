@@ -111,7 +111,7 @@ LEFT JOIN ( SELECT c1.issue, c1.author, c1.when_posted
 		  ) AS comments ON issues.id=comments.issue
 	$whereclause
  ORDER BY COALESCE(commentposted, issues.when_opened) DESC
-");
+", false, 'Retrieving a list of issues');
 
 // extra variables
 $count = count($result_issues);
