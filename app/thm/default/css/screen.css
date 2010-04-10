@@ -258,7 +258,7 @@ hr
 #header nav li
 {
 	float: left;
-	margin: 0 48px 0 0;
+	margin: 0 48px 0 -12px;
 	padding: 0;
 	height: 27px;
 	font-size: 12px;
@@ -270,6 +270,7 @@ hr
 #header nav li a
 {
 	color: #fff;
+	padding: 12px;
 }
 
 /* content */
