@@ -1,14 +1,14 @@
-<h2 class="fl">Issue list</h2>
-<div class="fr">
+<h1 class="left">Tickets</h2>
+<div class="right">
 	<button type="button" onclick="location.href='add_issue.php'"><img src="<?php echo $location['images']; ?>/btn/add.png" alt="" />Add an issue</button>
 </div>
-<div class="fc"></div>
+<div class="clear"></div>
 
 <div class="tabs">
 	<?php foreach ($status_tabs as $tab): ?>
 	<a href="<?php echo $tab['url']; ?>"<?php echo $tab['sel'] ? ' class="sel"' : ''; ?>><?php echo $tab['name']; ?></a>
     <?php endforeach; ?>
-	<div class="fc"></div>
+	<div class="clear"></div>
 </div>
 
 <table class="issuelist_large">
@@ -34,7 +34,7 @@
 				<div class="right">
 					<b>tagged as</b> <?php echo getcattag($issue['category']); ?>
 				</div>
-				<div class="fc"></div>
+				<div class="clear"></div>
 			</div>
 			
 			<div class="lower">

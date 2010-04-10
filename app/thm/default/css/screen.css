@@ -1,50 +1,174 @@
-/*
- * bugspray theme - Green Slate - Version 0.1-dev
- * Template files must be GPL as they are linked to bugspray
- * CSS / image files are copyright (c) a2h 2009 excluding Silk icons
- * Silk icons by Mark James - http://www.famfamfam.com/lab/icons/silk/
- * Mico icons (WIP) by a2h - no site currently
+/**
+ * mintytracker theme
+ * Please note that any mintytracker theme's PHP template files are
+ * licensed under the GNU GPL v3, as they are linked to mintytracker
+ *
+ * @name Silky
+ * @description A smooth, clean theme with plenty of breathing room
+ * @tags clean, white, fixed width
+ * @version 0.2
+ * @copyright Copyright (c) a2h 2009-2010
+ *
+ * WooFunction icons (c) WooThemes and WeFunction 2009
+ * Mico icons (WIP) (c) a2h 2009 - no site
  */
 
 /* main stuff */
 
 body
 {
-	background:url('../img/bg/main.png');
-	margin:0px 8px 8px 8px;
-	text-align:center;
-	color:#222;
+	background: #fff url('../img/bg/overall.png') repeat-x;
+	margin: 0;
+	padding: 0;
+	color: #222;
 }
-body,td
+body, td
 {
-	font-family:helvetica,arial,sans-serif;
-	font-size:13px;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
 }
 
-/* HTML 5 support */  
+/* html5 */
 
-header,section,footer,aside,nav,article,figure
+header, section, footer, aside, nav, article, figure
 {
-	display:block;  
+	display: block;  
+}
+
+/* apply palm to face, rub vigorously */
+
+img
+{
+	border: none;
 }
 
 /* links */
 
 a
 {
-	color:#4183C4;
-	text-decoration:none;
+	color: #4183C4;
+	text-decoration: none;
 }
 a:hover
 {
-	text-decoration:underline;
+	text-decoration: underline;
 }
 
 /* links to stuff that hasn't been implemented */
 
 a.notyet
 {
-	text-decoration:line-through;
+	text-decoration: line-through;
+}
+
+/* standard table layout because the default one is ugly and stupid */
+
+table
+{
+	width: 100%;
+	border-spacing: 0px;
+}
+td, th
+{
+	height: 24px;
+	border: none;
+	padding: 2px 8px;
+	text-align: left;
+	font-size: 11px;
+}
+
+/* floating */
+
+.left, .fl /* compatibility */
+{
+	float: left;
+}
+.right, .fr /* compatibility */
+{
+	float: right;
+}
+.clear, .fc /* compatibility */
+{
+	clear: both;
+}
+.clear-left
+{
+	clear: left;
+}
+.clear-right
+{
+	clear: right;
+}
+
+/* headings */
+
+h1, h2, h3, h4, h5
+{
+ 	padding: 0 0;
+	margin: 0 0 16px;
+	font-family: helvetica, arial, sans-serif;
+}
+h1
+{
+	font-size: 20px;
+}
+
+/* titles with an image */
+
+.imgtitle
+{
+	margin-bottom: 8px;
+}
+
+.imgtitle img, .imgtitle .text
+{
+	float: left;
+}
+.imgtitle img
+{
+	margin-right: 12px;
+}
+.imgtitle h1, .imgtitle h2, .imgtitle h3
+{
+	margin: -2px 0 0;
+	padding: 0;
+}
+
+.imgtitle-24 img
+{
+	width: 24px;
+	height: 24px;
+}
+.imgtitle-24 .text
+{
+	height: 24px;
+}
+.imgtitle-24 h1, .imgtitle-24 h2, .imgtitle-24 h3
+{
+	font-size: 14px;
+}
+
+.imgtitle-32 img
+{
+	width: 32px;
+	height: 32px;
+}
+.imgtitle-32 .text
+{
+	height: 32px;
+}
+.imgtitle-32 h1, .imgtitle-32 h2, .imgtitle-32 h3
+{
+	font-size: 16px;
+}
+
+/* various font size modifiers */
+
+.subtitle
+{
+	font-family: helvetica, arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
 }
 
 /* lists */
@@ -58,57 +182,38 @@ ul
 
 hr
 {
-	border:solid #888;
-	border-width:1px 0px 0px 0px;
+	border: solid #888;
+	border-width: 1px 0px 0px 0px;
 }
 
-/* apply palm to face, rub vigorously */
+/* wrapper! */
 
-img
+#wrap
 {
-	border:none;
-}
-
-#global_wrapper
-{
-	text-align:left;
-	margin:0px auto;
-	width:90%;
-	max-width:1440px;
+	margin: 0;
+	padding: 0 24px;
 }
 
 /* header */
 
-#header .top .bg
+#header
 {
-	position:absolute;
-	top:0px;
-	left:0px;
-	background:url('../img/bg/top.png');
-	width:100%;
-	height:48px;
-	z-index:-1;
+	height: 96px;
 }
 
-#header .top
+#header h1
 {
-	padding:8px;
-	height:32px;
+	float: left;
+	margin: 16px 0 0;
+	padding: 0;
+	height: 32px;
+	font-size: 28px;
+	font-weight: 600;
 }
-
-#header .top h1
+#header h1 a
 {
-	margin:0px;
-	float:left;
+	color: #fff;
 }
-
-#header .top h1 a
-{
-	color:#fff;
-}
-
-
-/* user box */
 
 #user_wrapper
 {
@@ -117,14 +222,10 @@ img
 	height:24px;
 	margin-top:3px;
 }
-
-/* user box (logged in users) */
-
 #user_left, #user_right
 {
 	margin-top:2px;
 }
-
 #user_left
 {
 	float:left;
@@ -139,163 +240,57 @@ img
 	color:#fff;
 }
 
-/* user box (logged out users) */
-
-#user_wrapper form
-{
-	margin-top:2px;
-}
-
-#user_wrapper input.unsel
-{
-	color:#ccc;
-}
-
-#user_wrapper input
-{
-	outline:0;
-	border:0px;
-	font-size:11px;
-	-moz-border-radius:0px !important;
-	-webkit-border-radius:0px !important;
-	border-radius:0px !important;
-	float:left;
-	margin-left:1px;
-}
-
-#user_wrapper input[type=text], #user_wrapper input[type=password]
-{
-	width:124px;
-	padding:2px;
-	height:16px;
-}
-
-#user_wrapper input[type=submit], #user_wrapper input[type=button]
-{
-	width:64px;
-	height:20px;
-	background:#ddd;
-	text-shadow:none;
-	
-	padding-bottom:2px;
-	line-height:20px;
-}
-
 /* navigation */
 
 #header nav
 {
-	color:#fff;
-	clear:both;
-	padding-top:16px;
+	clear: both;
+	margin-top: 20px;
+	color: #fff;
 }
 
 #header nav ul
 {
-	list-style:none;
-	padding:0px;
-	margin:0px;
-	height:32px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 #header nav li
 {
-	float:left;
-	margin:0px 8px 0 0;
-	padding:8px 0px 0px 0px;
-	width:128px;
-	text-align:center;
-	font-size:14px;
-	height:24px;
-	text-shadow:0px -1px 0px #8fb749;
-	background:url('../img/bg/menubtn.png') no-repeat;
+	float: left;
+	margin: 0 48px 0 0;
+	padding: 0;
+	height: 27px;
+	font-size: 12px;
 }
-#header nav li.right
+#header nav li.selected
 {
-	float:right;
+	background: url('../img/bg/menusel.png') center bottom no-repeat;
 }
 #header nav li a
 {
-	color:#fff;
-}
-#header nav .sel
-{
-	background:url('../img/bg/menusel.png');
-	text-shadow:0px -1px 0px #eee;
-	position:relative;
-	z-index:3;
-}
-#header nav .sel a
-{
-	color:#000;
+	color: #fff;
 }
 
-/* content - BIG THANKS to http://www.webmasterworld.com/css/3544816.htm for the fluid+fixed combo CSS */
+/* content */
 
-#content_wrap
-{
-	float:left;
-	width:100%;
-	min-width:500px;
-	margin-right:-304px;
-	background:#fff url('../img/sidebar.png') repeat-y top right;
-	-moz-box-shadow:0px 0px 6px rgba(0,0,0,0.5);
-	-webkit-box-shadow:0px 0px 6px rgba(0,0,0,0.5);
-	box-shadow:0px 0px 6px rgba(0,0,0,0.5);
-}
 #content
 {
-	margin-right:305px;
-	padding:24px;
+	margin-top: 24px;
+	width: 976px;
 }
 
-/* sidebar */
-
-#sidebar
+#content section
 {
-	float:left;
-	width:256px;
-	padding:24px;
-}
-
-#sidebar hr
-{
-	border-color:#aaa;
+	margin: 16px 0 32px;
 }
 
 /* footer */
 
 #footer
 {
-	margin-top:8px;
-	color:#fff;
-	font-size:10px;
-	padding:4px 16px;
-}
-
-/* float the boat */
-
-.fl
-{
-	float:left;
-}
-.fr
-{
-	float:right;
-}
-.fc
-{
-	clear:both;
-}
-
-/* the headings */
-
-h2
-{
-	margin:0px 0px 12px 0px;
-}
-h3,h4,h5
-{
-	margin:0px 0px 4px 0px;
+	margin: 32px 0 16px;
+	font-size: 10px;
 }
 
 /* custom form styling :o */
@@ -354,26 +349,16 @@ input[type=submit]
 
 /* avatars (for a <div> wrapping the image) */
 
-.avatar, .avatar_large
-{
-	border:2px solid #444;
-}
-
 .avatar, .avatar img
 {
-	width:16px;
-	height:16px;
+	width: 16px;
+	height: 16px;
 }
 
 .avatar_large, .avatar_large img
 {
-	width:24px;
-	height:24px;
-}
-
-#user_wrapper .avatar
-{
-	border-color:#555;
+	width: 24px;
+	height: 24px;
 }
 
 /* usernames in general */
@@ -385,25 +370,6 @@ input[type=submit]
 .username.banned
 {
 	color:#999;
-}
-
-/* NO, you tables, I don't want your crappy 1990's ways */
-
-table
-{
-	border-spacing:0px;
-}
-td
-{
-	border:0px;
-	padding:0px;
-}
-
-/* td spacing is mandatory for good of glorious nation */
-
-td
-{
-	padding-bottom:4px;
 }
 
 /* tabs */
@@ -499,6 +465,34 @@ td
 .linklisttbl tr:first-child td
 {
 	padding-top:0px !important;
+}
+
+/* ticket listing - normal - uses tables */
+
+.tickets th
+{
+	border-bottom: 1px solid #d3d3d3;
+}
+.tickets td
+{
+	border-bottom: 1px solid #ebebeb;
+}
+
+.tickets .status
+{
+	padding-left: 0;
+	padding-right: 0;
+}
+.tickets .status div
+{
+	width: 4px;
+	height: 24px;
+}
+
+.tickets .lesser /* as in lesser importance */
+{
+	color: #a0a0a0;
+	font-size: 10px;
 }
 
 /* issue listing - large - uses tables */
@@ -815,17 +809,6 @@ dl.ibox_details dd
 .ibox_generic .bar_top
 {
 	background:url('../img/graph/bar_top_ibox_gen.png');
-}
-
-/* small text */
-
-.subtitle
-{
-	font-size:12px;
-}
-.subtitle2
-{
-	font-size:11px;
 }
 
 /* colour picker */

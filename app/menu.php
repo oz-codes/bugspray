@@ -1,9 +1,14 @@
 <?php
 $menu = array(
 	array(
-		'id' => 'issues',
-		'name' => 'Issues',
+		'id' => 'dashboard',
+		'name' => 'Dashboard',
 		'url' => 'index.php'
+	),
+	array(
+		'id' => 'tickets',
+		'name' => 'Tickets',
+		'url' => 'tickets.php'
 	),
 	array(
 		'id' => 'milestones',

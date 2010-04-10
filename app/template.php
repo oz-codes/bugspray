@@ -22,7 +22,7 @@
  */
 
 // temporary
-$sitename = 'my unnamed issue tracker';
+$sitename = 'My Issue Tracker';
 
 // define the locations of everything
 $theme = 'default';
@@ -150,11 +150,6 @@ class PageBuilder
 			}
 			echo '</ul>' . "\n";
 		}
-	}
-	
-	public function outputSidebar()
-	{
-		include("sidebar.php");
 	}
 	
 	public function setPage($page,$variables=array())
