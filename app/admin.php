@@ -1,7 +1,7 @@
 <?php
-/*
+/**
  * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 include("functions.php");
@@ -37,9 +36,9 @@ if (isadmin())
 	
 	echo '
 	<div class="tabs">
-		<a href="admin.php"'.($subpage=='home'?'class="sel"':'').'>Home</a>
-		<a href="admin.php?p=projects"'.($subpage=='projects'?'class="sel"':'').'>Projects</a>
-		<a href="admin.php?p=categories"'.($subpage=='categories'?'class="sel"':'').'>Categories</a>
+		<a href="admin.php"' . ($subpage == 'home' ? 'class="sel"' : '') . '>Home</a>
+		<a href="admin.php?p=categories"' . ($subpage == 'categories' ? 'class="sel"' : '') . '>Categories</a>
+		<a href="admin.php?p=tags"' . ($subpage == 'tags' ? 'class="sel"' : '') . '>Tags</a>
 		<a href="#" class="notyet">Commenting</a>
 		<a href="#" class="notyet">Bans</a>
 		<a href="#" class="notyet">Pages</a>

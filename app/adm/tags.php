@@ -22,55 +22,60 @@
  */
 ?>
 
-<p>Categories are defined by you - they could be products, modules of one, versions of one, whatever you like!</p>
+<p>Tags are a great multipurpose way to get your tickets in order.</p>
 
 <?php
 if (!isset($_GET['s']))
-{	
+{
 	echo '
 	<h3>Listing</h3>
-
-	<button type="button" onclick="stringform(\'Add a project\',\''.$uri.'&amp;s=add\')"><img src="img/btn/add.png" alt="" />Add a category</button>';
 	
+	<button type="button" onclick="stringform(\'Add a category\',\''.$uri.'&amp;s=add\',{col:true})"><img src="img/btn/add.png" alt="" />Add a tag</button>';
+
 	echo '<ul>';
+	
+	$result_categories = db_query("SELECT * FROM categories", 'Retrieving all tags');
 
-	$result_projects = db_query("SELECT * FROM projects", 'Retrieving all categories');
-
-	while ($p = mysql_fetch_array($result_projects))
+	while ($category = mysql_fetch_array($result_categories))
 	{
 		echo '
 		<li>
-			'.$p['name'].'
-			<small>
-				<a href="javascript:void(0)" onclick="stringform(\'Rename project \\\''.str_replace("'","\'",$p['name']).'\\\'\',\''.$uri.'&amp;s=rename&amp;id='.$p['id'].'\')">(rename)</a>
-				<a href="javascript:void(0)" onclick="confirmurl(\'Delete project \\\''.str_replace("'","\'",$p['name']).'\\\'\',\''.$uri.'&amp;s=delete&amp;id='.$p['id'].'\',true);">(delete)</a>
+			<div class="left" style="width:128px;">' . $category['name'] . '</div>			
+			<small class="left">
+				<a href="#">(<s>list</s>)</a>
+				<a href="javascript:void(0)" class="rnm">(rename)</a>
+				<a href="javascript:void(0)" class="del">(delete)</a>
+				<br />
+				linked categories: all <a href="#">(<s>change</s>)</a>
 			</small>
+			<div class="clear"></div>
 		</li>';
 	}
-
+	
 	echo '</ul>';
 }
 else
-{	
+{
 	switch ($_GET['s'])
 	{
 		case 'add':
-			echo '<h3>Adding project</h3>';
+			echo '<h3>Adding category</h3>';
 			$n = escape_smart($_POST['str']);
-			$query = db_query("INSERT INTO projects (name) VALUES ('$n')");
+			$c = escape_smart(str_replace('#','',$_POST['col']));
+			$query = db_query("INSERT INTO categories (name,color) VALUES ('$n','$c')");
 			if ($query) { echo 'Added succesfully!'; } else { mysql_error(); }
 			break;
 		case 'rename':
-			echo '<h3>Renaming project</h3>';
+			echo '<h3>Renaming category</h3>';
 			$n = escape_smart($_POST['str']);
 			$i = escape_smart($_GET['id']);
-			$query = db_query("UPDATE projects set name='$n' WHERE id='$i'");
+			$query = db_query("UPDATE categories set name='$n' WHERE id='$i'");
 			if ($query) { echo 'Renamed succesfully!'; } else { mysql_error(); }
 			break;
 		case 'delete':
-			echo '<h3>Delete project</h3>';
+			echo '<h3>Delete category</h3>';
 			$i = escape_smart($_GET['id']);
-			$query = db_query("DELETE FROM projects WHERE id='$i'");
+			$query = db_query("DELETE FROM categories WHERE id='$i'");
 			if ($query) { echo 'Deleted succesfully!'; } else { mysql_error(); }
 			break;
 		default:
