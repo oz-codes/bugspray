@@ -935,6 +935,17 @@ div.color_swatch
 	cursor:pointer;
 }
 
+/* debug output */
+
+#debug
+{
+	background: #f5f5f5;
+	padding: 4px;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+
 /* fullscreen overlay */
 
 #amwnd_wnd
