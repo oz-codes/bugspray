@@ -138,17 +138,38 @@ class PageBuilder
 		if ($debug)
 		{
 			$tqueries = 0;
-			echo "\n" . '<ul id="debug">';
+			
+			$debugout = '
+				<table id="debug">
+					<thead>
+						<tr>
+							<th style="width:80px;">Type</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+			';
+			
 			foreach ($debug_log as $log)
 			{
-				if ($log['is_query'])
+				switch ($log['type'])
 				{
-					$tqueries++;
+					case 'query':
+						$tqueries++;
+						$debugout .= '<tr><td>Query #' . $tqueries . '</td><td>' . $log['text'] . '</td>';
+						break;
+					default:
+						$debugout .= '<tr><td>Unknown</td><td>' . $log['text'] . '</td>';
+						break;
 				}
-				
-				echo '<li><b>' . ($log['is_query'] ? '+1' : '<span style="opacity:0.33;filter:alpha(opacity=33);">+0</span>') . ' = ' . $tqueries . '</b> ' . $log['purpose'] . '</li>';
 			}
-			echo '</ul>' . "\n";
+			
+			$debugout .= '
+					</tbody>
+				</table>
+			';
+			
+			echo "\n" . str_replace(array("\n","\r","\r\n","\t"), '', $debugout) . "\n";
 		}
 	}
 	

@@ -21,24 +21,81 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// important stuff here
+// generation time tracking
 $starttime = explode(' ', microtime());
 $starttime = $starttime[1] + $starttime[0];
 
+// some variable(s) to use
+$datetimenull = '0000-00-00 00:00:00';
+
+// users!
 session_start();
 
-include("settings.php");
-include("template.php");
-
-$con = mysql_connect($mysql_server,$mysql_username,$mysql_password) or die(mysql_error());
-mysql_select_db($mysql_database,$con);
-
-$islogged = true;
-
+// debugging
 $debug_log = array();
 
-// constants
-$datetimenull = '0000-00-00 00:00:00';
+// grab the settings
+include("settings.php");
+
+// connect up to the db
+$con = mysql_connect($mysql_server, $mysql_username, $mysql_password) or die(mysql_error());
+mysql_select_db($mysql_database, $con);
+
+// include the other important files
+include("template.php");
+
+
+
+// the client (move this into auth later on)
+$client = array(
+	'is_logged' => false,
+	'is_admin' => false
+);
+
+// whether the client is logged in
+
+// is the session active?
+$sessionactive = isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['uid']);
+
+if (isset($_COOKIE['bs_username']) && isset($_COOKIE['bs_password']))
+{
+	if (!$sessionactive) // don't set the session repeatedly if it's already set
+	{
+		$_SESSION['username'] = $_COOKIE['bs_username'];
+		$_SESSION['password'] = $_COOKIE['bs_password'];
+		$_SESSION['uid'] = $_COOKIE['bs_uid'];
+		
+		$sessionactive = true;
+	}
+}
+if ($sessionactive)
+{
+	// okay, session active, but are they a valid user?
+	if (isexistinguser($_SESSION['username'], $_SESSION['password'], true) == 2)
+	{
+		unset($_SESSION['username']);
+		unset($_SESSION['password']);
+		unset($_SESSION['uid']);
+	}
+	else
+	{
+		$client['is_logged'] = true;
+	}
+}
+
+// whether the client is an admin
+if (isset($_SESSION['username']))
+{
+	$q = query_uid($_SESSION['uid']);
+	$g = $q['group'];
+	
+	if (db_query_single("SELECT global_admin FROM groups WHERE id = '$g'", "Checking whether the client is an administrator"))
+	{
+		$client['is_admin'] = true;
+	}
+}
+
+
 
 // functions begin here
 function db_query($query, $purpose='<i>No purpose given</i>')
@@ -55,9 +112,9 @@ function db_query($query, $purpose='<i>No purpose given</i>')
 	if ($debug)
 	{
 		$debug_log[] = array(
-			'is_query' => true,
+			'type' => 'query',
 			'success' => $result ? true : false,
-			'purpose' => $purpose
+			'text' => $purpose
 		);
 	}
 	
@@ -115,19 +172,11 @@ function logwhencmp($a,$b)
 
 function query_uid($id)
 {
-	global $debug, $debug_log, $queries_uid;
+	global $debug, $queries_uid;
 	
 	if (!$queries_uid[$id])
 	{
 		$queries_uid[$id] = db_query_single("SELECT * FROM users WHERE id = $id", "Retrieving info for user id $id from database");
-	}
-	elseif ($debug)
-	{
-		$debug_log[] = array(
-			'is_query' => false,
-			'success' => true,
-			'purpose' => "Retrieving info for user id $id from memory"
-		);
 	}
 	
 	return $queries_uid[$id];
@@ -135,19 +184,11 @@ function query_uid($id)
 
 function query_acttypes($id)
 {
-	global $debug, $debug_log, $queries_acttypes;
+	global $debug, $queries_acttypes;
 	
 	if (!$queries_acttypes[$id])
 	{
 		$queries_acttypes[$id] = db_query_single("SELECT * FROM actiontypes WHERE id = $id", "Retrieving info for action type id $id from database");
-	}
-	elseif ($debug)
-	{
-		$debug_log[] = array(
-			'is_query' => false,
-			'success' => true,
-			'purpose' => "Retrieving info for action type id $id from memory"
-		);
 	}
 	
 	return $queries_acttypes[$id];
@@ -155,30 +196,24 @@ function query_acttypes($id)
 
 function query_cats($id) //meow
 {
-	global $debug, $debug_log, $queries_cats;
+	global $debug, $queries_cats;
 	
 	if (!$queries_cats[$id])
 	{
 		$queries_cats[$id] = db_query_single("SELECT * FROM categories WHERE id = $id", "Retrieving info for category id $id from database");
-	}
-	elseif ($debug)
-	{
-		$debug_log[] = array(
-			'is_query' => false,
-			'success' => true,
-			'purpose' => "Retrieving info for category id $id from memory"
-		);
 	}
 	
 	return $queries_cats[$id];
 }
 
 function getuid($unm)
-{	
+{
+	global $debug_log;
 	if ($unm == $_SESSION['username'])
 	{
 		// added for sake of compatibility with old code; please don't use this function like this: getuid($_SESSION['username'])
 		// if you want to do something like that just use $_SESSION['uid']
+		$debug_log[] = array('text' => 'Call to getuid() with equivalent value to $_SESSION[\'username\'] detected, please use $_SESSION[\'uid\'] instead');
 		return $_SESSION['uid'];
 	}
 	else
@@ -406,64 +441,20 @@ function isexistinguser($uname, $pwd, $isclient=false)
 
 function isloggedin()
 {
-	// is the session active?
-	$sessionactive = isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['uid']);
-	
-	// is the user set to remember?
-	if (isset($_COOKIE['bs_username']) && isset($_COOKIE['bs_password']))
-	{
-		// don't set the session repeatedly if it's already set
-		if (!$sessionactive)
-		{
-			$_SESSION['username'] = $_COOKIE['bs_username'];
-			$_SESSION['password'] = $_COOKIE['bs_password'];
-			$_SESSION['uid'] = $_COOKIE['bs_uid'];
-		}
-	}
-
-	// user's session is still active
-	if ($sessionactive)
-	{
-		// but is their user/pass pair correct?
-		if (isexistinguser($_SESSION['username'], $_SESSION['password'], true) == 2)
-		{
-			// NO? gtfo
-			unset($_SESSION['username']);
-			unset($_SESSION['password']);
-			unset($_SESSION['uid']);
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	// looks like they're not active after all...
-	else
-	{
-		return false;
-	}
+	global $debug_log, $client;
+	$debug_log[] = array('text' => 'Call to isloggedin() detected, please use $client[\'is_logged\'] instead');
+	return $client['is_logged'];
+}
+function isadmin()
+{
+	global $debug_log, $client;
+	$debug_log[] = array('text' => 'Call to isadmin() detected, please use $client[\'is_admin\'] instead');
+	return $client['is_admin'];
 }
 
 function genpass($salt,$pwd)
 {
     return hash('whirlpool',$salt.$pwd);
-}
-
-function isadmin()
-{
-	if (isset($_SESSION['username']))
-	{
-		$q = query_uid($_SESSION['uid']);
-		$g = $q['group'];
-		
-		$q2 = db_query_single("SELECT global_admin FROM groups WHERE id = '$g'", "Checking whether the client is a logged in administrator");
-		return $q2[0];
-	}
-	else
-	{
-		return false;
-	}
 }
 
 function hascharacters($string)

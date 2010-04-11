@@ -1,4 +1,6 @@
 <?php
+global $client;
+
 $menu = array(
 	array(
 		'id' => 'dashboard',
@@ -26,7 +28,7 @@ $menu = array(
 	array(
 		'id' => 'admin',
 		'name' => 'Admin',
-		'hide' => !isadmin(),
+		'hide' => !$client['is_admin'],
 		'url' => 'admin.php'
 	),
 );
