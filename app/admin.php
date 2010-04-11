@@ -25,7 +25,7 @@ include("functions.php");
 $page->setType('admin');
 $page->setTitle('Administration Panel');
 
-echo '<h2>Administration Panel</h2>';
+echo '<h1>Administration Panel</h1>';
 
 if (isadmin())
 {
