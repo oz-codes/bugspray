@@ -21,7 +21,7 @@
 			<th><a href="#">Summary</a></th>
 			<th style="width: 128px;"><a href="#">Category</a></th>
 			<th style="width: 96px;"><a href="#">Assigned</a></th>
-			<th style="width: 48px;"><a href="#">Last</a></th>
+			<th style="width: 64px;"><a href="#">Last</a></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -44,7 +44,7 @@
 		</td>
 		<td class="lesser"><a href="#"><?php echo getprojnm($issue['project']); ?></a></td>
 		<td class="lesser">?</td>
-		<td class="lesser"><?php echo $issue['lastcomment']; ?></td>
+		<td class="lesser"><?php echo timeago($issue['when_updated'], false, true); ?></td>
 	</tr>
     <?php endforeach; ?>
 	</tbody>

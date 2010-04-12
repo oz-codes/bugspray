@@ -87,52 +87,16 @@ $status_tabs = array(
 	)
 );
 
-// thanks to najmeddine for the mind-bursting sql http://stackoverflow.com/questions/1575673/mysql-limit-on-a-left-join
 $result_issues = db_query_toarray("
-   SELECT issues.*, 
-		  comments.author AS commentauthor, 
-		  comments.when_posted AS commentposted
-	 FROM issues
-LEFT JOIN ( SELECT c1.issue, c1.author, c1.when_posted
-			  FROM comments c1
-		   JOIN
-		   (SELECT c2.issue, max(c2.when_posted) AS max_when_posted           
-			  FROM comments c2
-		  GROUP BY issue) c3
-			on c1.issue = c3.issue and c1.when_posted = c3.max_when_posted
-		  ) AS comments ON issues.id=comments.issue
-	$whereclause
- ORDER BY COALESCE(commentposted, issues.when_opened) DESC
+	SELECT issues.*, comments.author AS commentauthor FROM issues LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated $whereclause ORDER BY issues.when_updated DESC
 ", false, 'Retrieving a list of issues');
 
 // extra variables
 $count = count($result_issues);
 for ($i=0;$i<$count;$i++)
-{
-	// last comment
-	if ($result_issues[$i]['commentauthor'] > 0)
-	{
-		$result_issues[$i]['lastcomment'] = '
-		'.timeago($result_issues[$i]['commentposted']).'
-		<a href="profile.php?u='.$result_issues[$i]['commentauthor'].'">'.getunm($result_issues[$i]['commentauthor'],false).'</a>';
-	}
-	else
-	{
-		$result_issues[$i]['lastcomment'] = $issue['poster'].' N/A';
-	}
-	
-	// age
-	if ($result_issues[$i]['commentauthor'] > 0)
-	{
-		$age = $result_issues[$i]['commentposted'];
-	}
-	else
-	{
-		$age = $result_issues[$i]['when_opened'];
-	}
-	
+{	
 	// determine the colour of the listing
-	$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'],$result_issues[$i]['num_comments'],$age);
+	$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'],$result_issues[$i]['num_comments'], $result_issues[$i]['when_updated']);
 }
 
 $page->setPage(

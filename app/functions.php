@@ -505,63 +505,126 @@ function timehtml5($timestamp,$pubdate=false,$innerhtml='[nothingatall]')
 	}
 }
 
-function timeago($timestamp,$pubdate=false)
+function timeago($timestamp, $pubdate=false, $short=false)
 {
 	// original function written by Thomaschaaf - http://stackoverflow.com/questions/11/how-do-i-calculate-relative-time
-	
+
 	if (gettype($timestamp) == 'string')
 	{
 		$timestamp = strtotime($timestamp);
 	}
-	
+
 	$second = 1;
 	$minute = 60 * $second;
 	$hour = 60 * $minute;
 	$day = 24 * $hour;
 	$month = 30 * $day;
 	
-    $delta = time() - $timestamp;
+	if (!$short)
+	{
+		$ssecond = ' second';
+		$sseconds = ' seconds';
+		$sminute = ' minute';
+		$sminutes = ' minutes';
+		$shour = ' hour';
+		$shours = ' hours';
+		$sday = ' day';
+		$sdays = ' days';
+	}
+	else
+	{
+		$ssecond = 's';
+		$sseconds = 's';
+		$sminute = 'm';
+		$sminutes = 'm';
+		$shour = 'h';
+		$shours = 'h';
+		$sday = 'd';
+		$sdays = 'd';
+	}
 
-    if ($delta < 1 * $minute)
-    {
-        $ret = $delta == 1 ? "1 second ago" : $delta . " seconds ago";
-    }
-    elseif ($delta < 2 * $minute)
-    {
-		$ret = "1 minute ago";
-    }
-    elseif ($delta < 45 * $minute)
-    {
-        $ret = floor($delta / $minute) . " minutes ago";
-    }
-    elseif ($delta < 90 * $minute)
-    {
-		$ret = "1 hour ago";
-    }
-    elseif ($delta < 24 * $hour)
-    {
-		$ret = floor($delta / $hour) . " hours ago";
-    }
-    elseif ($delta < 48 * $hour)
-    {
-		$ret = "1 day ago";
-    }
-    elseif ($delta < 30 * $day)
-    {
-        $ret = floor($delta / $day) . " days ago";
-    }
-    elseif ($delta < 12 * $month)
-    {
-		$months = floor($delta / $day / 30);
-		$ret = $months <= 1 ? "1 month ago" : $months . " months ago";
-    }
-    else
-    {
-        $years = floor($delta / $day / 365);
-        $ret = $years <= 1 ? "1 year ago" : $years . " years ago";
-    }
+	$delta = time() - $timestamp;
+
+	$hasago = true;
 	
-	return timehtml5($timestamp,$pubdate,$ret);
+	if ($delta < 1 * $minute)
+	{
+		$ret = $delta == 1 ? "1$ssecond" : $delta . "$sseconds";
+	}
+	elseif ($delta < 2 * $minute)
+	{
+		$ret = "1$sminute";
+	}
+	elseif ($delta < 45 * $minute)
+	{
+		$ret = floor($delta / $minute) . "$sminutes";
+	}
+	elseif ($delta < 90 * $minute)
+	{
+		$ret = "1$shour";
+	}
+	elseif ($delta < 24 * $hour)
+	{
+		$ret = floor($delta / $hour) . "$shours";
+	}
+	elseif ($delta < 48 * $hour)
+	{
+		$ret = "1$sday";
+	}
+	elseif ($delta < 30 * $day)
+	{
+		$ret = floor($delta / $day) . "$sdays";
+	}
+	else
+	{
+		$hasago = false;
+		
+		$ret = date(
+			(!$short ? 'F' : 'M') . ' d' . ($delta < 12 * $month ? '' : " 'y"), 
+			$timestamp
+		);
+		
+		if ($short)
+		{
+			$ret = strtolower($ret);
+		}
+	}
+	
+	if ($hasago)
+	{
+		$ret .= ' ago';
+	}
+
+	return timehtml5($timestamp, $pubdate, $ret);
+}
+
+function timeago_short($timestamp, $pubdate=false)
+{
+	$temp = timeago($timestamp, $pubdate);
+	
+	return str_replace(
+		array(
+			'seconds',
+			'second',
+			'minutes',
+			'minute',
+			'hours',
+			'hour',
+			'days',
+			'day'
+		),
+		array(
+			's',
+			's',
+			'm',
+			'm',
+			'h',
+			'h',
+			'd',
+			'd'
+		),
+		$temp
+	);
 }
 
 function footerinfo($want)
