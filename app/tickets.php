@@ -62,27 +62,27 @@ if ($curstatus != 'all')
 $status_tabs = array(
 	array(
 		'name' => 'Open',
-		'url' => 'index.php',
+		'url' => 'tickets.php',
 		'sel' => $curstatus == 'open' ? true : false
 	),
 	array(
 		'name' => 'Assigned',
-		'url' => 'index.php?status=assigned',
+		'url' => 'tickets.php?status=assigned',
 		'sel' => $curstatus == 'assigned' ? true : false
 	),
 	array(
 		'name' => 'Resolved',
-		'url' => 'index.php?status=resolved',
+		'url' => 'tickets.php?status=resolved',
 		'sel' => $curstatus == 'resolved' ? true : false
 	),
 	array(
 		'name' => 'Declined',
-		'url' => 'index.php?status=declined',
+		'url' => 'tickets.php?status=declined',
 		'sel' => $curstatus == 'declined' ? true : false
 	),
 	array(
 		'name' => 'All',
-		'url' => 'index.php?status=all',
+		'url' => 'tickets.php?status=all',
 		'sel' => $curstatus == 'all' ? true : false
 	)
 );
