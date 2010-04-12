@@ -128,11 +128,6 @@ h1
 {
 	margin-right: 12px;
 }
-.imgtitle h1, .imgtitle h2, .imgtitle h3
-{
-	margin: -2px 0 0;
-	padding: 0;
-}
 
 .imgtitle-24 img
 {
@@ -159,7 +154,8 @@ h1
 }
 .imgtitle-32 h1, .imgtitle-32 h2, .imgtitle-32 h3
 {
-	font-size: 16px;
+	margin: 4px 0;
+	font-size: 18px;
 }
 
 /* various font size modifiers */
@@ -466,6 +462,24 @@ input[type=submit]
 .linklisttbl tr:first-child td
 {
 	padding-top:0px !important;
+}
+
+/* tags */
+
+.tag
+{
+	margin-left: 4px;
+	padding: 0 3px 0 10px;
+	height: 12px;
+	background: url('../img/tag.png') no-repeat;
+	border-right: 1px solid #a9a99b;
+	font-family: arial, sans-serif;
+	font-size: 9px;
+}
+.tag a
+{
+	color: #000;
+	text-decoration: none !important;
 }
 
 /* ticket listing - normal - uses tables */
