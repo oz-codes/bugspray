@@ -11,8 +11,8 @@
 			<td><?php echo timehtml5($issue['when_opened'],true); ?></td>
 		</tr>
 		<tr>
-			<td>Categorised under</td>
-			<td><?php echo getcattag($issue['category']); ?></td>
+			<td>Tag(s)</td>
+			<td><span class="tag"><?php echo getcatnm($issue['category']); ?></span></td>
 		</tr>
 		<tr>
 			<td>Project</td>
