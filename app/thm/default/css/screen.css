@@ -504,6 +504,19 @@ input[type=submit]
 	height: 24px;
 }
 
+.tickets .tag
+{
+	opacity: 0.33;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=33)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=33);
+}
+.tickets .tag:hover
+{
+	opacity: 0.75;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=75)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=75);
+}
+
 .tickets .lesser /* as in lesser importance */
 {
 	color: #a0a0a0;
