@@ -297,11 +297,6 @@ function getactlogdsc($id)
 	return $q['logdescription'];
 }
 
-function getcattag($id)
-{
-	return '<span class="cat" style="background:#'.getcatcol($id).';">'.getcatnm($id).'</span>';
-}
-
 function getcatcol($id)
 {
 	$q = query_cats($id);

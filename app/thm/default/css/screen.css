@@ -624,17 +624,6 @@ input[type=submit]
 	margin-top:4px;
 }
 
-/* little category labels */
-
-.cat
-{
-	font-size:9px;
-	padding:1px 2px;
-	-moz-border-radius:2px;
-	-webkit-border-radius:2px;
-	border-radius:2px;
-}
-
 /* infoboxes */
 
 .ibox_generic, .ibox_details, .ibox_alert, .ibox_error

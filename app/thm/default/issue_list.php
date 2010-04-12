@@ -11,41 +11,41 @@
 	<div class="clear"></div>
 </div>
 
-<table class="issuelist_large">
+<table class="tickets">
+	<thead>
+		<tr>
+			<!-- perhaps do classes for all these columns -->
+			<th class="status" style="width: 4px;"></th>
+			<th style="width: 16px;"></th>
+			<th style="width: 8px;"><a href="#">#</a></th>
+			<th><a href="#">Summary</a></th>
+			<th style="width: 128px;"><a href="#">Category</a></th>
+			<th style="width: 96px;"><a href="#">Assigned</a></th>
+			<th style="width: 48px;"><a href="#">Last</a></th>
+		</tr>
+	</thead>
+	<tbody>
 	<?php foreach ($issues as $issue): ?>
-	<tr<?php echo $issue['closed'] ? ' class="closed"' : ''; ?>>
-		<td class="col">
-			<div style="background:<?php echo $issue['status_color']; ?>"></div>
-		</td>
-		<td class="comments">
+	<tr>
+		<td class="status"><div style="background:<?php echo $issue['status_color']; ?>"></div></td>
+		<!--<td class="comments">
 			<div><?php echo $issue['num_comments']; ?></div>
 			<div>comment<?php echo $issue['num_comments'] == 1 ? '' : 's'; ?></div>
 		</td>
 		<td class="views">
 			<div><?php echo $issue['num_views']; ?></div>
 			<div>view<?php echo $issue['num_views'] == 1 ? '' : 's'; ?></div>
+		</td>-->
+		<td><!--<img src="<?php echo $location['images']; ?>/star.png" alt="*" />--></td>
+		<td><?php echo $issue['id']; ?></td>
+		<td>
+			<a href="view_issue.php?id=<?php echo $issue['id']; ?>"><?php echo $issue['name']; ?></a>
+			<span class="tag"><?php echo getcatnm($issue['category']); ?></span>
 		</td>
-		<td class="main">
-			<div class="upper">
-				<div class="left">
-					<a href="view_issue.php?id=<?php echo $issue['id']; ?>"><?php echo $issue['name']; ?></a>
-					&laquo; <a href="#"><?php echo getprojnm($issue['project']); ?></a>
-				</div>
-				<div class="right">
-					<b>tagged as</b> <?php echo getcattag($issue['category']); ?>
-				</div>
-				<div class="clear"></div>
-			</div>
-			
-			<div class="lower">
-				<div class="left">
-					<?php echo getuinfo($issue['author']); ?>
-				</div>
-				<div class="right">
-					<b>last</b> <?php echo $issue['lastcomment']; ?>
-				</div>
-			</div>
-		</td>
+		<td class="lesser"><a href="#"><?php echo getprojnm($issue['project']); ?></a></td>
+		<td class="lesser">?</td>
+		<td class="lesser"><?php echo $issue['lastcomment']; ?></td>
 	</tr>
     <?php endforeach; ?>
+	</tbody>
 </table>
