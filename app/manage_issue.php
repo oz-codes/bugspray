@@ -87,7 +87,7 @@ if (isadmin())
 			if ($error == '')
 			{
 				// update the count
-				db_query("UPDATE issues SET num_comments=num_comments-1") or $error = 'Couldn\'t update the ticket (comment count)... has the ticket been deleted?';
+				db_query("UPDATE issues SET num_comments=num_comments-1 WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (comment count)... has the ticket been deleted?';
 				
 				if ($error == '')
 				{
