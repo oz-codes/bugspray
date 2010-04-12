@@ -1,7 +1,7 @@
 <?php
 /**
  * bugspray issue tracking software
- * Copyright (c) 2009-2010 a2h
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -72,21 +72,64 @@ if (isadmin())
 		header('Content-type: application/json');
 		
 		$success = true;
+		$error = '';
+		
 		if (is_numeric($i))
 		{
-			$arr = db_query_single("SELECT issue FROM comments WHERE id='$i'") or $success = false;
-			$ii = $arr[0];
-			db_query("UPDATE issues SET num_comments=num_comments-1 WHERE id=$ii") or $succes = false;
-			db_query("DELETE FROM comments WHERE id='$i'") or $success = false;
+			// find the ticket the comment falls under
+			$arr = db_query_single("SELECT issue FROM comments WHERE id='$i'");
+			$ticket = $arr[0];
+			
+			// delete the ticket
+			db_query("DELETE FROM comments WHERE id='$i'") or $error = 'The comment could\'nt be deleted... it\'s most likely it already has been.';
+			
+			// if the ticket's already been deleted we definitely do not want to mess with the ticket again
+			if ($error == '')
+			{
+				// update the count
+				db_query("UPDATE issues SET num_comments=num_comments-1") or $error = 'Couldn\'t update the ticket (comment count)... has the ticket been deleted?';
+				
+				if ($error == '')
+				{
+					// get the newest ticket that hasn't been killed off
+					$newquery = db_query("SELECT when_posted FROM comments WHERE issue='$ticket' ORDER BY when_posted DESC LIMIT 1");
+					
+					// is there one?
+					if (mysql_num_rows($newquery))
+					{
+						$newqueryarr = mysql_fetch_array($newquery);
+						$newtime = $newqueryarr[0];
+					}
+					// otherwise, we grab the time that the ticket was opened
+					else
+					{
+						$newquery2 = db_query("SELECT when_opened FROM issues WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (non-existent)... has the ticket been deleted?';
+						$newquery2arr = mysql_fetch_array($newquery2);
+						$newtime = $newquery2arr[0];
+					}
+					
+					// and finally, update the ticket!
+					if ($error == '')
+					{
+						db_query("UPDATE issues SET when_updated='$newtime' WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (last update time)... has the ticket been deleted?';
+					}
+				}
+			}
 		}
 		else
 		{
 			$success = false;
 		}
 		
+		if ($error != '')
+		{
+			$success = false;
+		}
+		
 		// return
 		echo json_encode(array(
-			'success' => $success
+			'success' => $success,
+			'message' => $error
 		));
 	}
 	elseif (isset($_GET['status']))

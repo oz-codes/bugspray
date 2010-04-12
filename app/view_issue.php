@@ -22,7 +22,7 @@
  */
 
 include("functions.php");
-$page->setType('issues');
+$page->setType('tickets');
 
 $id = escape_smart($_GET['id']);
 
@@ -62,7 +62,7 @@ if (mysql_num_rows($result_issues))
 	$issue['assigns'] = $assignsarr;
 	
 	// get the comments
-	$result_comments = db_query_toarray("SELECT * FROM comments WHERE issue = $id ORDER BY when_posted DESC", "Retrieving comments for issue $id from database");
+	$result_comments = db_query_toarray("SELECT * FROM comments WHERE issue = $id ORDER BY when_posted ASC", "Retrieving comments for issue $id from database");
 	
 	// output the page
 	$page->setPage(

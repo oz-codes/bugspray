@@ -46,7 +46,7 @@ $(document).ready(function() {
 			return $(elm).closest("article");
 		};
 		var caId = function(aelm) {
-			return $(cElm(aelm)).attr('id').replace(/[^0-9]/g, '');
+			return $(caElm(aelm)).attr('id').replace(/[^0-9]/g, '');
 		};
 		
 		// comment actions

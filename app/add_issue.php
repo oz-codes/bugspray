@@ -1,7 +1,7 @@
 <?php
-/*
+/**
  * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 // if possible make this more like the reg/login forms or at least introduce similarities to this or them
@@ -110,7 +109,7 @@ else
 		$a = escape_smart($_SESSION['uid']);
 		$d = escape_smart(htmlentities($_POST['desc']));
 		
-		$query2 = db_query("INSERT INTO issues (name,author,description,project,when_opened,category) VALUES ('$t','$a','$d','1',NOW(),'$c')");
+		$query2 = db_query("INSERT INTO issues (name,author,description,project,when_opened,when_updated,category) VALUES ('$t','$a','$d','1',NOW(),NOW(),'$c')");
 		if ($query2) { echo 'Added issue successfully!'; } else { mysql_error(); }
 		
 		$query2_id = mysql_insert_id();
