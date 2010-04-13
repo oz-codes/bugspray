@@ -40,9 +40,9 @@
 		<td><?php echo $issue['id']; ?></td>
 		<td>
 			<a href="view_issue.php?id=<?php echo $issue['id']; ?>"><?php echo $issue['name']; ?></a>
-			<span class="tag"><?php echo getcatnm($issue['category']); ?></span>
+			<span class="tag"><?php echo gettagnm($issue['tags']); ?></span>
 		</td>
-		<td class="lesser"><a href="#"><?php echo getprojnm($issue['project']); ?></a></td>
+		<td class="lesser"><a href="#"><?php echo getcatnm($issue['category']); ?></a></td>
 		<td class="lesser">?</td>
 		<td class="lesser"><?php echo timeago($issue['when_updated'], false, true); ?></td>
 	</tr>

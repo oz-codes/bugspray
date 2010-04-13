@@ -30,21 +30,21 @@ if (!isset($_GET['s']))
 	echo '
 	<h3>Listing</h3>
 	
-	<button type="button" onclick="stringform(\'Add a category\',\''.$uri.'&amp;s=add\',{col:true})"><img src="img/btn/add.png" alt="" />Add a tag</button>';
+	<button type="button" onclick="stringform(\'Add a tag\',\''.$uri.'&amp;s=add\',{col:true})"><img src="img/btn/add.png" alt="" />Add a tag</button>';
 
 	echo '<ul>';
 	
-	$result_categories = db_query("SELECT * FROM categories", 'Retrieving all tags');
+	$result_tags = db_query("SELECT * FROM tags", 'Retrieving all tags');
 
-	while ($category = mysql_fetch_array($result_categories))
+	while ($tag = mysql_fetch_array($result_tags))
 	{
 		echo '
 		<li>
-			<div class="left" style="width:128px;">' . $category['name'] . '</div>			
+			<div class="left" style="width:128px;">' . $tag['name'] . '</div>			
 			<small class="left">
 				<a href="#">(<s>list</s>)</a>
-				<a href="javascript:void(0)" class="rnm">(rename)</a>
-				<a href="javascript:void(0)" class="del">(delete)</a>
+				<a href="javascript:void(0)" class="rnm">(<s>rename</s>)</a>
+				<a href="javascript:void(0)" class="del">(<s>delete</s>)</a>
 				<br />
 				linked categories: all <a href="#">(<s>change</s>)</a>
 			</small>
@@ -59,23 +59,23 @@ else
 	switch ($_GET['s'])
 	{
 		case 'add':
-			echo '<h3>Adding category</h3>';
+			echo '<h3>Adding tag</h3>';
 			$n = escape_smart($_POST['str']);
 			$c = escape_smart(str_replace('#','',$_POST['col']));
-			$query = db_query("INSERT INTO categories (name,color) VALUES ('$n','$c')");
+			$query = db_query("INSERT INTO tags (name,color) VALUES ('$n','$c')");
 			if ($query) { echo 'Added succesfully!'; } else { mysql_error(); }
 			break;
 		case 'rename':
-			echo '<h3>Renaming category</h3>';
+			echo '<h3>Renaming tag</h3>';
 			$n = escape_smart($_POST['str']);
 			$i = escape_smart($_GET['id']);
-			$query = db_query("UPDATE categories set name='$n' WHERE id='$i'");
+			$query = db_query("UPDATE tags set name='$n' WHERE id='$i'");
 			if ($query) { echo 'Renamed succesfully!'; } else { mysql_error(); }
 			break;
 		case 'delete':
-			echo '<h3>Delete category</h3>';
+			echo '<h3>Delete tag</h3>';
 			$i = escape_smart($_GET['id']);
-			$query = db_query("DELETE FROM categories WHERE id='$i'");
+			$query = db_query("DELETE FROM tags WHERE id='$i'");
 			if ($query) { echo 'Deleted succesfully!'; } else { mysql_error(); }
 			break;
 		default:

@@ -48,8 +48,8 @@ if (mysql_num_rows($result_issues))
 
 	// get list of assignable users
 	$assignsarr = array(array(-1,'nobody'),array(-1,'----------------------'));
-	$result_userproject = db_query("SELECT * FROM assigns_userproject WHERE projectid = " . $issue['project'], "Retrieving assigned users for issue $id from database");
-	while ($assign = mysql_fetch_array($result_userproject))
+	$result_usercat = db_query("SELECT * FROM assigns_usercat WHERE catid = {$issue['category']}", "Retrieving assignable users for category id {$issue['category']} from database");
+	while ($assign = mysql_fetch_array($result_usercat))
 	{
 		$enableme = $assign['userid'] == $issue['assign'] ? true : false;
 		

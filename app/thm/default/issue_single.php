@@ -12,11 +12,11 @@
 		</tr>
 		<tr>
 			<td>Tag(s)</td>
-			<td><span class="tag"><?php echo getcatnm($issue['category']); ?></span></td>
+			<td><span class="tag"><?php echo gettagnm($issue['tags']); ?></span></td>
 		</tr>
 		<tr>
-			<td>Project</td>
-			<td><?php echo getprojnm($issue['project']); ?></td>
+			<td>Category</td>
+			<td><?php echo getcatnm($issue['category']); ?></td>
 		</tr>
 		<tr>
 			<td>Status</td>

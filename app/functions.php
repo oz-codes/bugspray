@@ -172,7 +172,7 @@ function logwhencmp($a,$b)
 
 function query_uid($id)
 {
-	global $debug, $queries_uid;
+	global $queries_uid;
 	
 	if (!$queries_uid[$id])
 	{
@@ -184,7 +184,7 @@ function query_uid($id)
 
 function query_acttypes($id)
 {
-	global $debug, $queries_acttypes;
+	global $queries_acttypes;
 	
 	if (!$queries_acttypes[$id])
 	{
@@ -194,16 +194,16 @@ function query_acttypes($id)
 	return $queries_acttypes[$id];
 }
 
-function query_cats($id) //meow
+function query_tags($id)
 {
-	global $debug, $queries_cats;
+	global $queries_tags;
 	
-	if (!$queries_cats[$id])
+	if (!$queries_tags[$id])
 	{
-		$queries_cats[$id] = db_query_single("SELECT * FROM categories WHERE id = $id", "Retrieving info for category id $id from database");
+		$queries_tags[$id] = db_query_single("SELECT * FROM tags WHERE id = $id", "Retrieving info for tag id $id from database");
 	}
 	
-	return $queries_cats[$id];
+	return $queries_tags[$id];
 }
 
 function getuid($unm)
@@ -299,19 +299,23 @@ function getactlogdsc($id)
 
 function getcatcol($id)
 {
-	$q = query_cats($id);
-	return $q['color'];
+	global $debug, $debug_log;
+	if ($debug)
+	{
+		$debug_log[] = array('text' => 'getcatcol() is no longer a usable function, please remove references to it');
+	}
+	return '#f00';
+}
+
+function gettagnm($id)
+{	
+	$q = query_tags($id);
+	return $q['name'];
 }
 
 function getcatnm($id)
 {	
-	$q = query_cats($id);
-	return $q['name'];
-}
-
-function getprojnm($id)
-{	
-	$q = db_query_single("SELECT name FROM projects WHERE id = $id", "Retrieving info for project id $id from database");
+	$q = db_query_single("SELECT name FROM categories WHERE id = $id", "Retrieving info for category id $id from database");
 	return $q[0];
 }
 

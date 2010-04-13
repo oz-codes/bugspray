@@ -14,27 +14,22 @@ INSERT INTO `actiontypes` (`id`, `color`, `img`, `title`, `logdescription`) VALU
 (2, 'FFBFBF', 'close.png', 'issue-close', 'locked an issue'),
 (3, 'BFE9FF', 'comment.png', 'issue-comment', 'commented on an issue');
 
-CREATE TABLE IF NOT EXISTS `assigns_userproject` (
+CREATE TABLE IF NOT EXISTS `assigns_usercat` (
   `userid` int(11) NOT NULL,
-  `projectid` int(11) NOT NULL
+  `catid` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-INSERT INTO `assigns_userproject` (`userid`, `projectid`) VALUES
+INSERT INTO `assigns_usercat` (`userid`, `catid`) VALUES
 (1, 1);
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) NOT NULL,
-  `color` varchar(6) NOT NULL,
-  `projects` varchar(128) NOT NULL,
+  `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
-INSERT INTO `categories` (`id`, `name`, `color`, `projects`) VALUES
-(1, 'suggestion', 'F8FFBF', ''),
-(2, 'bug-severe', 'FF3F3F', ''),
-(3, 'bug-medium', 'FF7F7F', ''),
-(4, 'bug-low', 'FFBFBF', '');
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Example Category');
 
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -46,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `when_edited` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+
 
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -65,17 +61,17 @@ CREATE TABLE IF NOT EXISTS `issues` (
   `author` int(11) NOT NULL,
   `when_opened` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `when_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `project` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
   `closereason` varchar(64) NOT NULL,
   `discussion_closed` tinyint(1) NOT NULL,
-  `category` int(11) NOT NULL,
-  `tags` varchar(128) NOT NULL,
+  `tags` int(11) NOT NULL COMMENT 'Currently can only reference one tag (used to be category)',
   `status` int(11) NOT NULL DEFAULT '1',
   `assign` int(11) NOT NULL DEFAULT '0',
   `num_comments` int(11) NOT NULL,
   `num_views` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE IF NOT EXISTS `log_issues` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -86,14 +82,6 @@ CREATE TABLE IF NOT EXISTS `log_issues` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `projects` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
-
-INSERT INTO `projects` (`id`, `name`) VALUES
-(1, 'Example Project 1');
 
 CREATE TABLE IF NOT EXISTS `statuses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -112,6 +100,20 @@ INSERT INTO `statuses` (`id`, `type`, `name`) VALUES
 (7, 'declined', 'nonissue'),
 (8, 'declined', 'spam');
 
+CREATE TABLE IF NOT EXISTS `tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(16) NOT NULL,
+  `color` varchar(6) NOT NULL,
+  `projects` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+INSERT INTO `tags` (`id`, `name`, `color`, `projects`) VALUES
+(1, 'suggestion', 'F8FFBF', ''),
+(2, 'bug-severe', 'FF3F3F', ''),
+(3, 'bug-medium', 'FF7F7F', ''),
+(4, 'bug-low', 'FFBFBF', '');
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(24) NOT NULL,
@@ -129,4 +131,5 @@ CREATE TABLE IF NOT EXISTS `users` (
   `num_posted_issues` int(11) NOT NULL,
   `num_posted_comments` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+

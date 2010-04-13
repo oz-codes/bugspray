@@ -54,31 +54,31 @@ if (!isset($_POST['sub']))
 		</tr>
 		<tr>
 			<td>
-				Project
+				Category
 			</td>
 			<td>
-				<select name="proj">
+				<select name="category">
 					<option>todo</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Category
+				Tags
 			</td>
 			<td>
-				<select name="cat">
+				<select name="tag">
 					<option value="-1">Select one...</option>
 					<option value="-1">--------------------------------</option>
 					<?php
-						$result_categories = db_query("SELECT * FROM categories");
-						while ($category = mysql_fetch_array($result_categories))
+						$result_tags = db_query("SELECT * FROM tags");
+						while ($tag = mysql_fetch_array($result_tags))
 						{
-							echo '<option value="'.$category['id'].'" style="background:#'.$category['color'].'">'.$category['name'].'</option>';
+							echo '<option value="' . $tag['id'] . '">' . $tag['name'] . '</option>';
 						}
 					?>
 				</select><br />
-				<small>What category does this issue fit under?</small>
+				<small>You can only select one tag for now, as changes are happening with the codebase</small>
 			</td>
 		</tr>
 		<tr>
@@ -99,9 +99,9 @@ if (!isset($_POST['sub']))
 }
 else
 {
-	$c = escape_smart($_POST['cat']);
+	$c = escape_smart($_POST['tag']);
 	
-	$cate = db_query_single("SELECT id from categories WHERE id='$c'");
+	$cate = db_query_single("SELECT id from tags WHERE id='$c'");
 	
 	if ($cate[0])
 	{
@@ -109,8 +109,8 @@ else
 		$a = escape_smart($_SESSION['uid']);
 		$d = escape_smart(htmlentities($_POST['desc']));
 		
-		$query2 = db_query("INSERT INTO issues (name,author,description,project,when_opened,when_updated,category) VALUES ('$t','$a','$d','1',NOW(),NOW(),'$c')");
-		if ($query2) { echo 'Added issue successfully!'; } else { mysql_error(); }
+		$query2 = db_query("INSERT INTO issues (name,author,description,category,when_opened,when_updated,tags) VALUES ('$t','$a','$d','1',NOW(),NOW(),'$c')");
+		if ($query2) { echo 'Added issue successfully!'; } else { echo mysql_error(); }
 		
 		$query2_id = mysql_insert_id();
 		
@@ -119,11 +119,11 @@ else
 		$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(),'$a',1,$query2_id)");
 		if ($query3) { echo 'Logged successfully!'; } else { mysql_error(); }
 		
-		echo '<br /><br /><a href="view_issue.php?id='.$query3[0].'">Go to issue</a>';
+		echo '<br /><br /><a href="view_issue.php?id=' . $query2_id . '">Go to issue</a>';
 	}
 	else
 	{
-		echo 'You did not select a proper category.';
+		echo 'You did not select a proper tag.';
 	}
 }
 }
