@@ -194,6 +194,18 @@ function query_acttypes($id)
 	return $queries_acttypes[$id];
 }
 
+function query_cats($id) /* queries don't have 9 lives though */
+{
+	global $queries_cats;
+	
+	if (!$queries_cats[$id])
+	{
+		$queries_cats[$id] = db_query_single("SELECT * FROM categories WHERE id = $id", "Retrieving info for category id $id from database");
+	}
+	
+	return $queries_cats[$id];
+}
+
 function query_tags($id)
 {
 	global $queries_tags;
@@ -297,26 +309,16 @@ function getactlogdsc($id)
 	return $q['logdescription'];
 }
 
-function getcatcol($id)
-{
-	global $debug, $debug_log;
-	if ($debug)
-	{
-		$debug_log[] = array('text' => 'getcatcol() is no longer a usable function, please remove references to it');
-	}
-	return '#f00';
-}
-
 function gettagnm($id)
-{	
+{
 	$q = query_tags($id);
 	return $q['name'];
 }
 
 function getcatnm($id)
-{	
-	$q = db_query_single("SELECT name FROM categories WHERE id = $id", "Retrieving info for category id $id from database");
-	return $q[0];
+{
+	$q = query_cats($id);
+	return $q['name'];
 }
 
 function getissnm($id)
