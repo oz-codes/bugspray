@@ -27,7 +27,7 @@ $page->setTitle('Administration Panel');
 
 echo '<h1>Administration Panel</h1>';
 
-if (isadmin())
+if ($client['is_admin'])
 {
 	if (file_exists("adm/{$_GET['p']}.php"))
 		$subpage = $_GET['p'];

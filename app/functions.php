@@ -442,19 +442,6 @@ function isexistinguser($uname, $pwd, $isclient=false)
 	return array('hit'=>$hit,'salt'=>$salt,'uid'=>$uid);
 }
 
-function isloggedin()
-{
-	global $debug_log, $client;
-	$debug_log[] = array('text' => 'Call to isloggedin() detected, please use $client[\'is_logged\'] instead');
-	return $client['is_logged'];
-}
-function isadmin()
-{
-	global $debug_log, $client;
-	$debug_log[] = array('text' => 'Call to isadmin() detected, please use $client[\'is_admin\'] instead');
-	return $client['is_admin'];
-}
-
 function genpass($salt,$pwd)
 {
     return hash('whirlpool',$salt.$pwd);

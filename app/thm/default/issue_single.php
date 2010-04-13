@@ -29,7 +29,7 @@
 				<div class="fc"></div>
 			</td>
 		</tr>
-		<?php if (isadmin()): ?>
+		<?php if ($client['is_admin']): ?>
 		<tr>
 			<td>Manage</td>
 			<td>
@@ -135,8 +135,8 @@
 	
 	<section>
 		<h3>Add a comment</h3>
-		<?php if (!$issue['discussion_closed'] || isadmin()): ?>
-		<?php if (isloggedin()): ?>
+		<?php if (!$issue['discussion_closed'] || $client['is_admin']): ?>
+		<?php if ($client['is_logged']): ?>
 		<form id="comment_form" class="ajax">
 			<input type="hidden" name="id" value="<?php echo $issue['id']; ?>" />
 			<small>You can use BBcode here, like [b] and [url]. If you don't want something to be parsed, use [noparse]!</small><br />

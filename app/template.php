@@ -174,7 +174,7 @@ class PageBuilder
 	
 	public function setPage($page,$variables=array())
 	{
-		global $debug_log;
+		global $debug_log, $client;
 		
 		extract($variables,EXTR_SKIP);
 		$location = $this->location;
@@ -191,7 +191,7 @@ class PageBuilder
 	
 	private function build()
 	{
-		global $debug_log;
+		global $debug_log, $client;
 		
 		if ($this->disabled)
 		{
