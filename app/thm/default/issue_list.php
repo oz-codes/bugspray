@@ -27,24 +27,26 @@
 	<tbody>
 	<?php foreach ($issues as $issue): ?>
 	<tr>
-		<td class="status"><div style="background:<?php echo $issue['status_color']; ?>"></div></td>
-		<!--<td class="comments">
-			<div><?php echo $issue['num_comments']; ?></div>
-			<div>comment<?php echo $issue['num_comments'] == 1 ? '' : 's'; ?></div>
+		<td class="status"><div style="background:<?php echo $issue['status_color'] ?>"></div></td>
+		
+		<?php /*<td class="comments">
+			<div><?php echo $issue['num_comments'] ?></div>
+			<div>comment<?php echo $issue['num_comments'] == 1 ? '' : 's' ?></div>
 		</td>
 		<td class="views">
-			<div><?php echo $issue['num_views']; ?></div>
-			<div>view<?php echo $issue['num_views'] == 1 ? '' : 's'; ?></div>
-		</td>-->
-		<td><!--<img src="<?php echo $location['images']; ?>/star.png" alt="*" />--></td>
+			<div><?php echo $issue['num_views'] ?></div>
+			<div>view<?php echo $issue['num_views'] == 1 ? '' : 's' ?></div>
+		</td>*/ ?>
+		
+		<td><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></td>
 		<td><?php echo $issue['id']; ?></td>
 		<td>
-			<a href="view_issue.php?id=<?php echo $issue['id']; ?>"><?php echo $issue['name']; ?></a>
-			<span class="tag"><?php echo gettagnm($issue['tags']); ?></span>
+			<a href="view_issue.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
+			<span class="tag"><?php echo gettagnm($issue['tags']) ?></span>
 		</td>
-		<td class="lesser"><a href="#"><?php echo getcatnm($issue['category']); ?></a></td>
-		<td class="lesser"><?php echo $issue['assign'] > 0 ? getunm($issue['assign']) : '--'; ?></td>
-		<td class="lesser"><?php echo timeago($issue['when_updated'], false, true); ?></td>
+		<td class="lesser"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>
+		<td class="lesser"><?php echo $issue['assign'] > 0 ? getunm($issue['assign']) : '--' ?></td>
+		<td class="lesser"><?php echo timeago($issue['when_updated'], false, true) ?></td>
 	</tr>
     <?php endforeach; ?>
 	</tbody>

@@ -94,8 +94,11 @@ $result_issues = db_query_toarray("
 // extra variables
 $count = count($result_issues);
 for ($i=0;$i<$count;$i++)
-{	
-	// determine the colour of the listing
+{
+	// is the issue favoUrited? (db uses "favorite" because everyone favoUrs the americans)
+	$result_issues[$i]['favorite'] = in_array($result_issues[$i]['id'], getufavs($_SESSION['uid']));
+	
+	// determine the colour of the listing (!!!!!!!!!!!!!!!!!!!todo: redo this)
 	$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'],$result_issues[$i]['num_comments'], $result_issues[$i]['when_updated']);
 }
 

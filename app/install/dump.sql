@@ -43,6 +43,12 @@ CREATE TABLE IF NOT EXISTS `comments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 
+CREATE TABLE IF NOT EXISTS `favorites` (
+  `ticketid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,

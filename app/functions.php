@@ -274,6 +274,25 @@ function getubanned($id)
 	return $q['banned'];
 }
 
+function getufavs($id)
+{
+	global $queries_favs;
+	
+	if (!isset($queries_favs[$id]))
+	{
+		$favs = db_query("SELECT ticketid FROM favorites WHERE userid = $id", "Retrieving favorites for user id $id from database");
+		
+		$queries_favs[$id] = array();
+		
+		while ($fav = mysql_fetch_array($favs))
+		{
+			$queries_favs[$id][] = $fav['ticketid'];
+		}
+	}
+	
+	return $queries_favs[$id];
+}
+
 function getactimg($id)
 {
 	$q = query_acttypes($id);
