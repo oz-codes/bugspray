@@ -19,40 +19,31 @@
 <table class="tickets">
 	<thead>
 		<tr>
-			<!-- perhaps do classes for all these columns -->
-			<th class="status" style="width: 4px;"></th>
-			<th style="width: 16px;"></th>
-			<th style="width: 8px;"><a href="#">#</a></th>
-			<th><a href="#">Summary</a></th>
-			<th style="width: 128px;"><a href="#">Category</a></th>
-			<th style="width: 96px;"><a href="#">Assigned</a></th>
-			<th style="width: 64px;"><a href="#">Last</a></th>
+			<th class="status"></th>
+			<th class="star"></th>
+			<th class="id"><a href="#">#</a></th>
+			<th class="summary"><a href="#">Summary</a></th>
+			<th class="category"><a href="#">Category</a></th>
+			<th class="assigned"><a href="#">Assigned</a></th>
+			<th class="last"><a href="#">Last</a></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($issues as $issue): ?>
-	<tr>
+	
+	<tr class="ticket" data-id="<?php echo $issue['id'] ?>">
 		<td class="status"><div style="background:<?php echo $issue['status_color'] ?>"></div></td>
-		
-		<?php /*<td class="comments">
-			<div><?php echo $issue['num_comments'] ?></div>
-			<div>comment<?php echo $issue['num_comments'] == 1 ? '' : 's' ?></div>
-		</td>
-		<td class="views">
-			<div><?php echo $issue['num_views'] ?></div>
-			<div>view<?php echo $issue['num_views'] == 1 ? '' : 's' ?></div>
-		</td>*/ ?>
-		
-		<td><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></td>
-		<td><?php echo $issue['id']; ?></td>
-		<td>
+		<td class="star"><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></td>
+		<td class="id"><?php echo $issue['id']; ?></td>
+		<td class="summary">
 			<a href="view_issue.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
 			<span class="tag"><?php echo gettagnm($issue['tags']) ?></span>
 		</td>
-		<td class="lesser"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>
-		<td class="lesser"><?php echo $issue['assign'] > 0 ? getunm($issue['assign']) : '--' ?></td>
-		<td class="lesser"><?php echo timeago($issue['when_updated'], false, true) ?></td>
+		<td class="category"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>
+		<td class="assigned"><?php echo $issue['assign'] > 0 ? getunm($issue['assign']) : '--' ?></td>
+		<td class="last"><?php echo timeago($issue['when_updated'], false, true) ?></td>
 	</tr>
+	
     <?php endforeach; ?>
 	</tbody>
 </table>

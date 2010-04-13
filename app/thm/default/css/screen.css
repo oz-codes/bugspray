@@ -498,11 +498,37 @@ input[type=submit]
 {
 	padding-left: 0;
 	padding-right: 0;
+	width: 4px;
 }
 .tickets .status div
 {
 	width: 4px;
 	height: 24px;
+}
+.tickets .star
+{
+	width: 16px;
+}
+.tickets .id
+{
+	width: 8px;
+}
+.tickets td.category, .tickets td.assigned, .tickets td.last
+{
+	color: #a0a0a0;
+	font-size: 10px;
+}
+.tickets .category
+{
+	width: 128px;
+}
+.tickets .assigned
+{
+	width: 96px;
+}
+.tickets .last
+{
+	width: 64px;
 }
 
 .tickets .tag
@@ -516,12 +542,6 @@ input[type=submit]
 	opacity: 0.75;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=75)";
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=75);
-}
-
-.tickets .lesser /* as in lesser importance */
-{
-	color: #a0a0a0;
-	font-size: 10px;
 }
 
 /* issue listing - large - uses tables */
