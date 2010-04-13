@@ -330,27 +330,26 @@ function getissnm($id)
 }
 
 function getstatuses()
-{
-	global $statuseslist;
-	
-	if (!$statuseslist)
-	{
-		$statuseslist = db_query_toarray("SELECT * FROM statuses", true, "Retrieving all status types from database");
-	}
-	
-	return $statuseslist;
+{	
+	return array(
+		array('id' => 1, 'type' => 'open', 'name' => 'open'),
+		array('id' => 2, 'type' => 'assigned', 'name' => 'assigned'),
+		array('id' => 3, 'type' => 'resolved', 'name' => 'resolved'),
+		array('id' => 4, 'type' => 'postponed', 'name' => 'open'),
+		array('id' => 8, 'type' => 'declined', 'name' => 'declined')
+	);
 }
 
 function getstatusnm($id)
 {
 	$statuses = getstatuses();
-	return $statuses[$id]['name'];
+	return $statuses[$id-1]['name'];
 }
 
 function getstatustype($id)
 {
 	$statuses = getstatuses();
-	return $statuses[$id]['type'];
+	return $statuses[$id-1]['type'];
 }
 
 function issuecol($status,$comments,$lastactivity)

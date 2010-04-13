@@ -130,11 +130,8 @@ function changestatus(id,status,assigns)
 			<input type="radio" name="st" value="1" id="st1" /> <label for="st1">Open</label> <br />\
 			<input type="radio" name="st" value="2" id="st2" /> <label for="st2">Assigned to</label> <select name="st2a" id="st2a">'+a+'</select><br />\
 			<input type="radio" name="st" value="3" id="st3" /> <label for="st3">Resolved</label> <br />\
-			<input type="radio" name="st" value="4" id="st4" /> <label for="st4">Duplicate of</label> <input type="text" id="st4a" /> (doesn\'t work right now) <br />\
+			<input type="radio" name="st" value="4" id="st4" /> <label for="st4">Postponed</label> <br />\
 			<input type="radio" name="st" value="5" id="st5" /> <label for="st5">Declined</label> <br />\
-			<input type="radio" name="st" value="6" id="st6" /> <label for="st6">By design</label> <br />\
-			<input type="radio" name="st" value="7" id="st7" /> <label for="st7">Non-issue</label> <br />\
-			<input type="radio" name="st" value="8" id="st8" /> <label for="st8">Spam</label> <br />\
 			<br />\
 			<div class="ibox_generic">\
 				<b>You may enter some additional notes here. These will be posted in the comments. If you do not wish to write any, leave the box blank.</b> (doesn\'t work right now)\

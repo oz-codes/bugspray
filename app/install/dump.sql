@@ -89,23 +89,6 @@ CREATE TABLE IF NOT EXISTS `log_issues` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE IF NOT EXISTS `statuses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` enum('open','assigned','resolved','declined') NOT NULL,
-  `name` varchar(24) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
-
-INSERT INTO `statuses` (`id`, `type`, `name`) VALUES
-(1, 'open', 'open'),
-(2, 'assigned', 'assigned'),
-(3, 'resolved', 'resolved'),
-(4, 'declined', 'duplicate'),
-(5, 'declined', 'declined'),
-(6, 'declined', 'bydesign'),
-(7, 'declined', 'nonissue'),
-(8, 'declined', 'spam');
-
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
