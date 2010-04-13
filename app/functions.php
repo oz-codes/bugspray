@@ -218,23 +218,6 @@ function query_tags($id)
 	return $queries_tags[$id];
 }
 
-function getuid($unm)
-{
-	global $debug_log;
-	if ($unm == $_SESSION['username'])
-	{
-		// added for sake of compatibility with old code; please don't use this function like this: getuid($_SESSION['username'])
-		// if you want to do something like that just use $_SESSION['uid']
-		$debug_log[] = array('text' => 'Call to getuid() with equivalent value to $_SESSION[\'username\'] detected, please use $_SESSION[\'uid\'] instead');
-		return $_SESSION['uid'];
-	}
-	else
-	{
-		$q = db_query_single("SELECT id FROM users WHERE username = '$unm'", "Retrieving username for user with id $id");
-		return $q[0];
-	}
-}
-
 function getav($id)
 {
 	$q = query_uid($id);

@@ -23,7 +23,7 @@
 
 include("functions.php");
 
-$a = escape_smart(getuid($_SESSION['username']));
+$a = escape_smart($_SESSION['uid']);
 $i = escape_smart($_GET['id']);
 
 if (isadmin())

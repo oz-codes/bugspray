@@ -46,7 +46,7 @@ else
 		}
 		else
 		{
-			$a = escape_smart(getuid($_SESSION['username']));
+			$a = escape_smart($_SESSION['uid']);
 			$i = escape_smart($_POST['id']);
 			$c = escape_smart(htmlentities($_POST['cont'])); 
 			
