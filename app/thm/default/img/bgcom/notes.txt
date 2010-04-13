@@ -1,1 +1,0 @@
-rotate 15 degrees counterclockwise, cut it off at the top/right edges, upsize with "nearest neighbour" to 48x48 px, 50% transp

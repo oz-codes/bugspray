@@ -654,12 +654,6 @@ input[type=submit]
 	color:#777;
 }
 
-.ibox_details
-{
-	background-image:url('../img/bgcom/details.png');
-	background-repeat:no-repeat;
-	background-position:bottom right;
-}
 table.ibox_details
 {
 	width:100%;
