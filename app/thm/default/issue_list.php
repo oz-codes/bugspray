@@ -43,7 +43,7 @@
 			<span class="tag"><?php echo gettagnm($issue['tags']); ?></span>
 		</td>
 		<td class="lesser"><a href="#"><?php echo getcatnm($issue['category']); ?></a></td>
-		<td class="lesser">?</td>
+		<td class="lesser"><?php echo $issue['assign'] > 0 ? getunm($issue['assign']) : '--'; ?></td>
 		<td class="lesser"><?php echo timeago($issue['when_updated'], false, true); ?></td>
 	</tr>
     <?php endforeach; ?>
