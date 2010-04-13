@@ -9,8 +9,9 @@
  * @version 0.2
  * @copyright Copyright (c) a2h 2009-2010
  *
+ * Silk icons (c) Mark James
  * WooFunction icons (c) WooThemes and WeFunction 2009
- * Mico icons (WIP) (c) a2h 2009 - no site
+ * btnmini icons and titles/ticket.png (c) a2h 2009-2010
  */
 
 /* main stuff */
@@ -120,16 +121,16 @@ h1
 	margin-bottom: 8px;
 }
 
-.imgtitle img, .imgtitle .text
+.imgtitle .image, .imgtitle .text
 {
 	float: left;
 }
-.imgtitle img
+.imgtitle .image
 {
 	margin-right: 12px;
 }
 
-.imgtitle-24 img
+.imgtitle-24 .image
 {
 	width: 24px;
 	height: 24px;
@@ -143,7 +144,7 @@ h1
 	font-size: 14px;
 }
 
-.imgtitle-32 img
+.imgtitle-32 .image
 {
 	width: 32px;
 	height: 32px;

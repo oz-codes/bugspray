@@ -1,8 +1,13 @@
-<h1 class="left">Tickets</h2>
-<div class="right">
-	<button type="button" onclick="location.href='add_issue.php'"><img src="<?php echo $location['images']; ?>/btn/add.png" alt="" />Add an issue</button>
+<div class="imgtitle imgtitle-32">
+	<img class="image" src="<?php echo $location['images']; ?>/titles/tickets.png" alt="" />
+	<div class="text">
+		<h1>Tickets</h1>
+	</div>
+	<div class="right">
+		<button type="button" onclick="location.href='add_issue.php'"><img src="<?php echo $location['images']; ?>/btn/add.png" alt="" />Add an issue</button>
+	</div>
+	<div class="clear"></div>
 </div>
-<div class="clear"></div>
 
 <div class="tabs">
 	<?php foreach ($status_tabs as $tab): ?>
