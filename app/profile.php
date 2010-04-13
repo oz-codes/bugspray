@@ -57,7 +57,7 @@ $page->setTitle($profile['username'].'\'s Profile');
 				<?php
 					if ($profile['email'] != '')
 					{
-						if ($profile['email_show'] || isadmin())
+						if ($profile['email_show'] || $client['is_admin'])
 						{
 							if (!$profile['email_show'])
 							{
