@@ -26,7 +26,7 @@ include("functions.php");
 $a = escape_smart($_SESSION['uid']);
 $i = escape_smart($_GET['id']);
 
-if (isadmin())
+if ($client['is_admin'])
 {
 	if (isset($_GET['lock']))
 	{		
@@ -175,7 +175,7 @@ if (isadmin())
 		
 		// and finally the comment
 		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Status changed to \'".getstatusnm($s)."\'$custom ***',NOW(),'status')") or $success = false;
-		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'") or $success = false;
+		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1, when_updated=NOW() WHERE id='$i'") or $success = false;
 		
 		// return
 		if (!$success) { $message = mysql_error(); }
