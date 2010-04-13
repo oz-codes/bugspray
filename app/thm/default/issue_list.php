@@ -40,7 +40,7 @@
 			<span class="tag"><?php echo gettagnm($issue['tags']) ?></span>
 		</td>
 		<td class="category"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>
-		<td class="assigned"><?php echo $issue['assign'] > 0 ? getunm($issue['assign']) : '--' ?></td>
+		<td class="assigned<?php echo $issue['assign'] && $issue['status'] < 3 == $_SESSION['uid'] ? ' you' : '' ?>"><?php echo $issue['assign'] > 0 ? '<a href="profile.php?id=' . $issue['assign'] . '">' . getunm($issue['assign']) . '</a>' : '--' ?></td>
 		<td class="last"><?php echo timeago($issue['when_updated'], false, true) ?></td>
 	</tr>
 	
