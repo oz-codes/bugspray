@@ -47,7 +47,7 @@ if (mysql_num_rows($result_issues))
 	}
 
 	// get list of assignable users
-	$assignsarr = array(array(-1,'nobody'),array(-1,'----------------------'));
+	$assignsarr = array(array(0,'nobody'),array(0,'----------------------'));
 	$result_usercat = db_query("SELECT * FROM assigns_usercat WHERE catid = {$issue['category']}", "Retrieving assignable users for category id {$issue['category']} from database");
 	while ($assign = mysql_fetch_array($result_usercat))
 	{
