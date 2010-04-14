@@ -25,7 +25,7 @@ body
 }
 body, td
 {
-	font-family: verdana, arial, sans-serif;
+	font-family: 'lucida grande', 'lucida sans unicode', verdana, arial, sans-serif;
 	font-size: 12px;
 }
 
@@ -73,7 +73,7 @@ td, th
 {
 	height: 24px;
 	border: none;
-	padding: 3px 8px;
+	padding: 2px 8px;
 	text-align: left;
 	font-size: 11px;
 }
@@ -196,6 +196,7 @@ hr
 #header
 {
 	height: 96px;
+	font-family: verdana, sans-serif;
 }
 
 #header h1
@@ -298,27 +299,27 @@ input[type=text], input[type=password], textarea, select
 
 button, input[type=submit], input[type=button]
 {
-	height:24px;
-	background:url('../img/btn/grad.png');
-	border:1px solid #bebebe;
-	padding:0px 4px;
-	font-family:verdana;
-	font-size:11px;
-	text-shadow:0px 1px 0px #fff;
-	cursor:pointer;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
+	padding: 0 4px;
+	height: 24px;
+	background: url('../img/btn/grad.png');
+	border: 1px solid #bebebe;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	text-shadow: 0 1px 0 #fff;
+	font-family: verdana, sans-serif;
+	font-size: 11px;
+	cursor: pointer;
 }
 
 button img
 {
-	margin:-4px 8px -3px 0px;
+	margin: -4px 8px -3px 0px;
 }
 
 input[type=submit]
 {
-	width:64px;
+	width: 64px;
 }
 
 /* web 2.0 means BIIIIG forms */
@@ -487,14 +488,14 @@ input[type=submit]
 
 .tickets tfoot td
 {
-	padding: 8px;
+	padding: 6px 8px;
 	background: #eeeeee;
 	border: none;
 }
 .tickets tfoot select
 {
 	font-size: 11px;
-	font-family: verdana, sans-serif;
+	font-family: 'lucida grande', 'lucida sans unicode', verdana, sans-serif;
 }
 
 .tickets tbody tr:hover td
@@ -549,11 +550,11 @@ input[type=submit]
 }
 .tickets .assigned
 {
-	width: 96px;
+	width: 128px;
 }
 .tickets .assigned.you
 {
-	background: #ffc0c0;
+	background: #f3d3d3;
 }
 .tickets .last
 {
