@@ -25,7 +25,13 @@ include("functions.php");
 $page->setType('admin');
 $page->setTitle('Administration Panel');
 
-echo '<h1>Administration Panel</h1>';
+echo '<div class="imgtitle imgtitle-32">
+	<img class="image" src="' . $location['images'] . '/titles/admin.png" alt="" />
+	<div class="text">
+		<h1>Administration Panel</h1>
+	</div>
+	<div class="clear"></div>
+</div>';
 
 if ($client['is_admin'])
 {
