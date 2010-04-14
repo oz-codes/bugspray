@@ -89,7 +89,7 @@ $count = count($result_issues);
 for ($i=0;$i<$count;$i++)
 {
 	// is the issue favoUrited? (db uses "favorite" because everyone favoUrs the americans)
-	$result_issues[$i]['favorite'] = in_array($result_issues[$i]['id'], getufavs($_SESSION['uid']));
+	$result_issues[$i]['favorite'] = $client['is_logged'] ? in_array($result_issues[$i]['id'], getufavs($_SESSION['uid'])) : false;
 	
 	// determine the colour of the listing (!!!!!!!!!!!!!!!!!!!move into template?)
 	$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'], $result_issues[$i]['severity']);
