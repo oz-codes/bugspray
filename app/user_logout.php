@@ -26,7 +26,7 @@ include("functions.php");
 $page->setType('account');
 $page->setTitle('Logout');
 
-if (!isloggedin())
+if (!$client['is_logged'])
 {
 	echo 'Congratulations, you have just created a paradox. A black hole is currently being formed behind you.';
 }
