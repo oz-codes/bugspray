@@ -1,7 +1,7 @@
 <?php
-/*
+/**
  * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,23 +19,22 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 include("functions.php");
-$page->setType('activity');
-$page->setTitle('Activity');
+$page->setType('statistics');
+$page->setTitle('Statistics');
 
-$projects = db_query_toarray("SELECT id, name FROM projects");
+$projects = db_query_toarray("SELECT id, name FROM categories");
 
 $i = 0;
 foreach ($projects as $project)
 {
 	$result_logs = db_query("
-		SELECT issues.category as issuecat, issues.name as issuename, log_issues.when_occured as logwhen, log_issues.userid, log_issues.actiontype
+		SELECT issues.tags as issuecat, issues.name as issuename, log_issues.when_occured as logwhen, log_issues.userid, log_issues.actiontype
 		FROM issues
 		RIGHT JOIN log_issues ON log_issues.issue = issues.id
-		WHERE project = '{$project['id']}'
+		WHERE category = '{$project['id']}'
 		ORDER BY log_issues.when_occured DESC
 	");
 	$j=0;
@@ -54,7 +53,7 @@ foreach ($projects as $project)
 }
 
 $page->setPage(
-	'activity.php',
+	'statistics.php',
 	array(
 		'projects' => $projects
 	)

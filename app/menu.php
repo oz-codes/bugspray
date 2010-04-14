@@ -13,13 +13,9 @@ $menu = array(
 		'url' => 'tickets.php'
 	),
 	array(
-		'id' => 'milestones',
-		'name' => 'Milestones'
-	),
-	array(
-		'id' => 'activity',
-		'name' => 'Activity',
-		'url' => 'activity.php'
+		'id' => 'statistics',
+		'name' => 'Statistics',
+		'url' => 'statistics.php'
 	),
 	array(
 		'id' => 'help',

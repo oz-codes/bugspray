@@ -1,4 +1,10 @@
-<h2>Recent activity</h2>
+<div class="imgtitle imgtitle-32">
+	<img class="image" src="<?php echo $location['images']; ?>/titles/statistics.png" alt="" />
+	<div class="text">
+		<h1>Statistics</h1>
+	</div>
+	<div class="clear"></div>
+</div>
 
 <b>Logging has only been implemented for adding issues right now.</b><br /><br />
 
