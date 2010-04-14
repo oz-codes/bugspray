@@ -60,7 +60,7 @@
 			</div>
 			
 			<footer id="footer">
-				powered by bugspray | version 0.1-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
+				powered by bugspray | version 0.2-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
 			</footer>
 		</div>
 	</body>

@@ -73,7 +73,7 @@ td, th
 {
 	height: 24px;
 	border: none;
-	padding: 2px 8px;
+	padding: 3px 8px;
 	text-align: left;
 	font-size: 11px;
 }
@@ -293,14 +293,7 @@ hr
 
 input[type=text], input[type=password], textarea, select
 {
-	border:1px solid #bbb;
-	font-size:13px;
-	font-family:helvetica,arial,sans-serif;
-	background:#fff url('../img/bg/form.png') repeat-x;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
-	padding:4px;
+	/* make some new styling because the old one is rubbish */
 }
 
 button, input[type=submit], input[type=button]
@@ -489,7 +482,43 @@ input[type=submit]
 }
 .tickets td
 {
-	border-bottom: 1px solid #ebebeb;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.tickets tfoot td
+{
+	padding: 8px;
+	background: #eeeeee;
+	border: none;
+}
+.tickets tfoot select
+{
+	font-size: 11px;
+	font-family: verdana, sans-serif;
+}
+
+.tickets tbody tr:hover td
+{
+	background: #f5f5f5;
+}
+
+.tickets .tag
+{
+	opacity: 0.33;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=33)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=33);
+}
+.tickets tr:hover .tag
+{
+	opacity: 0.50;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+}
+.tickets tr:hover .tag:hover
+{
+	opacity: 1;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=100)";
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=100);
 }
 
 .tickets .status
@@ -535,19 +564,6 @@ input[type=submit]
 .tickets .last
 {
 	width: 64px;
-}
-
-.tickets .tag
-{
-	opacity: 0.33;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=33)";
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=33);
-}
-.tickets .tag:hover
-{
-	opacity: 0.75;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=75)";
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=75);
 }
 
 /* issue listing - large - uses tables */

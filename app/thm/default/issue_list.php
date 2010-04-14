@@ -9,13 +9,6 @@
 	<div class="clear"></div>
 </div>
 
-<div class="tabs">
-	<?php foreach ($status_tabs as $tab): ?>
-	<a href="<?php echo $tab['url']; ?>"<?php echo $tab['sel'] ? ' class="sel"' : ''; ?>><?php echo $tab['name']; ?></a>
-    <?php endforeach; ?>
-	<div class="clear"></div>
-</div>
-
 <table class="tickets">
 	<thead>
 		<tr>
@@ -28,6 +21,21 @@
 			<th class="last"><a href="#">Last</a></th>
 		</tr>
 	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="7">
+				<form id="tickets-filter">
+					Showing
+					<select name="status">
+						<?php foreach ($status_tabs as $tab): ?>
+						<option value="<?php echo $tab['url']; ?>"<?php echo $tab['sel'] ? ' selected' : ''; ?> onclick="location.href=this.getAttribute('value')"><?php echo strtolower($tab['name']); ?></a>
+						<?php endforeach; ?>
+					</select>
+					tickets
+				</form>
+			</td>
+		</tr>
+	</tfoot>
 	<tbody>
 	<?php foreach ($issues as $issue): ?>
 	
@@ -46,4 +54,5 @@
 	
     <?php endforeach; ?>
 	</tbody>
+	
 </table>

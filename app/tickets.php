@@ -35,26 +35,14 @@ if ($curstatus != 'all')
 	if (!isset($_GET['status']))
 		$curstatus = 'open';
 	
-	$wherests = array();
-	foreach (getstatuses() as $status)
+	switch ($curstatus)
 	{
-		if ($status['type'] == $curstatus)
-		{
-			$wherests[] = $status['id'];
-		}
-	}
-	if (count($wherests) > 0)
-	{
-		$whereclause = 'WHERE (';
-		$i = 0;
-		foreach ($wherests as $st)
-		{
-			if ($i > 0)
-				$whereclause .= ' OR';
-			$whereclause .= ' issues.status = '.$st;
-			$i++;
-		}
-		$whereclause .= ')';
+		case 'open': $whereclause = 'WHERE issues.status = 1 OR issues.status = 2'; break;
+		case 'unassigned': $whereclause = 'WHERE issues.status = 1'; break;
+		case 'resolved': $whereclause = 'WHERE issues.status = 3'; break;
+		//case 'postponed': $whereclause = 'WHERE issues.status = 4'; break;
+		case 'declined': $whereclause = 'WHERE issues.status = 5'; break;
+		case 'all': $whereclause = ''; break;
 	}
 }
 
@@ -64,6 +52,11 @@ $status_tabs = array(
 		'name' => 'Open',
 		'url' => 'tickets.php',
 		'sel' => $curstatus == 'open' ? true : false
+	),
+	array(
+		'name' => 'Unassigned',
+		'url' => 'tickets.php?status=unassigned',
+		'sel' => $curstatus == 'unassigned' ? true : false
 	),
 	array(
 		'name' => 'Assigned',
