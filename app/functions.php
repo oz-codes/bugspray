@@ -336,7 +336,7 @@ function getstatuses()
 		array('id' => 2, 'type' => 'assigned', 'name' => 'assigned'),
 		array('id' => 3, 'type' => 'resolved', 'name' => 'resolved'),
 		array('id' => 4, 'type' => 'postponed', 'name' => 'open'),
-		array('id' => 8, 'type' => 'declined', 'name' => 'declined')
+		array('id' => 5, 'type' => 'declined', 'name' => 'declined')
 	);
 }
 
@@ -364,11 +364,11 @@ function issuecol($status,$comments,$lastactivity)
 	
 	if (getstatustype($status) == 'declined')
 	{
-		$col = 'rgb(48,48,48)';
+		$col = '#ededed';
 	}
 	elseif (getstatustype($status) == 'resolved')
 	{
-		$col = 'rgb(128,255,64)';
+		$col = '#c8ffa3';
 	}
 	else
 	{
