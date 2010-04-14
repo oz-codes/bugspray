@@ -1,5 +1,5 @@
 <article>
-	<h2>Viewing issue "<?php echo $issue['name']; ?>"</h2>
+	<h2>Viewing ticket "<?php echo $issue['name']; ?>"</h2>
 	
 	<table class="ibox_details">
 		<tr>
@@ -21,6 +21,10 @@
 		<tr>
 			<td>Status</td>
 			<td><?php echo getstatusnm($issue['status']); ?></td>
+		</tr>
+		<tr>
+			<td>Severity</td>
+			<td><?php echo $issue['severity']; ?>/5 <small>[todo: show text not a number]</small></td>
 		</tr>
 		<tr>
 			<td><?php echo ($issue['status'] == 3 ? 'Was assigned to' : 'Assigned to'); ?></td>
