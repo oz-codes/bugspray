@@ -26,9 +26,9 @@
 			<td colspan="7">
 				<form id="tickets-filter">
 					Showing
-					<select name="status">
+					<select name="status" onchange="location.href=this.options[selectedIndex].value">
 						<?php foreach ($status_tabs as $tab): ?>
-						<option value="<?php echo $tab['url']; ?>"<?php echo $tab['sel'] ? ' selected' : ''; ?> onclick="location.href=this.getAttribute('value')"><?php echo strtolower($tab['name']); ?></a>
+						<option value="<?php echo $tab['url']; ?>"<?php echo $tab['sel'] ? ' selected' : ''; ?>><?php echo strtolower($tab['name']); ?></a>
 						<?php endforeach; ?>
 					</select>
 					tickets

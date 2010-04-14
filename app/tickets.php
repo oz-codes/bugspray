@@ -39,6 +39,7 @@ if ($curstatus != 'all')
 	{
 		case 'open': $whereclause = 'WHERE issues.status = 1 OR issues.status = 2'; break;
 		case 'unassigned': $whereclause = 'WHERE issues.status = 1'; break;
+		case 'assigned': $whereclause = 'WHERE issues.status = 2'; break;
 		case 'resolved': $whereclause = 'WHERE issues.status = 3'; break;
 		//case 'postponed': $whereclause = 'WHERE issues.status = 4'; break;
 		case 'declined': $whereclause = 'WHERE issues.status = 5'; break;
