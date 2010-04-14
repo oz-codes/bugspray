@@ -24,14 +24,22 @@
 // if possible make this more like the reg/login forms or at least introduce similarities to this or them
 
 include("functions.php");
-$page->setType('issues');
-$page->setTitle('Add an issue');
+$page->setType('tickets');
+$page->setTitle('Add a ticket');
 ?>
 
-<h2>Add an issue</h2>
+<div class="imgtitle imgtitle-32">
+	<img class="image" src="<?php echo $location['images']; ?>/titles/tickets-add.png" alt="" />
+	<div class="text">
+		<h1>Add a ticket</h1>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<p><b>[todo: redo this form]</b></p>
 
 <?php
-if (!isloggedin())
+if (!$client['is_logged'])
 {
 	echo 'You are not logged in.';
 }
@@ -45,11 +53,23 @@ if (!isset($_POST['sub']))
 	<table class="frmtbl">
 		<tr>
 			<td style="width:128px;">
-				Title
+				Summary
 			</td>
 			<td>
 				<input name="title" type="text" /><br />
-				<small>Be succint! You are limited to 128 characters.</small>
+				<small>Be succinct! You are limited to 128 characters.</small>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Severity
+			</td>
+			<td>
+				<input type="radio" name="severity" id="sv-1" value="1" /> <label for="sv-1">Very Low</label>
+				<input type="radio" name="severity" id="sv-2" value="2" /> <label for="sv-2">Low</label>
+				<input type="radio" name="severity" id="sv-3" value="3" /> <label for="sv-3">Medium</label>
+				<input type="radio" name="severity" id="sv-4" value="4" /> <label for="sv-4">Severe</label>
+				<input type="radio" name="severity" id="sv-5" value="5" /> <label for="sv-5">Very Severe</label>
 			</td>
 		</tr>
 		<tr>
@@ -92,7 +112,7 @@ if (!isset($_POST['sub']))
 		</tr>
 	</table>
 
-	<input type="submit" name="sub" value="Add" />
+	<input type="submit" name="sub" value="Post" />
 </form>
 
 <?php
@@ -108,8 +128,9 @@ else
 		$t = escape_smart(htmlentities($_POST['title']));
 		$a = escape_smart($_SESSION['uid']);
 		$d = escape_smart(htmlentities($_POST['desc']));
+		$s = escape_smart($_POST['severity']);
 		
-		$query2 = db_query("INSERT INTO issues (name,author,description,category,when_opened,when_updated,tags) VALUES ('$t','$a','$d','1',NOW(),NOW(),'$c')");
+		$query2 = db_query("INSERT INTO issues (name,author,description,category,when_opened,when_updated,tags,severity) VALUES ('$t','$a','$d','1',NOW(),NOW(),'$c','$s')");
 		if ($query2) { echo 'Added issue successfully!'; } else { echo mysql_error(); }
 		
 		$query2_id = mysql_insert_id();

@@ -352,16 +352,8 @@ function getstatustype($id)
 	return $statuses[$id-1]['type'];
 }
 
-function issuecol($status,$comments,$lastactivity)
-{
-	if (gettype($lastactivity) == 'string')
-	{
-		$lastactivity = strtotime($lastactivity);
-	}
-	
-	$delta = time() - $lastactivity;
-	$daysago = floor($delta / ( 60 * 60 * 24 ));
-	
+function issuecol($status, $severity)
+{	
 	if (getstatustype($status) == 'declined')
 	{
 		$col = '#ededed';
@@ -372,17 +364,23 @@ function issuecol($status,$comments,$lastactivity)
 	}
 	else
 	{
-		if ($comments > 0)
+		switch ($severity)
 		{
-			$green = round(255-128*($daysago/30));
-			if ($green < 128)
-				$green = 128;
-			
-			$col = 'rgb(255,'.$green.',0)';
-		}
-		else
-		{
-			$col = 'rgb(242,72,72)';
+			case 1:
+				$col = '#fffa6c';
+				break;
+			case 2:
+				$col = '#ffe400';
+				break;
+			case 3:
+				$col = '#ffae00';
+				break;
+			case 4:
+				$col = '#ff6600';
+				break;
+			case 5:
+				$col = '#ff0000';
+				break;
 		}
 	}
 	

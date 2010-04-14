@@ -68,10 +68,10 @@ CREATE TABLE IF NOT EXISTS `issues` (
   `when_opened` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `when_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `category` int(11) NOT NULL,
-  `closereason` varchar(64) NOT NULL,
   `discussion_closed` tinyint(1) NOT NULL,
   `tags` int(11) NOT NULL COMMENT 'Currently can only reference one tag (used to be category)',
-  `status` int(11) NOT NULL DEFAULT '1',
+  `severity` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `assign` int(11) NOT NULL DEFAULT '0',
   `num_comments` int(11) NOT NULL,
   `num_views` int(11) NOT NULL,
@@ -99,9 +99,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
 
 INSERT INTO `tags` (`id`, `name`, `color`, `projects`) VALUES
 (1, 'suggestion', 'F8FFBF', ''),
-(2, 'bug-severe', 'FF3F3F', ''),
-(3, 'bug-medium', 'FF7F7F', ''),
-(4, 'bug-low', 'FFBFBF', '');
+(2, 'bug', 'FF7F7F', '');
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
