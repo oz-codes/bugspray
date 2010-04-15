@@ -23,174 +23,301 @@
 
 include("functions.php");
 
+$id = escape_smart($_GET['id']);
 $a = escape_smart($_SESSION['uid']);
-$i = escape_smart($_GET['id']);
 
-if ($client['is_admin'])
+switch ($_GET['action'])
 {
-	if (isset($_GET['lock']))
-	{		
-		$query = db_query("UPDATE issues SET discussion_closed=1 WHERE id='$i'");
-		if ($query) { echo 'Locked discussion succesfully!'; } else { mysql_error(); }
-		
-		echo '<br />';
-		
-		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Discussion has been locked ***',NOW(),'close')");
-		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'");
-		if ($query2 && $query3) { echo 'Comment added succesfully!'; } else { mysql_error(); }
-		
-		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
-	}
-	elseif (isset($_GET['unlock']))
-	{		
-		$query = db_query("UPDATE issues SET discussion_closed=0 WHERE id='$i'");
-		if ($query) { echo 'Unlocked discussion succesfully!'; } else { mysql_error(); }
-		
-		echo '<br />';
-		
-		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Discussion has been unlocked ***',NOW(),'reopen')");
-		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1 WHERE id='$i'");
-		if ($query2 && $query3) { echo 'Comment added succesfully!'; } else { mysql_error(); }
-		
-		echo '<br /><br /><a href="view_issue.php?id='.$i.'">Go back</a>';
-	}
-	elseif (isset($_GET['delete']))
-	{
-		$query = db_query("DELETE FROM issues WHERE id='$i'");
-		if ($query) { echo 'Deleted issue succesfully!'; } else { mysql_error(); }
-		
-		echo '<br />';
-		
-		$query2 = db_query("DELETE FROM comments WHERE issue='$i'");
-		if ($query2) { echo 'Deleted associated comments succesfully!'; } else { mysql_error(); }
-		
-		echo '<br /><br /><a href="index.php">Go to issue index</a>';
-	}
-	elseif (isset($_GET['deletecomment']))
-	{
+	case 'lock':
+		if ($client['is_admin'])
+		{
+			ticket_discussion_close($id, true);
+			break;
+		}
+	
+	case 'unlock':
+		if ($client['is_admin'])
+		{
+			ticket_discussion_close($id, false);
+			break;
+		}
+	
+	case 'status':
 		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
 		header('Content-type: application/json');
-		
-		$success = true;
-		$error = '';
-		
-		if (is_numeric($i))
+		echo json_encode(ticket_status($id));
+		break;
+	
+	case 'delete':
+		if ($client['is_admin'])
 		{
-			// find the ticket the comment falls under
-			$arr = db_query_single("SELECT issue FROM comments WHERE id='$i'");
-			$ticket = $arr[0];
-			
-			// delete the ticket
-			db_query("DELETE FROM comments WHERE id='$i'") or $error = 'The comment could\'nt be deleted... it\'s most likely it already has been.';
-			
-			// if the ticket's already been deleted we definitely do not want to mess with the ticket again
-			if ($error == '')
-			{
-				// update the count
-				db_query("UPDATE issues SET num_comments=num_comments-1 WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (comment count)... has the ticket been deleted?';
-				
-				if ($error == '')
-				{
-					// get the newest ticket that hasn't been killed off
-					$newquery = db_query("SELECT when_posted FROM comments WHERE issue='$ticket' ORDER BY when_posted DESC LIMIT 1");
-					
-					// is there one?
-					if (mysql_num_rows($newquery))
-					{
-						$newqueryarr = mysql_fetch_array($newquery);
-						$newtime = $newqueryarr[0];
-					}
-					// otherwise, we grab the time that the ticket was opened
-					else
-					{
-						$newquery2 = db_query("SELECT when_opened FROM issues WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (non-existent)... has the ticket been deleted?';
-						$newquery2arr = mysql_fetch_array($newquery2);
-						$newtime = $newquery2arr[0];
-					}
-					
-					// and finally, update the ticket!
-					if ($error == '')
-					{
-						db_query("UPDATE issues SET when_updated='$newtime' WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (last update time)... has the ticket been deleted?';
-					}
-				}
-			}
+			ticket_delete($id);
+			break;
+		}
+	
+	case 'deletecomment':
+		if ($client['is_admin'])
+		{
+			$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
+			header('Content-type: application/json');
+			echo json_encode(ticket_comment_delete($id));
+			break;
+		}
+	
+	case 'notadmin':
+		echo 'You need to be an administrator to perform that action.';
+		break;
+	
+	case 'comment':
+		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
+		header('Content-type: application/json');
+		echo json_encode(ticket_comment_add(escape_smart($_POST['id']), escape_smart(htmlspecialchars($_POST['content'])), 'json'));
+		break;
+}
+
+function ticket_delete($ticket)
+{
+	$query = db_query("DELETE FROM issues WHERE id='$ticket'");
+	if ($query) { echo 'Deleted issue succesfully!'; } else { mysql_error(); }
+	
+	echo '<br />';
+	
+	$query2 = db_query("DELETE FROM comments WHERE issue='$ticket'");
+	if ($query2) { echo 'Deleted associated comments succesfully!'; } else { mysql_error(); }
+	
+	echo '<br /><br /><a href="index.php">Go to issue index</a>';
+}
+
+function ticket_discussion_close($ticket, $do)
+{
+	if (db_query("UPDATE issues SET discussion_closed=" . ($do ? 1 : 0) . " WHERE id='$ticket'"))
+	{
+		echo ($do ? 'L' : 'Unl') . 'ocked discussion succesfully!';
+	}
+	else
+	{
+		echo mysql_error();
+	}
+	
+	echo '<br />';
+	
+	if (ticket_comment_add($ticket, '*** Discussion has been ' . ($do ? '' : 'un') . 'locked ***', 'success', 'close'))
+	{
+		echo 'Comment added successfully!';
+	}
+	else
+	{
+		echo ticket_comment_add_error();
+	}
+	
+	echo '<br /><br /><a href="view_issue.php?id='.$ticket.'">Go back</a>';
+}
+
+// same issue with this and ticket_comment_add....
+// also TODO: pass post variables through the switch not here
+// and rewrite this to use $message properly
+function ticket_status($ticket)
+{	
+	$success = true;
+	
+	// general vars
+	$s = escape_smart($_POST['st']);
+	
+	// first, the status
+	$query = db_query("UPDATE issues SET status='$s' WHERE id='$ticket'") or $success = false;
+	
+	// custom stuff, whoooooo
+	$custom = '';
+	
+	$assign = escape_smart($_POST['st2a']) == $_POST['st2a'] ? $_POST['st2a'] : false;
+	if ($assign)
+	{
+		if ($assign == -1)
+		{
+			$uassigned = 'nobody';
+		}
+		else
+		{
+			$uassigned = 'user id '.$assign; // need to find a way to get the display name w/o becoming incorrect when it changes
+		}
+		
+		$queryassign = db_query("UPDATE issues SET assign='$assign' WHERE id='$ticket'");
+		if ($queryassign)
+		{
+			$custom .= ', assigned to '.$uassigned;
 		}
 		else
 		{
 			$success = false;
+			$message = mysql_error();
 		}
-		
-		if ($error != '')
+	}
+	
+	$custom = escape_smart($custom);
+	
+	// and finally the comment
+	if (!ticket_comment_add($ticket, '*** Status changed to \'' . getstatusnm($s) . '\'' . $custom . ' ***', 'success', 'status'))
+	{
+		$success = false;
+		$message = ticket_comment_add_error();
+	}
+	
+	// return
+	return array(
+		'success' => $success,
+		'message' => $message
+	);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// okay this function is written to return text if it's UNsuccessful, so if you don't choose json then the error goes to another
+// function like how mysql_query goes to mysql_error, except mysql_query returns something if it's successful... i really wish
+// i knew of a better solution. so, TODO: FIND A BETTER SOLUTION!
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function ticket_comment_add($issue, $content, $return, $type='')
+{
+	// blargh
+	global $client;
+	
+	// safety first
+	$content = escape_smart($content);
+	$type = escape_smart($type);
+	
+	// closed for business?
+	$isclosed_query = db_query_single("SELECT discussion_closed FROM issues WHERE id='$issue'");
+	$isclosed = $isclosed_query[0];
+	
+	// tracking
+	$success = true;
+	$message = '';
+	
+	// we CAN post here, right?
+	if ((!$isclosed || $client['is_admin']) && $client['is_logged'])
+	{
+		// yeah, like we're going to post a blank message...
+		if (trim($content) == '')
 		{
 			$success = false;
+			$message = 'You didn\'t put in any content to post.';
 		}
-		
-		// return
-		echo json_encode(array(
-			'success' => $success,
-			'message' => $error
-		));
-	}
-	elseif (isset($_GET['status']))
-	{
-		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
-		header('Content-type: application/json');
-		
-		$success = true;
-		
-		// general vars
-		$s = escape_smart($_POST['st']);
-		
-		// first, the status
-		$query = db_query("UPDATE issues SET status='$s' WHERE id='$i'") or $success = false;
-		
-		// custom stuff, whoooooo
-		$custom = '';
-		
-		$assign = escape_smart($_POST['st2a']) == $_POST['st2a'] ? $_POST['st2a'] : false;
-		if ($assign)
+		else
 		{
-			if ($assign == -1)
+			// want to set a custom type?
+			$typecolumn = '';
+			$typevalue = '';
+			if ($type != '')
 			{
-				$uassigned = 'nobody';
-			}
-			else
-			{
-				$uassigned = 'user id '.$assign; // need to find a way to get the display name w/o becoming incorrect when it changes
+				$typecolumn = ",type";
+				$typevalue = ",'$type'";
 			}
 			
-			$queryassign = db_query("UPDATE issues SET assign='$assign' WHERE id='$i'");
-			if ($queryassign)
+			// and we're off!
+			if (db_query("INSERT INTO comments (author,issue,content,when_posted$typecolumn) VALUES ({$_SESSION['uid']},'$issue','$content',NOW()$typevalue)"))
 			{
-				$custom .= ', assigned to '.$uassigned;
+				if (!db_query("UPDATE issues SET num_comments=num_comments+1, when_updated=NOW() WHERE id='$issue'"))
+				{
+					$success = false;
+					$message = 'Comment inserted successfully, however the comment count could not be updated.';
+				}
 			}
 			else
 			{
 				$success = false;
+				$message = 'Could not insert the comment.';
 			}
 		}
+	}
+	// or not...
+	else
+	{
+		$success = false;
+		$message = 'You do not have sufficient privileges to post the comment.';
+	}
+	
+	// and our work here is done!
+	switch ($return)
+	{
+		case 'json':
+			return array('success' => $success, 'message' => $message);
+			break;
 		
-		$custom = escape_smart($custom);
+		case 'success':
+		default:
+			global $commenterr;
+			$commenterr = $message;
+			return $success;
+			break;
+	}
+}
+
+function ticket_comment_add_error()
+{
+	global $commenterr;
+	return $commenterr ? $commenterr : false;
+}
+
+// this function has the same issue as with ticket_comment_add
+function ticket_comment_delete($comment)
+{
+	$success = true;
+	$error = '';
+	
+	if (is_numeric($comment))
+	{
+		// find the ticket the comment falls under
+		$arr = db_query_single("SELECT issue FROM comments WHERE id='$comment'");
+		$ticket = $arr[0];
 		
-		// and finally the comment
-		$query2 = db_query("INSERT INTO comments (author,issue,content,when_posted,type) VALUES ('$a','$i','*** Status changed to \'".getstatusnm($s)."\'$custom ***',NOW(),'status')") or $success = false;
-		$query3 = db_query("UPDATE issues SET num_comments=num_comments+1, when_updated=NOW() WHERE id='$i'") or $success = false;
+		// delete the ticket
+		db_query("DELETE FROM comments WHERE id='$comment'") or $error = 'The comment could\'nt be deleted... it\'s most likely it already has been.';
 		
-		// return
-		if (!$success) { $message = mysql_error(); }
-		echo json_encode(array(
-			'success' => $success,
-			'message' => $message
-		));
+		// if the ticket's already been deleted we definitely do not want to mess with the ticket again
+		if ($error == '')
+		{
+			// update the count
+			db_query("UPDATE issues SET num_comments=num_comments-1 WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (comment count)... has the ticket been deleted?';
+			
+			if ($error == '')
+			{
+				// get the newest ticket that hasn't been killed off
+				$newquery = db_query("SELECT when_posted FROM comments WHERE issue='$ticket' ORDER BY when_posted DESC LIMIT 1");
+				
+				// is there one?
+				if (mysql_num_rows($newquery))
+				{
+					$newqueryarr = mysql_fetch_array($newquery);
+					$newtime = $newqueryarr[0];
+				}
+				// otherwise, we grab the time that the ticket was opened
+				else
+				{
+					$newquery2 = db_query("SELECT when_opened FROM issues WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (non-existent)... has the ticket been deleted?';
+					$newquery2arr = mysql_fetch_array($newquery2);
+					$newtime = $newquery2arr[0];
+				}
+				
+				// and finally, update the ticket!
+				if ($error == '')
+				{
+					db_query("UPDATE issues SET when_updated='$newtime' WHERE id='$ticket'") or $error = 'Couldn\'t update the ticket (last update time)... has the ticket been deleted?';
+				}
+			}
+		}
 	}
 	else
 	{
-		echo 'What?';
+		$success = false;
 	}
-}
-else
-{
-	echo 'You do not have sufficient privileges to access this page.';
+	
+	if ($error != '')
+	{
+		$success = false;
+	}
+	
+	// return
+	return array(
+		'success' => $success,
+		'message' => $error
+	);
 }
 ?>

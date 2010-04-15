@@ -72,7 +72,7 @@
 						this.blur();
 						confirmurl(
 							'<?php echo !$issue['discussion_closed'] ? 'Lock' : 'Unlock'; ?> discussion',
-							'manage_issue.php?id=<?php echo $issue['id']; ?>&<?php echo !$issue['discussion_closed'] ? '' : 'un'; ?>lock',
+							'manage_issue.php?id=<?php echo $issue['id']; ?>&action=<?php echo !$issue['discussion_closed'] ? '' : 'un'; ?>lock',
 							false
 						);
 					});
@@ -80,7 +80,7 @@
 						this.blur();
 						confirmurl(
 							'Delete issue',
-							'manage_issue.php?id=<?php echo $issue['id']; ?>&delete',
+							'manage_issue.php?id=<?php echo $issue['id']; ?>&action=delete',
 							true
 						);
 					});
@@ -144,7 +144,7 @@
 		<form id="comment_form" class="ajax">
 			<input type="hidden" name="id" value="<?php echo $issue['id']; ?>" />
 			<small>You can use BBcode here, like [b] and [url]. If you don't want something to be parsed, use [noparse]!</small><br />
-			<textarea rows="6" style="width:600px;" name="cont" id="comment_form"></textarea>
+			<textarea rows="6" style="width:600px;" name="content" id="comment_form"></textarea>
 			<?php if ($issue['discussion_closed']): ?>
 			<div style="margin:4px 0px;">
 				<div class="fl" style="margin-right:4px;"><img src="<?php echo $location['images']; ?>/alert/exclaim.png" alt="" /></div>

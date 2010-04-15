@@ -60,7 +60,7 @@ $(document).ready(function() {
 			{
 				var elm = caElm(this);
 				$.ajax({
-					url: 'manage_issue.php?deletecomment&id=' + caId(elm),
+					url: 'manage_issue.php?action=deletecomment&id=' + caId(elm),
 					success: function(data) {						
 						if (data.success)
 						{
@@ -77,7 +77,7 @@ $(document).ready(function() {
 			
 			$.ajax({
 				type: 'post',
-				url: 'add_comment.php',
+				url: 'manage_issue.php?action=comment',
 				data: $(this).serialize(),
 				dataType: 'json',
 				success: function(data) {
@@ -152,7 +152,7 @@ function changestatus(id,status,assigns)
 		
 		$.ajax({
 			type: 'post',
-			url: 'manage_issue.php?id=' + id + '&status',
+			url: 'manage_issue.php?id=' + id + '&action=status',
 			data: $("#amwnd_content form").serialize(),
 			dataType: 'json',
 			success: function(data) {
