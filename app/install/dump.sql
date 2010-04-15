@@ -68,7 +68,6 @@ CREATE TABLE IF NOT EXISTS `issues` (
   `when_opened` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `when_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `category` int(11) NOT NULL,
-  `discussion_closed` tinyint(1) NOT NULL,
   `tags` int(11) NOT NULL COMMENT 'Currently can only reference one tag (used to be category)',
   `severity` tinyint(4) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',

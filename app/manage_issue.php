@@ -27,21 +27,7 @@ $id = escape_smart($_GET['id']);
 $a = escape_smart($_SESSION['uid']);
 
 switch ($_GET['action'])
-{
-	case 'lock':
-		if ($client['is_admin'])
-		{
-			ticket_discussion_close($id, true);
-			break;
-		}
-	
-	case 'unlock':
-		if ($client['is_admin'])
-		{
-			ticket_discussion_close($id, false);
-			break;
-		}
-	
+{	
 	case 'status':
 		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
 		header('Content-type: application/json');
@@ -86,31 +72,6 @@ function ticket_delete($ticket)
 	if ($query2) { echo 'Deleted associated comments succesfully!'; } else { mysql_error(); }
 	
 	echo '<br /><br /><a href="index.php">Go to issue index</a>';
-}
-
-function ticket_discussion_close($ticket, $do)
-{
-	if (db_query("UPDATE issues SET discussion_closed=" . ($do ? 1 : 0) . " WHERE id='$ticket'"))
-	{
-		echo ($do ? 'L' : 'Unl') . 'ocked discussion succesfully!';
-	}
-	else
-	{
-		echo mysql_error();
-	}
-	
-	echo '<br />';
-	
-	if (ticket_comment_add($ticket, '*** Discussion has been ' . ($do ? '' : 'un') . 'locked ***', 'success', 'close'))
-	{
-		echo 'Comment added successfully!';
-	}
-	else
-	{
-		echo ticket_comment_add_error();
-	}
-	
-	echo '<br /><br /><a href="view_issue.php?id='.$ticket.'">Go back</a>';
 }
 
 // same issue with this and ticket_comment_add....
@@ -183,16 +144,12 @@ function ticket_comment_add($issue, $content, $return, $type='')
 	$content = escape_smart($content);
 	$type = escape_smart($type);
 	
-	// closed for business?
-	$isclosed_query = db_query_single("SELECT discussion_closed FROM issues WHERE id='$issue'");
-	$isclosed = $isclosed_query[0];
-	
 	// tracking
 	$success = true;
 	$message = '';
 	
 	// we CAN post here, right?
-	if ((!$isclosed || $client['is_admin']) && $client['is_logged'])
+	if ($client['is_logged'])
 	{
 		// yeah, like we're going to post a blank message...
 		if (trim($content) == '')

@@ -52,10 +52,6 @@
 					<img src="<?php echo $location['images']; ?>/btn/change_status.png" alt="" />
 					Change status
 				</button>
-				<button type="button" id="manage_lock">
-					<img src="<?php echo $location['images']; ?>/btn/<?php echo !$issue['discussion_closed'] ? '' : 'un'; ?>lock.png" alt="" />
-					<?php echo !$issue['discussion_closed'] ? 'Lock' : 'Unlock'; ?> discussion
-				</button>
 				<button type="button" id="manage_delete">
 					<img src="<?php echo $location['images']; ?>/btn/delete.png" alt="" />
 					Delete issue
@@ -68,14 +64,6 @@
 							<?php echo $issue['id']; ?>,
 							<?php echo $issue['status']; ?>,
 							<?php echo $assigns; ?> 
-						);
-					});
-					$("#manage_lock").click(function(){
-						this.blur();
-						confirmurl(
-							'<?php echo !$issue['discussion_closed'] ? 'Lock' : 'Unlock'; ?> discussion',
-							'manage_issue.php?id=<?php echo $issue['id']; ?>&action=<?php echo !$issue['discussion_closed'] ? '' : 'un'; ?>lock',
-							false
 						);
 					});
 					$("#manage_delete").click(function(){
@@ -147,7 +135,6 @@
 	
 	<section>
 		<h3>Add a comment</h3>
-		<?php if (!$issue['discussion_closed'] || $client['is_admin']): ?>
 		<?php if ($client['is_logged']): ?>
 		<form id="comment_form" class="ajax">
 			<input type="hidden" name="id" value="<?php echo $issue['id']; ?>" />
@@ -165,9 +152,6 @@
 		</form>
 		<?php else: ?>
 		You need to be logged in to comment.
-		<?php endif; ?>
-		<?php else: ?>
-		Discussion has been closed.
 		<?php endif; ?>
 	</section>
 </article>
