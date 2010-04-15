@@ -1,6 +1,8 @@
 <article>
 	<h2>Viewing ticket "<?php echo $issue['name']; ?>"</h2>
 	
+	<p><b>[TODO: Just redo this whole page it's a mess, especially "moderation" comments so that they don't take up so much space and grab unnecessary attention]</b></p>
+	
 	<table class="ibox_details">
 		<tr>
 			<td style="width:128px;">Opened by</td>
@@ -94,17 +96,23 @@
 	<br />
 	
 	<section>
-		<h3>Description</h3>
-		<div class="cont">
-			<?php echo parsebbcode($issue['description']); ?>
-		</div>
-	</section>
-	
-	<br />
-	<br />
-	
-	<section>
-		<h3>Comments</h3>
+		<!-- TODO: Use the same template as below for this -->
+		<article class="comment">
+			<table>
+				<tr>
+					<td class="user">
+						<div class="username">
+							<?php echo getuinfo($issue['author'],false); ?>
+						</div>
+					</td>
+					<td class="main">
+						<div class="time">Posted on <?php echo timehtml5($issue['when_opened'],true); ?></div>
+						<div class="content"><?php echo parsebbcode($issue['description']); ?></div>
+					</td>
+				</tr>
+			</table>
+		</article>
+		
 		<?php foreach ($comments as $comment): ?>
 		<article id="comment_<?php echo $comment['id']; ?>" class="comment<?php echo $comment['type'] != '' ? ' moderation' : ''; ?>">
 			<table>
