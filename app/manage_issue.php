@@ -59,7 +59,15 @@ switch ($_GET['action'])
 		header('Content-type: application/json');
 		echo json_encode(ticket_comment_add(escape_smart($_POST['id']), escape_smart(htmlspecialchars($_POST['content'])), 'json'));
 		break;
+	
+	case 'favorite':
+		$page->disableTemplate();
+		header('Content-type: application/json');
+		echo json_encode(ticket_favorite(escape_smart($_GET['id']), 'json'));
+		break;
 }
+
+
 
 function ticket_delete($ticket)
 {
@@ -276,5 +284,52 @@ function ticket_comment_delete($comment)
 		'success' => $success,
 		'message' => $error
 	);
+}
+
+// this function has the same issue as with ticket_comment_add
+function ticket_favorite($ticket, $return)
+{
+	global $client;
+	
+	$success = true;
+	$message = '';
+	
+	if ($client['is_logged'])
+	{
+		if (!mysql_num_rows(db_query("SELECT * FROM favorites WHERE ticketid='$ticket'")))
+		{
+			if (!db_query("INSERT INTO favorites (ticketid, userid) VALUES ('$ticket', '{$_SESSION['uid']}')"))
+			{
+				$success = false;
+				$message = 'Could not favourite this issue';
+			}
+		}
+		else
+		{
+			if (!db_query("DELETE FROM favorites WHERE ticketid='$ticket' AND userid='{$_SESSION['uid']}'"))
+			{
+				$success = false;
+				$message = 'Could not unfavourite this issue';
+			}
+		}
+	}
+	else
+	{
+		$success = false;
+		$message = 'You need to be logged in to access this.';
+	}
+	
+	// and our work here is done!
+	switch ($return)
+	{
+		case 'json':
+			return array('success' => $success, 'message' => $message);
+			break;
+		
+		case 'success':
+		default:
+			return $success;
+			break;
+	}
 }
 ?>

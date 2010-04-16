@@ -106,6 +106,12 @@ $(document).ready(function() {
 			return false;
 		});
 	}
+	
+	// favouriting
+	if ($(".ticket .favorite").length)
+	{
+		$(".ticket .favorite a").click(ticketFavorite);
+	}
 });
 
 function changestatus(id,status,assigns)
@@ -238,4 +244,84 @@ function stringform(title,url,custom)
 	$("#amwnd_ok").bind('click',function() {
 		$("#st").submit();
 	});
+}
+
+function ticketFavorite()
+{
+	var orig = $(this);
+	var idholder = $(this);
+	var ticket = -1;
+	
+	// scan
+	for (i=0; i<15; i++)
+	{
+		if ($(idholder).attr('data-id') == undefined)
+		{
+			idholder = $(idholder).parent();
+		}
+		else
+		{
+			ticket = $(idholder).attr('data-id');
+			break;
+		}
+	}
+	
+	if (ticket == -1)
+	{
+		$.amwnd({
+			title: 'Error!',
+			content: 'This theme does not have a parent for the favouriting button with the <code>data-id</code> attribute.',
+			buttons: ['ok'],
+			closer: 'ok'
+		});
+	}
+	else
+	{
+		$.ajax({
+			type: 'post',
+			url: 'manage_issue.php?id=' + ticket + '&action=favorite',
+			dataType: 'json',
+			success: function(data) {
+				if (!data.success)
+				{
+					$.amwnd({
+						title: 'Error!',
+						content: data.message,
+						buttons: ['ok'],
+						closer: 'ok'
+					});
+				}
+				else
+				{
+					// find and replace all instances of on to off and vice versa
+					/*! TODO: even though i tried to make this flexible, if you had <button>Starred</button> that wouldn't work... */
+					
+					var favElm = $(orig).closest(".favorite");
+					
+					var scanfunc = function() {
+						var target = this;
+						
+						$.each(['class', 'src', 'style', 'value'], function(i, v) {
+							var tempattr = $(target).attr(v);
+							
+							if (tempattr !== undefined)
+							{
+								if (tempattr.indexOf('on') != -1)
+								{
+									$(target).attr(v, tempattr.replace('on', 'off'));
+								}
+								else if (tempattr.indexOf('off') != -1)
+								{
+									$(target).attr(v, tempattr.replace('off', 'on'));
+								}
+							}
+						});
+					};
+					
+					$(favElm).each(scanfunc);
+					$(favElm).find("*").each(scanfunc);
+				}
+			}
+		});
+	}
 }

@@ -41,7 +41,7 @@
 	
 	<tr class="ticket" data-id="<?php echo $issue['id'] ?>">
 		<td class="status"><div style="background:<?php echo $issue['status_color'] ?>"></div></td>
-		<td class="star"><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></td>
+		<td class="favorite"><a href="javascript:;"><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></a></td>
 		<td class="id"><?php echo $issue['id']; ?></td>
 		<td class="summary">
 			<a href="view_issue.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
@@ -54,5 +54,4 @@
 	
     <?php endforeach; ?>
 	</tbody>
-	
 </table>
