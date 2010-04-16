@@ -1,24 +1,17 @@
 <article>
-	<h2>Viewing ticket "<?php echo $issue['name']; ?>"</h2>
-	
-	<p><b>[TODO: Just redo this whole page it's a mess, especially "moderation" comments so that they don't take up so much space and grab unnecessary attention]</b></p>
+	<div class="imgtitle imgtitle-32">
+		<img class="image" src="<?php echo $location['images']; ?>/titles/tickets.png" alt="" />
+		<div class="text">
+			<h1 class="has-subtitle"><?php echo $issue['name']; ?></h1>
+			<div class="subtitle">&laquo; <a href="#"><?php echo getcatnm($issue['category']); ?></a></div>
+		</div>
+		<div class="clear"></div>
+	</div>
 	
 	<table class="ibox_details">
 		<tr>
-			<td style="width:128px;">Opened by</td>
-			<td><?php echo getuinfo($issue['author']); ?></td>
-		</tr>
-		<tr>
-			<td>Opened on</td>
-			<td><?php echo timehtml5($issue['when_opened'],true); ?></td>
-		</tr>
-		<tr>
 			<td>Tag(s)</td>
 			<td><span class="tag"><?php echo gettagnm($issue['tags']); ?></span></td>
-		</tr>
-		<tr>
-			<td>Category</td>
-			<td><?php echo getcatnm($issue['category']); ?></td>
 		</tr>
 		<tr>
 			<td>Status</td>
@@ -85,16 +78,16 @@
 	
 	<section>
 		<!-- TODO: Use the same template as below for this -->
-		<article class="comment">
+		<article class="comment first">
 			<table>
 				<tr>
-					<td class="user">
-						<div class="username">
-							<?php echo getuinfo($issue['author'],false); ?>
-						</div>
+					<td>
+						<div class="user"><?php echo getuinfo($issue['author'], false); ?></div>
+						<div class="time">Posted on <?php echo timehtml5($issue['when_opened'], true); ?></div>
 					</td>
+				</tr>
+				<tr>
 					<td class="main">
-						<div class="time">Posted on <?php echo timehtml5($issue['when_opened'],true); ?></div>
 						<div class="content"><?php echo parsebbcode($issue['description']); ?></div>
 					</td>
 				</tr>
@@ -105,13 +98,13 @@
 		<article id="comment_<?php echo $comment['id']; ?>" class="comment<?php echo $comment['type'] != '' ? ' moderation' : ''; ?>">
 			<table>
 				<tr>
-					<td class="user">
-						<div class="username">
-							<?php echo getuinfo($comment['author'],false); ?>
-						</div>
+					<td colspan="2">
+						<div class="user"><?php echo getuinfo($comment['author'], false); ?></div>
+						<div class="time">Posted on <?php echo timehtml5($comment['when_posted'], true); ?></div>
 					</td>
+				</tr>
+				<tr>
 					<td class="main">
-						<div class="time">Posted on <?php echo timehtml5($comment['when_posted'],true); ?></div>
 						<div class="content"><?php echo parsebbcode($comment['content']); ?></div>
 					</td>
 					<td class="actions">

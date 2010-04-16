@@ -262,7 +262,7 @@ function getuinfo($info,$clear=true)
 	
 	$string = '
 	<div class="avatar fl" style="margin-right:4px;"><img src="'.$av.'" alt="" /></div>
-	<a href="profile.php?id='.$id.'" class="username'.(getubanned($id)?' banned':'').'" style="position:relative;top:2px;">'.$unm.'</a>
+	<a href="profile.php?id='.$id.'" class="username'.(getubanned($id)?' banned':'').'">'.$unm.'</a>
 	'.($clear?'<div class="fc"></div>':'');
 	
 	return str_replace(array("\n","\r","\t"),'',$string);
