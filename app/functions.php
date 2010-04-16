@@ -655,7 +655,6 @@ function parsebbcode($string)
 {	
 	$original = array(
 		'/\n/',
-		'/&/',
 		'/\[noparse\](.*?)\[\/noparse\]/ise',
 		'/\[b\](.*?)\[\/b\]/is',
 		'/\[i\](.*?)\[\/i\]/is',
@@ -670,7 +669,6 @@ function parsebbcode($string)
 
 	$replaces = array(
 		'<br />',
-		'&amp;',
 		'str_replace(array("[","]"),array("&#91;","&#93;"),\'\\1\')',
 		'<b>\\1</b>',
 		'<i>\\1</i>',
