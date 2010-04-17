@@ -301,7 +301,7 @@ function ticket_list($type, $status, $order='desc')
 			$query = "
 				SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
 				LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
-				LEFT JOIN favorites ON favorites.ticketid = issues.id
+				LEFT JOIN favorites ON favorites.ticketid = issues.id AND favorites.userid = '{$_SESSION['uid']}'
 				$whereclause
 				ORDER BY issues.when_updated $order"; break;
 	}
