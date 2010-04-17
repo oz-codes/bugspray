@@ -33,11 +33,10 @@ $location = array(
 );
 
 // set up everything
-$page = new PageBuilder();
+$page = new MTTemplate();
 register_shutdown_function(array($page,'outputAll'));
 
-// http://ianburris.com/tutorials/oophp-template-engine/
-class PageBuilder
+class MTTemplate
 {
 	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $sitename, $location;
 	

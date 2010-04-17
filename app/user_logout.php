@@ -26,30 +26,16 @@ include("functions.php");
 $page->setType('account');
 $page->setTitle('Logout');
 
-if (!$client['is_logged'])
+if (!$users->client->is_logged)
 {
 	echo 'Congratulations, you have just created a paradox. A black hole is currently being formed behind you.';
 }
 else
-{
-	// kill ze cookies
-	if (isset($_COOKIE['bs_username']) && isset($_COOKIE['bs_password']))
+{	
+	if ($users->logout())
 	{
-	   setcookie("bs_username", "", time()-60*60*24*100, "/");
-	   setcookie("bs_password", "", time()-60*60*24*100, "/");
-	   setcookie("bs_uid", "", time()-60*60*24*100, "/");
+		// congraulations, you have helped destroy ze vorld!
+		echo 'You have been logged out.<br /><br /><small>[todo maybe: an ajax version]</small>';
 	}
-	
-	// kill ze session variables
-	unset($_SESSION['username']);
-	unset($_SESSION['password']);
-	unset($_SESSION['uid']);
-	
-	// kill ze session
-	$_SESSION = array();
-	session_destroy();
-	
-	// congraulations, you have helped destroy ze vorld!
-	echo 'You have been logged out.<br /><br /><small>[todo maybe: an ajax version]</small>';
 }
 ?>

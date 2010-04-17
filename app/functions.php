@@ -43,58 +43,11 @@ mysql_select_db($mysql_database, $con);
 
 // include the other important files
 include("template.php");
+include("users.php");
 
 
-
-// the client (move this into auth later on)
-$client = array(
-	'is_logged' => false,
-	'is_admin' => false
-);
-
-// whether the client is logged in
-
-// is the session active?
-$sessionactive = isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['uid']);
-
-if (isset($_COOKIE['bs_username']) && isset($_COOKIE['bs_password']))
-{
-	if (!$sessionactive) // don't set the session repeatedly if it's already set
-	{
-		$_SESSION['username'] = $_COOKIE['bs_username'];
-		$_SESSION['password'] = $_COOKIE['bs_password'];
-		$_SESSION['uid'] = $_COOKIE['bs_uid'];
-		
-		$sessionactive = true;
-	}
-}
-if ($sessionactive)
-{
-	// okay, session active, but are they a valid user?
-	if (isexistinguser($_SESSION['username'], $_SESSION['password'], true) == 2)
-	{
-		unset($_SESSION['username']);
-		unset($_SESSION['password']);
-		unset($_SESSION['uid']);
-	}
-	else
-	{
-		$client['is_logged'] = true;
-	}
-}
-
-// whether the client is an admin
-if (isset($_SESSION['username']))
-{
-	$q = query_uid($_SESSION['uid']);
-	$g = $q['group'];
-	
-	if (db_query_single("SELECT global_admin FROM groups WHERE id = '$g'", "Checking whether the client is an administrator"))
-	{
-		$client['is_admin'] = true;
-	}
-}
-
+// temp
+$client = array('is_logged' => $users->client->is_logged, 'is_admin' => $users->client->is_admin);
 
 
 // functions begin here
@@ -499,63 +452,6 @@ function ticket_list($type, $status, $order='desc')
 		)
 	);
 	return ob_get_clean();
-}
-
-function isexistinguser($uname, $pwd, $isclient=false)
-{
-	global $path;
-	
-	$uname = escape_smart($uname);
-	
-	$result = db_query(
-		"SELECT * FROM users WHERE username = '$uname'",
-		$isclient ? 'Checking whether the client is a logged in valid user' : 'Checking whether a given username/password matches a user'
-	);
-	
-	/* description of $hit:
-	 *  -1 more than one match of the username for some reason
-	 *   0 no match for both username/password
-	 *   1 match for both username/password
-	 *   2 match for username, no match for password
-	 *   3 match for password, no match for username
-	*/
-	
-	$hit = 0;
-	$rowcounted = false;
-	$salt = '';
-	
-	while($row = mysql_fetch_array($result))
-	{
-		$salt = $row['password_salt'];
-		
-		if (!$rowcounted && $hit != -1)
-		{
-			if ($uname == $row['username'])
-			{
-				$hit = 2;
-			}
-			if (genpass($salt,$pwd) == $row['password'])
-			{
-				if ($hit == 2)
-					$hit = 1;
-				else
-					$hit = 3;
-			}
-		}
-		else
-		{
-			$hit = -1;
-		}
-		
-		$uid = $row['id'];
-	}
-	
-	return array('hit'=>$hit,'salt'=>$salt,'uid'=>$uid);
-}
-
-function genpass($salt,$pwd)
-{
-    return hash('whirlpool',$salt.$pwd);
 }
 
 function hascharacters($string)

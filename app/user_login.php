@@ -51,24 +51,9 @@ if (!isset($_POST['sub']))
 	</form>';
 }
 else
-{
-	$isuser = isexistinguser($_POST['uname'],$_POST['pwd']);
-	
-	if ($isuser['hit'] == 1)
-	{
-		// set the session
-		$_SESSION['username'] = stripslashes($_POST['uname']);
-		$_SESSION['password'] = genpass($isuser['salt'],$_POST['pwd']);
-		$_SESSION['uid'] = $isuser['uid'];
-		
-		// does the user want to be remembered?
-		if (isset($_POST['remember']))
-		{
-			setcookie("bs_username", $_SESSION['username'], time()+60*60*24*100, "/");
-			setcookie("bs_password", $_SESSION['password'], time()+60*60*24*100, "/");
-			setcookie("bs_uid", $_SESSION['uid'], time()+60*60*24*100, "/");
-		}
-		
+{	
+	if ($users->login($_POST['uname'], $_POST['pwd']))
+	{		
 		// now show the message		
 		echo '<script type="text/javascript">$("#menu_admin").hide();$("#menu_admin").fadeIn();</script>';
 		echo 'You have been logged in.<br /><br /><a href="index.php">Go to your dashboard?</a>';
