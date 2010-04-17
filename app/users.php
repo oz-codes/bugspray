@@ -34,51 +34,8 @@ class MTUsers
 		setcookie("bs_password", "", time()-60*60*24*100, "/");
 		setcookie("bs_uid", "", time()-60*60*24*100, "/");
 		
-		
-		
-		
-		
-		// whether the client is logged in
-		$this->client->is_logged = false;
-		$sessionactive = isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['uid']);
-		if (isset($_COOKIE['mt_username']) && isset($_COOKIE['mt_password']))
-		{
-			if (!$sessionactive) // don't set the session repeatedly if it's already set
-			{
-				$_SESSION['username'] = $_COOKIE['mt_username'];
-				$_SESSION['password'] = $_COOKIE['mt_password'];
-				$_SESSION['uid'] = $_COOKIE['mt_uid'];
-				
-				$sessionactive = true;
-			}
-		}
-		if ($sessionactive)
-		{
-			// okay, session active, but are they a valid user?
-			if (!$this->is_user($_SESSION['username'], $_SESSION['password'], true))
-			{
-				unset($_SESSION['username']);
-				unset($_SESSION['password']);
-				unset($_SESSION['uid']);
-			}
-			else
-			{
-				$this->client->is_logged = true;
-			}
-		}
-		
-		// whether the client is an admin
-		$this->client->is_admin = false;
-		if (isset($_SESSION['username']))
-		{
-			$q = query_uid($_SESSION['uid']);
-			$g = $q['group'];
-			
-			if (db_query_single("SELECT global_admin FROM groups WHERE id = '$g'", "Checking whether the client is an administrator"))
-			{
-				$this->client->is_admin = true;
-			}
-		}
+		// the client
+		$this->client = new MTClient();
 	}
 	
 	public function login($username, $password)
@@ -206,5 +163,154 @@ class MTUsers
 	{
 		return hash('whirlpool', $salt.$password);
 	}
+	
+	public function id($id)
+	{
+		if ($id != $_SESSION['uid'])
+		{
+			global $mtusers;
+			
+			if (!$mtusers[$id])
+			{
+				$mtusers[$id] = new MTUser($id);
+			}
+			
+			return $mtusers[$id];
+		}
+		else
+		{
+			return $this->client;
+		}
+	}
+}
+
+class MTUser extends MTUsers
+{
+	public $info, $favorites;
+	
+	function __construct($id)
+	{
+		// grab the info
+		$this->info = db_query_single("SELECT * FROM users WHERE id = $id", "Retrieving info for user id $id from database");
+		
+		// the user's name (as in what they are identified by in the browser)
+		$this->info['name'] = !$this->info['displayname'] ? $this->info['username'] : $this->info['displayname'];
+	}
+	
+	function get_favorites()
+	{
+		if (!$this->favorites)
+		{
+			$this->favorites = array('-1');
+			
+			$favs = db_query("SELECT ticketid FROM favorites WHERE userid = {$this->info['id']}", "Retrieving favorites for user id {$this->info['id']} from database");
+			
+			while ($fav = mysql_fetch_array($favs))
+			{
+				$this->favorites[] = $fav['ticketid'];
+			}
+		}
+	}
+	
+	function get_info($clear=true) //need a better name for this
+	{		
+		$string = '
+		<div class="avatar fl" style="margin-right:4px;"><img src="' . $this->info['avatar_location'] . '" alt="" /></div>
+		<a href="profile.php?id=' . $this->info['id'] . '" class="username' . ($this->info['banned'] ? ' banned' : '') . '">' . $this->info['name'] . '</a>
+		' . ($clear ? '<div class="fc"></div>' : '');
+		
+		return str_replace(array("\n", "\r", "\r\n", "\t"), '', $string);
+	}
+}
+
+class MTClient extends MTUser
+{
+	public $is_logged, $is_admin;
+	
+	function __construct()
+	{		
+		// whether the client is logged in
+		$this->is_logged = false;
+		$sessionactive = isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['uid']);
+		if (isset($_COOKIE['mt_username']) && isset($_COOKIE['mt_password']))
+		{
+			if (!$sessionactive) // don't set the session repeatedly if it's already set
+			{
+				$_SESSION['username'] = $_COOKIE['mt_username'];
+				$_SESSION['password'] = $_COOKIE['mt_password'];
+				$_SESSION['uid'] = $_COOKIE['mt_uid'];
+				
+				$sessionactive = true;
+			}
+		}
+		if ($sessionactive)
+		{
+			// okay, session active, but are they a valid user?
+			if (!$this->is_user($_SESSION['username'], $_SESSION['password'], true))
+			{
+				unset($_SESSION['username']);
+				unset($_SESSION['password']);
+				unset($_SESSION['uid']);
+			}
+			else
+			{
+				$this->is_logged = true;
+			}
+		}
+		
+		// so if we're logged in, grab our info!
+		if ($this->is_logged)
+		{
+			parent::__construct($_SESSION['uid']);
+		}
+		
+		// whether the client is an admin
+		$this->is_admin = false;
+		if (isset($_SESSION['username']))
+		{
+			$info = db_query_single("SELECT global_admin FROM groups WHERE id = '{$this->info['group']}'", "Checking whether the client is an administrator");
+			if ($info[0])
+			{
+				$this->is_admin = true;
+			}
+		}
+	}
+}
+
+// old functions for compatibility's sake
+function getav($id)
+{
+	global $users;
+	return $users->id($id)->info['avatar_location'];
+}
+
+function getunm($id,$link=false)
+{
+	global $users;
+	return $users->id($id)->info['name'];
+}
+
+function getuemail($id)
+{
+	global $users;
+	return $users->id($id)->info['email'];
+}
+
+function getuinfo($id, $clear=true)
+{
+	global $users;
+	return $users->id($id)->get_info();
+}
+
+function getubanned($id)
+{
+	global $users;
+	return $users->id($id)->info['banned'];
+}
+
+function getufavs($id)
+{
+	global $users;
+	return $users->id($id)->get_favorites();
 }
 ?>

@@ -120,7 +120,7 @@ if (isset($_POST['sub']))
 	{
 		$u = escape_smart($_POST['uname']);
 		$s = md5(rand(0,9001));
-		$p = genpass($s,$_POST['pwd']);
+		$p = $users->generate_password($s,$_POST['pwd']);
 		$e = escape_smart($_POST['email']);
 		
 		$query = db_query("INSERT INTO users (username,password,password_salt,when_registered,email,avatar_type,avatar_location)".

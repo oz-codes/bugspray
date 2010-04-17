@@ -123,18 +123,6 @@ function logwhencmp($a,$b)
 	return ($a['when'] > $b['when']) ? -1 : 1;
 }
 
-function query_uid($id)
-{
-	global $queries_uid;
-	
-	if (!$queries_uid[$id])
-	{
-		$queries_uid[$id] = db_query_single("SELECT * FROM users WHERE id = $id", "Retrieving info for user id $id from database");
-	}
-	
-	return $queries_uid[$id];
-}
-
 function query_acttypes($id)
 {
 	global $queries_acttypes;
@@ -169,81 +157,6 @@ function query_tags($id)
 	}
 	
 	return $queries_tags[$id];
-}
-
-function getav($id)
-{
-	$q = query_uid($id);
-	return $q['avatar_location'];
-}
-
-function getunm($id,$link=false)
-{
-	$q = query_uid($id);
-	
-	if ($q['displayname'] == '')
-		$ret = $q['username'];
-	else
-		$ret = $q['displayname'];
-	
-	if ($link)
-		return '<a href="profile.php?id='.$id.'">' . $ret . '</a>';
-	else
-		return $ret;
-}
-
-function getuemail($id)
-{	
-	$q = query_uid($id);
-	return $q['email'];
-}
-
-function getuinfo($info,$clear=true)
-{
-	if (gettype($info) == 'array')
-	{
-		$id = $info['id'];
-		$av = $info['avatar'];
-		$unm = $info['username'];
-	}
-	else
-	{
-		$id = $info;
-		$av = getav($id);
-		$unm = getunm($id);
-	}
-	
-	$string = '
-	<div class="avatar fl" style="margin-right:4px;"><img src="'.$av.'" alt="" /></div>
-	<a href="profile.php?id='.$id.'" class="username'.(getubanned($id)?' banned':'').'">'.$unm.'</a>
-	'.($clear?'<div class="fc"></div>':'');
-	
-	return str_replace(array("\n","\r","\t"),'',$string);
-}
-
-function getubanned($id)
-{
-	$q = query_uid($id);
-	return $q['banned'];
-}
-
-function getufavs($id)
-{
-	global $queries_favs;
-	
-	if (!isset($queries_favs[$id]))
-	{
-		$favs = db_query("SELECT ticketid FROM favorites WHERE userid = $id", "Retrieving favorites for user id $id from database");
-		
-		$queries_favs[$id] = array();
-		
-		while ($fav = mysql_fetch_array($favs))
-		{
-			$queries_favs[$id][] = $fav['ticketid'];
-		}
-	}
-	
-	return $queries_favs[$id];
 }
 
 function getactimg($id)
