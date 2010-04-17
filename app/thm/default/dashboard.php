@@ -1,3 +1,4 @@
+<?php if ($client['is_logged']) : ?>
 <section id="dashboard-following">
 	<div class="imgtitle imgtitle-32">
 		<img class="image" src="<?php echo $location['images']; ?>/titles/following.png" alt="" />
@@ -10,38 +11,45 @@
 	<table class="tickets">
 		<thead>
 			<tr>
-				<!-- perhaps do classes for all these columns -->
-				<th class="status" style="width: 4px;"></th>
-				<th style="width: 16px;"></th>
-				<th style="width: 8px;"><a href="#">#</a></th>
-				<th><a href="#">Summary</a></th>
-				<th style="width: 128px;"><a href="#">Category</a></th>
-				<th style="width: 96px;"><a href="#">Assigned</a></th>
-				<th style="width: 48px;"><a href="#">Last</a></th>
+				<th class="status"></th>
+				<th class="star"></th>
+				<th class="id"><a href="#">#</a></th>
+				<th class="summary"><a href="#">Summary</a></th>
+				<th class="category"><a href="#">Category</a></th>
+				<th class="assigned"><a href="#">Assigned</a></th>
+				<th class="last"><a href="#">Last</a></th>
 			</tr>
 		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="7">
+					<form id="tickets-filter">
+						Ticket filtering doesn't work here right now
+					</form>
+				</td>
+			</tr>
+		</tfoot>
 		<tbody>
-			<tr>
-				<td class="status"><div style="background:#ffae00"></div></td>
-				<td><img src="<?php echo $location['images']; ?>/star-on.png" alt="*" /></td>
-				<td>5</td>
-				<td>Quoting doesn't work <span class="tag">test</span></td>
-				<td class="lesser">Example Category</td>
-				<td class="lesser">--</td>
-				<td class="lesser">2d ago</td>
-			</tr>
-			<tr>
-				<td class="status"><div style="background:#ffde00"></div></td>
-				<td><img src="<?php echo $location['images']; ?>/star-off.png" alt="*" /></td>
-				<td>12</td>
-				<td>Default theme doesn't work in all WebKit-based browsers</td>
-				<td class="lesser">Example Category</td>
-				<td class="lesser">a2h</td>
-				<td class="lesser">1h ago</td>
-			</tr>
+		<?php foreach ($issues as $issue): ?>
+		
+		<tr class="ticket" data-id="<?php echo $issue['id'] ?>">
+			<td class="status"><div style="background:<?php echo $issue['status_color'] ?>"></div></td>
+			<td class="favorite"><a href="javascript:;"><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></a></td>
+			<td class="id"><?php echo $issue['id']; ?></td>
+			<td class="summary">
+				<a href="ticket.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
+				<span class="tag"><?php echo gettagnm($issue['tags']) ?></span>
+			</td>
+			<td class="category"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>
+			<td class="assigned<?php echo $issue['assign'] == $_SESSION['uid'] && $issue['status'] < 3 ? ' you' : '' ?>"><?php echo $issue['assign'] > 0 ? '<a href="profile.php?id=' . $issue['assign'] . '">' . getunm($issue['assign']) . '</a>' : '--' ?></td>
+			<td class="last"><?php echo timeago($issue['when_updated'], false, true) ?></td>
+		</tr>
+		
+		<?php endforeach; ?>
 		</tbody>
 	</table>
 </section>
+<?php endif; ?>
 
 <section id="dashboard-new">
 	<div class="imgtitle imgtitle-32">

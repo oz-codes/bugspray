@@ -44,7 +44,7 @@
 		<td class="favorite"><a href="javascript:;"><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></a></td>
 		<td class="id"><?php echo $issue['id']; ?></td>
 		<td class="summary">
-			<a href="view_issue.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
+			<a href="ticket.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
 			<span class="tag"><?php echo gettagnm($issue['tags']) ?></span>
 		</td>
 		<td class="category"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>

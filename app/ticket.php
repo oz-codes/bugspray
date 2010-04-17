@@ -66,7 +66,7 @@ if (mysql_num_rows($result_issues))
 	
 	// output the page
 	$page->setPage(
-		'issue_single.php',
+		'ticket.php',
 		array(
 			'issue' => $issue,
 			'comments' => $result_comments

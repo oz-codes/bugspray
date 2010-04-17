@@ -32,72 +32,32 @@ if (isset($_GET['installerdone']) && is_dir('install'))
 	include("install/index.php");
 }
 
-// current status
-$curstatus = $_GET['status'];
-
-// restrict the status
-$whereclause = '';
-if ($curstatus != 'all')
+if ($client['is_logged'])
 {
-	if (!isset($_GET['status']))
-		$curstatus = 'open';
-	
-	$wherests = array();
-	foreach (getstatuses() as $status)
+	$result_issues = db_query_toarray("
+		SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
+		LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
+		LEFT JOIN favorites ON favorites.ticketid = issues.id
+		WHERE issues.status < 3 AND (favorites.userid = {$_SESSION['uid']} OR issues.assign = {$_SESSION['uid']})
+		ORDER BY issues.when_updated DESC
+	", false, 'Retrieving a list of issues');
+
+	// extra variables
+	$count = count($result_issues);
+	for ($i=0;$i<$count;$i++)
 	{
-		if ($status['type'] == $curstatus)
-		{
-			$wherests[] = $status['id'];
-		}
-	}
-	if (count($wherests) > 0)
-	{
-		$whereclause = 'WHERE (';
-		$i = 0;
-		foreach ($wherests as $st)
-		{
-			if ($i > 0)
-				$whereclause .= ' OR';
-			$whereclause .= ' issues.status = '.$st;
-			$i++;
-		}
-		$whereclause .= ')';
+		// is the issue favoUrited? (db uses "favorite" because everyone favoUrs the americans)
+		$result_issues[$i]['favorite'] = $result_issues[$i]['favorited'] ? true : false;
+		
+		// determine the colour of the listing (!!!!!!!!!!!!!!!!!!!move into template?)
+		$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'], $result_issues[$i]['severity']);
 	}
 }
-
-// status tabs
-$status_tabs = array(
-	array(
-		'name' => 'Open',
-		'url' => 'index.php',
-		'sel' => $curstatus == 'open' ? true : false
-	),
-	array(
-		'name' => 'Assigned',
-		'url' => 'index.php?status=assigned',
-		'sel' => $curstatus == 'assigned' ? true : false
-	),
-	array(
-		'name' => 'Resolved',
-		'url' => 'index.php?status=resolved',
-		'sel' => $curstatus == 'resolved' ? true : false
-	),
-	array(
-		'name' => 'Declined',
-		'url' => 'index.php?status=declined',
-		'sel' => $curstatus == 'declined' ? true : false
-	),
-	array(
-		'name' => 'All',
-		'url' => 'index.php?status=all',
-		'sel' => $curstatus == 'all' ? true : false
-	)
-);
 
 $page->setPage(
 	'dashboard.php',
 	array(
-		'status_tabs' => $status_tabs
+		'issues' => $result_issues
 	)
 );
 ?>

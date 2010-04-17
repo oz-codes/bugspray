@@ -97,7 +97,7 @@ for ($i=0;$i<$count;$i++)
 }
 
 $page->setPage(
-	'issue_list.php',
+	'tickets.php',
 	array(
 		'status_tabs' => $status_tabs,
 		'issues' => $result_issues
