@@ -71,7 +71,6 @@ table
 }
 td, th
 {
-	height: 24px;
 	border: none;
 	padding: 2px 8px;
 	text-align: left;
@@ -486,6 +485,11 @@ input[type=submit]
 }
 
 /* ticket listing - normal - uses tables */
+
+.tickets th, .tickets td
+{
+	height: 24px;
+}
 
 .tickets th
 {
