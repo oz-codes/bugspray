@@ -21,9 +21,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// temporary
-$sitename = 'My Issue Tracker';
-
 // define the locations of everything
 $theme = 'default';
 $location = array(
