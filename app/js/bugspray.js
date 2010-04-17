@@ -112,6 +112,26 @@ $(document).ready(function() {
 	{
 		$(".ticket .favorite a").click(ticketFavorite);
 	}
+	
+	// filtering tickets
+	if ($(".tickets .filter").length)
+	{
+		$(".tickets .filter select[name=status]").live('change', function() {
+			var tickets = $(this).closest(".tickets");
+			
+			$.ajax({
+				type: 'post',
+				url: 'ticket_list.php',
+				data: {
+					type: $(tickets).attr('data-type'),
+					status: $(this).find("option:selected").val()
+				},
+				success: function(data) {
+					$(tickets).html($(data).html());
+				}
+			});
+		});
+	}
 });
 
 function changestatus(id,status,assigns)

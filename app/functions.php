@@ -387,6 +387,120 @@ function issuecol($status, $severity)
 	return $col;
 }
 
+function ticket_list($type, $status, $order='desc')
+{
+	global $page, $client;
+	
+	// the myriad of status filters
+	switch ($status)
+	{
+		case 'unassigned': $whereclause = 'WHERE issues.status = 1'; break;
+		case 'assigned': $whereclause = 'WHERE issues.status = 2'; break;
+		case 'resolved': $whereclause = 'WHERE issues.status = 3'; break;
+		//case 'postponed': $whereclause = 'WHERE issues.status = 4'; break;
+		case 'declined': $whereclause = 'WHERE issues.status = 5'; break;
+		case 'all': $whereclause = ''; break;
+		case 'open': default: $status = 'open'; $whereclause = 'WHERE issues.status = 1 OR issues.status = 2'; break;
+	}
+	
+	// if we don't have a proper order than force descending
+	if ($order)
+	{
+		$order = strtoupper($order);
+		if ($order != 'ASC' || $order != 'DESC')
+		{
+			$order = 'DESC';
+		}
+	}
+	else
+	{
+		$order = 'DESC';
+	}
+
+	// and what query do we need?
+	switch ($type)
+	{
+		case 'following':
+			$whereclause = str_replace('WHERE', 'AND', $whereclause);
+			
+			$query = "
+				SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
+				LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
+				LEFT JOIN favorites ON favorites.ticketid = issues.id
+				WHERE (favorites.userid = {$_SESSION['uid']} OR issues.assign = {$_SESSION['uid']})
+				$whereclause
+				ORDER BY issues.when_updated $order"; break;
+		
+		case 'standard': default:
+			$query = "
+				SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
+				LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
+				LEFT JOIN favorites ON favorites.ticketid = issues.id
+				$whereclause
+				ORDER BY issues.when_updated $order"; break;
+	}
+
+	// now run it!
+	$result_issues = db_query_toarray($query, false, 'Retrieving a list of issues');
+
+	// extra variables
+	$count = count($result_issues);
+	for ($i=0;$i<$count;$i++)
+	{
+		// is the issue favoUrited? (db uses "favorite" because everyone favoUrs the americans)
+		$result_issues[$i]['favorite'] = $result_issues[$i]['favorited'] ? true : false;
+		
+		// determine the colour of the listing (!!!!!!!!!!!!!!!!!!!move into template?)
+		$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'], $result_issues[$i]['severity']);
+	}
+
+	// status types
+	$statuses = array(
+		array(
+			'name' => 'Open',
+			'type' => 'open',
+			'sel' => $status == 'open' ? true : false
+		),
+		array(
+			'name' => 'Unassigned',
+			'type' => 'unassigned',
+			'sel' => $status == 'unassigned' ? true : false
+		),
+		array(
+			'name' => 'Assigned',
+			'type' => 'assigned',
+			'sel' => $status == 'assigned' ? true : false
+		),
+		array(
+			'name' => 'Resolved',
+			'type' => 'resolved',
+			'sel' => $status == 'resolved' ? true : false
+		),
+		array(
+			'name' => 'Declined',
+			'type' => 'declined',
+			'sel' => $status == 'declined' ? true : false
+		),
+		array(
+			'name' => 'All',
+			'type' => 'all',
+			'sel' => $status == 'all' ? true : false
+		)
+	);
+
+	// and we're off! even though this is called "setPage" it's just an include, probably should change that [TODO]
+	ob_start();
+	$page->setPage(
+		'ticket_list.php',
+		array(
+			'type' => $type,
+			'statuses' => $statuses,
+			'issues' => $result_issues
+		)
+	);
+	return ob_get_clean();
+}
+
 function isexistinguser($uname, $pwd, $isclient=false)
 {
 	global $path;

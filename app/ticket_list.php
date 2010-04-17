@@ -21,26 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// used for ajax
 include("functions.php");
-$page->setType('dashboard');
-$page->setTitle('Dashboard');
-
-// installer completion screen
-if (isset($_GET['installerdone']) && is_dir('install'))
-{
-	$page->addCSS('install/installer.css');
-	include("install/index.php");
-}
-
-if ($client['is_logged'])
-{
-	$tickets_following = ticket_list('following', $_GET['status'], 'desc');
-}
-
-$page->setPage(
-	'dashboard.php',
-	array(
-		'tickets_following' => $tickets_following
-	)
-);
+$page->disableTemplate();
+echo ticket_list($_POST['type'], $_POST['status'], 'desc');
 ?>
