@@ -266,7 +266,7 @@ function ticket_list($type, $status, $order='desc')
 		//case 'postponed': $whereclause = 'WHERE issues.status = 4'; break;
 		case 'declined': $whereclause = 'WHERE issues.status = 5'; break;
 		case 'all': $whereclause = ''; break;
-		case 'open': default: $status = 'open'; $whereclause = 'WHERE issues.status = 1 OR issues.status = 2'; break;
+		case 'open': default: $status = 'open'; $whereclause = 'WHERE (issues.status = 1 OR issues.status = 2)'; break;
 	}
 	
 	// if we don't have a proper order than force descending
@@ -293,7 +293,7 @@ function ticket_list($type, $status, $order='desc')
 				SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
 				LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
 				LEFT JOIN favorites ON favorites.ticketid = issues.id
-				WHERE (favorites.userid = {$_SESSION['uid']} OR issues.assign = {$_SESSION['uid']})
+				WHERE ((favorites.ticketid = issues.id AND favorites.userid = {$_SESSION['uid']}) OR issues.assign = {$_SESSION['uid']})
 				$whereclause
 				ORDER BY issues.when_updated $order"; break;
 		
