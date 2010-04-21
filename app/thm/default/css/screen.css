@@ -402,25 +402,6 @@ input[type=submit]
 	font-size:13px;
 }
 
-/* tables for forms */
-
-.frmtbl
-{
-	width:100%;
-}
-.frmtbl td
-{
-	vertical-align:top;
-}
-.frmtbl tr td
-{
-	padding-bottom:8px;
-}
-.frmtbl tr td:first-child
-{
-	font-weight:bold;
-}
-
 /* the watchlist */
 
 .watchlist h3, .watchlist nav
@@ -482,6 +463,42 @@ input[type=submit]
 {
 	color: #000;
 	text-decoration: none !important;
+}
+
+/* forms */
+
+dl.form label
+{
+	font-weight: bold;
+}
+
+dl.form dt
+{
+	clear: both;
+}
+dl.form dd
+{
+	margin: 4px 0;
+}
+
+dl.form dt, dl.form dd.inline
+{
+	margin: 4px 0;
+}
+
+dl.form dt.inline, dl.form dd
+{
+	margin-bottom: 16px !important;
+}
+
+dl.form dt.inline
+{
+	float: left;
+	padding: 2px 12px 0 0;
+}
+dl.form dd.inline
+{
+	float: left;
 }
 
 /* ticket listing - normal - uses tables */

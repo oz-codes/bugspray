@@ -36,8 +36,6 @@ $page->setTitle('Add a ticket');
 	<div class="clear"></div>
 </div>
 
-<p><b>[todo: redo this form]</b></p>
-
 <?php
 if (!$client['is_logged'])
 {
@@ -49,69 +47,64 @@ if (!isset($_POST['sub']))
 {
 ?>
 
-<form action="" method="post">	
-	<table class="frmtbl">
-		<tr>
-			<td style="width:128px;">
-				Summary
-			</td>
-			<td>
-				<input name="title" type="text" /><br />
-				<small>Be succinct! You are limited to 128 characters.</small>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Severity
-			</td>
-			<td>
-				<input type="radio" name="severity" id="sv-0" value="0" /> <label for="sv-0">None</label>
-				<input type="radio" name="severity" id="sv-1" value="1" /> <label for="sv-1">Very Low</label>
-				<input type="radio" name="severity" id="sv-2" value="2" /> <label for="sv-2">Low</label>
-				<input type="radio" name="severity" id="sv-3" value="3" /> <label for="sv-3">Medium</label>
-				<input type="radio" name="severity" id="sv-4" value="4" /> <label for="sv-4">Severe</label>
-				<input type="radio" name="severity" id="sv-5" value="5" /> <label for="sv-5">Very Severe</label>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Category
-			</td>
-			<td>
-				<select name="category">
-					<option>todo</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Tags
-			</td>
-			<td>
-				<select name="tag">
-					<option value="-1">Select one...</option>
-					<option value="-1">--------------------------------</option>
-					<?php
-						$result_tags = db_query("SELECT * FROM tags");
-						while ($tag = mysql_fetch_array($result_tags))
-						{
-							echo '<option value="' . $tag['id'] . '">' . $tag['name'] . '</option>';
-						}
-					?>
-				</select><br />
-				<small>You can only select one tag for now, as changes are happening with the codebase</small>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Description
-			</td>
-			<td>
-				<textarea name="desc" style="width:50%;height:192px;"></textarea><br />
-				<small>This is where you describe the issue in full. Be sure to be descriptive!</small>
-			</td>
-		</tr>
-	</table>
+<form action="" method="post">
+	<dl class="form">
+		<dt class="inline">
+			<label for="title">Summary</label>
+		</dt>
+		<dd class="inline">
+			<input id="title" name="title" type="text" size="64" maxlength="128" />
+		</dd>
+		
+		<dt>
+			<label for="description">Describe the problem</label>
+		</dt>
+		<dd>
+			<textarea id="description" name="description" style="width: 75%; height: 192px;"></textarea>
+		</dd>
+		
+		<dt>
+			<label for="severity">Severity</label>
+		</dt>
+		<dd>
+			<select id="severity" name="severity">
+				<option value="0">None</option>
+				<option value="1">Very Low</option>
+				<option value="2">Low</option>
+				<option value="3">Medium</option>
+				<option value="4">Severe</option>
+				<option value="5">Very Severe</option>
+			</select>
+		</dd>
+		
+		<dt>
+			<label for="tag">Tag</label>
+		</dt>
+		<dd>
+			<select id="tag" name="tag">
+				<option value="-1">Select one...</option>
+				<option value="-1">--------------------------------</option>
+				<?php
+					$tags = db_query("SELECT * FROM tags", 'Retrieving all tags from the database');
+					while ($tag = mysql_fetch_array($tags))
+					{
+						echo '<option value="' . $tag['id'] . '">' . $tag['name'] . '</option>';
+					}
+				?>
+			</select>
+			<br />
+			<small>Due to recent changes in the codebase, the tag system does not work like how tags would be expected to. This will be changed later on.</small>
+		</dd>
+		
+		<dt>
+			<label for="category">Category</label>
+		</dt>
+		<dd>
+			<select id="category" name="category">
+				<option>todo</option>
+			</select>
+		</dd>
+	</dl>
 
 	<input type="submit" name="sub" value="Post" />
 </form>
@@ -128,7 +121,7 @@ else
 	{
 		$t = escape_smart(htmlentities($_POST['title']));
 		$a = escape_smart($_SESSION['uid']);
-		$d = escape_smart(htmlentities($_POST['desc']));
+		$d = escape_smart(htmlentities($_POST['description']));
 		$s = escape_smart($_POST['severity']);
 		
 		$query2 = db_query("INSERT INTO issues (name,author,description,category,when_opened,when_updated,tags,severity) VALUES ('$t','$a','$d','1',NOW(),NOW(),'$c','$s')");
