@@ -232,6 +232,9 @@ function issuecol($status, $severity)
 	{
 		switch ($severity)
 		{
+			case 0:
+				$col = '#e7f4fc';
+				break;
 			case 1:
 				$col = '#fffa6c';
 				break;

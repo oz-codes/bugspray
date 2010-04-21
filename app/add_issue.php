@@ -65,6 +65,7 @@ if (!isset($_POST['sub']))
 				Severity
 			</td>
 			<td>
+				<input type="radio" name="severity" id="sv-0" value="0" /> <label for="sv-0">None</label>
 				<input type="radio" name="severity" id="sv-1" value="1" /> <label for="sv-1">Very Low</label>
 				<input type="radio" name="severity" id="sv-2" value="2" /> <label for="sv-2">Low</label>
 				<input type="radio" name="severity" id="sv-3" value="3" /> <label for="sv-3">Medium</label>
