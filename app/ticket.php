@@ -24,58 +24,66 @@
 include("functions.php");
 $page->setType('tickets');
 
-$id = escape_smart($_GET['id']);
+$id = $_GET['id'];
 
-$result_issues = db_query("SELECT * FROM issues WHERE id = '$id' LIMIT 1", "Retrieving info for issue $id from database");
-
-if (mysql_num_rows($result_issues))
+if (!is_numeric($id))
 {
-	$issue = mysql_fetch_array($result_issues);
-	$page->setTitle($issue['name']);
-	
-	// add to views
-	db_query("UPDATE issues SET num_views = num_views + 1 WHERE id = '$id'");
-	
-	// who is the issue assigned to?
-	if ($issue['assign'] > 0)
-	{
-		$issue['assignedto'] = getuinfo($issue['assign']);
-	}
-	else
-	{
-		$issue['assignedto'] = 'nobody';
-	}
-
-	// get list of assignable users
-	$assignsarr = array(array(0,'nobody'),array(0,'----------------------'));
-	$result_usercat = db_query("SELECT * FROM assigns_usercat WHERE catid = {$issue['category']}", "Retrieving assignable users for category id {$issue['category']} from database");
-	while ($assign = mysql_fetch_array($result_usercat))
-	{
-		$enableme = $assign['userid'] == $issue['assign'] ? true : false;
-		
-		$assignsarr[] = array(
-			$assign['userid'],
-			getunm($assign['userid']),
-			$enableme
-		);
-	}
-	$issue['assigns'] = $assignsarr;
-	
-	// get the comments
-	$result_comments = db_query_toarray("SELECT * FROM comments WHERE issue = $id ORDER BY when_posted ASC", "Retrieving comments for issue $id from database");
-	
-	// output the page
-	$page->setPage(
-		'ticket.php',
-		array(
-			'issue' => $issue,
-			'comments' => $result_comments
-		)
-	);
+	$page->setTitle('Error');
+	echo 'Invalid ticket id! If you accessed this page through a link, please contact the person who posted it and inform them that the link is invalid.';
 }
 else
 {
-	$page->setTitle('Error');
-	echo 'That issue doesn\'t exist!';
+	$result_issues = db_query("SELECT * FROM issues WHERE id = '$id' LIMIT 1", "Retrieving info for issue $id from database");
+	
+	if (!mysql_num_rows($result_issues))
+	{
+		$page->setTitle('Error');
+		echo 'That ticket doesn\'t exist! If you accessed this page through a link, please contact the person who posted it and inform them that the link is invalid.';
+	}
+	else
+	{
+		$issue = mysql_fetch_array($result_issues);
+		$page->setTitle($issue['name']);
+		
+		// add to views
+		db_query("UPDATE issues SET num_views = num_views + 1 WHERE id = '$id'");
+		
+		// who is the issue assigned to?
+		if ($issue['assign'] > 0)
+		{
+			$issue['assignedto'] = getuinfo($issue['assign']);
+		}
+		else
+		{
+			$issue['assignedto'] = 'nobody';
+		}
+
+		// get list of assignable users
+		$assignsarr = array(array(0,'nobody'),array(0,'----------------------'));
+		$result_usercat = db_query("SELECT * FROM assigns_usercat WHERE catid = {$issue['category']}", "Retrieving assignable users for category id {$issue['category']} from database");
+		while ($assign = mysql_fetch_array($result_usercat))
+		{
+			$enableme = $assign['userid'] == $issue['assign'] ? true : false;
+			
+			$assignsarr[] = array(
+				$assign['userid'],
+				getunm($assign['userid']),
+				$enableme
+			);
+		}
+		$issue['assigns'] = $assignsarr;
+		
+		// get the comments
+		$result_comments = db_query_toarray("SELECT * FROM comments WHERE issue = $id ORDER BY when_posted ASC", "Retrieving comments for issue $id from database");
+		
+		// output the page
+		$page->setPage(
+			'ticket.php',
+			array(
+				'issue' => $issue,
+				'comments' => $result_comments
+			)
+		);
+	}
 }
 ?>
