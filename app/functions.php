@@ -372,10 +372,7 @@ function ticket_list($type, $status, $order='desc')
 
 function hascharacters($string)
 {
-	if (str_replace(' ','',$string) == '')
-		return false;
-	else
-		return true;
+	return trim($string) == '' ? false : true;
 }
 
 function escape_smart($value)

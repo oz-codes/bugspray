@@ -160,7 +160,7 @@ function ticket_comment_add($issue, $content, $return, $type='')
 	if ($client['is_logged'])
 	{
 		// yeah, like we're going to post a blank message...
-		if (trim($content) == '')
+		if (!hascharacters($content))
 		{
 			$success = false;
 			$message = 'You didn\'t put in any content to post.';

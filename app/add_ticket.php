@@ -135,21 +135,37 @@ else
 		}
 	}
 	
-	$query2 = db_query("
-		INSERT INTO issues (name, author, description, category, when_opened, when_updated, tags, severity)
-		VALUES ('$title', {$_SESSION['uid']}, '$description', '1', NOW(), NOW(), '$tags', '$severity')
-	");
+	$prefail = false;
 	
-	if ($query2) { echo '<p><b>Info:</b> Added issue successfully!</p>'; } else { echo mysql_error(); }
+	if (!hascharacters($title))
+	{
+		$prefail = true;
+		echo '<p><b>Error:</b> The title you provided for your ticket is blank.</p>';
+	}
+	if (!hascharacters($description))
+	{
+		$prefail = true;
+		echo '<p><b>Error:</b> The description you provided for your ticket is blank.</p>';
+	}
 	
-	$query2_id = mysql_insert_id();
-	
-	echo '<br />';
-	
-	$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(), {$_SESSION['uid']}, 1, $query2_id)");
-	if ($query3) { echo '<p><b>Info:</b> Logged successfully!</p>'; } else { mysql_error(); }
-	
-	echo '<p><a href="ticket.php?id=' . $query2_id . '">Go to issue</a></p>';
+	if (!$prefail)
+	{
+		$query2 = db_query("
+			INSERT INTO issues (name, author, description, category, when_opened, when_updated, tags, severity)
+			VALUES ('$title', {$_SESSION['uid']}, '$description', '1', NOW(), NOW(), '$tags', '$severity')
+		");
+		
+		if ($query2) { echo '<p><b>Info:</b> Added issue successfully!</p>'; } else { echo mysql_error(); }
+		
+		$query2_id = mysql_insert_id();
+		
+		echo '<br />';
+		
+		$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(), {$_SESSION['uid']}, 1, $query2_id)");
+		if ($query3) { echo '<p><b>Info:</b> Logged successfully!</p>'; } else { mysql_error(); }
+		
+		echo '<p><a href="ticket.php?id=' . $query2_id . '">Go to issue</a></p>';
+	}
 }
 
 }
