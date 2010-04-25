@@ -11,7 +11,17 @@
 	<table class="ibox_details">
 		<tr>
 			<td>Tag(s)</td>
-			<td><span class="tag"><?php echo gettagnm($issue['tags']); ?></span></td>
+			<td>
+			
+			<?php
+				$tags = explode(' ', $issue['tags']); // todo: use the separate table for tags instead of one long string
+				foreach ($tags as $tag)
+				{
+					echo '<span class="tag">' . $tag . '</span>';
+				}
+			?>
+			
+			</td>
 		</tr>
 		<tr>
 			<td>Status</td>

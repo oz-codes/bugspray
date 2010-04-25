@@ -76,6 +76,14 @@ td, th
 	text-align: left;
 	font-size: 11px;
 }
+tr td:first-child
+{
+	padding-left: 0;
+}
+tr td:last-child
+{
+	padding-right: 0;
+}
 
 /* floating */
 
@@ -467,38 +475,26 @@ input[type=submit]
 
 /* forms */
 
-dl.form label
+.form
 {
+	margin-bottom: 12px;
+}
+
+.form label
+{
+	display: block;
+	margin-bottom: 3px;
 	font-weight: bold;
 }
 
-dl.form dt
+.form textarea
 {
-	clear: both;
-}
-dl.form dd
-{
-	margin: 4px 0;
+	width: 75%;
 }
 
-dl.form dt, dl.form dd.inline
+.form .col-3 td
 {
-	margin: 4px 0;
-}
-
-dl.form dt.inline, dl.form dd
-{
-	margin-bottom: 16px !important;
-}
-
-dl.form dt.inline
-{
-	float: left;
-	padding: 2px 12px 0 0;
-}
-dl.form dd.inline
-{
-	float: left;
+	width: 25%;
 }
 
 /* ticket listing - normal - uses tables */

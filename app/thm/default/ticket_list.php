@@ -34,7 +34,15 @@
 		<td class="id"><?php echo $issue['id']; ?></td>
 		<td class="summary">
 			<a href="ticket.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
-			<span class="tag"><?php echo gettagnm($issue['tags']) ?></span>
+			
+			<?php
+			$tags = explode(' ', $issue['tags']); // todo: use the separate table for tags instead of one long string
+			foreach ($tags as $tag)
+			{
+				echo '<span class="tag">' . $tag . '</span>';
+			}
+			?>
+			
 		</td>
 		<td class="category"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>
 		<td class="assigned<?php echo $issue['assign'] == $_SESSION['uid'] && $issue['status'] < 3 ? ' you' : '' ?>"><?php echo $issue['assign'] > 0 ? '<a href="profile.php?id=' . $issue['assign'] . '">' . getunm($issue['assign']) . '</a>' : '--' ?></td>

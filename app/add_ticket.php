@@ -48,63 +48,64 @@ if (!isset($_POST['sub']))
 ?>
 
 <form action="" method="post">
-	<dl class="form">
-		<dt class="inline">
-			<label for="title">Summary</label>
-		</dt>
-		<dd class="inline">
-			<input id="title" name="title" type="text" size="64" maxlength="128" />
-		</dd>
+	<table class="form">
+		<tr>
+			<td colspan="3">
+				<table>
+					<tr>
+						<td>
+							<label for="title">Summary</label>
+						</td>
+						<td>
+							<input id="title" name="title" type="text" size="64" maxlength="128" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<label for="tags">Tags</label>
+						</td>
+						<td colspan="2">
+							<input id="tags" name="tags" type="text" size="64" />
+							<small>(seperate tags by spaces)</small>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 		
-		<dt>
-			<label for="description">Describe the problem</label>
-		</dt>
-		<dd>
-			<textarea id="description" name="description" style="width: 75%; height: 192px;"></textarea>
-		</dd>
+		<tr>
+			<td colspan="3">
+				<label for="description">Describe the problem</label>
+				<textarea id="description" name="description" style="height: 192px;"></textarea>
+			</td>
+		</tr>
 		
-		<dt>
-			<label for="severity">Severity</label>
-		</dt>
-		<dd>
-			<select id="severity" name="severity">
-				<option value="0">None</option>
-				<option value="1">Very Low</option>
-				<option value="2">Low</option>
-				<option value="3">Medium</option>
-				<option value="4">Severe</option>
-				<option value="5">Very Severe</option>
-			</select>
-		</dd>
-		
-		<dt>
-			<label for="tag">Tag</label>
-		</dt>
-		<dd>
-			<select id="tag" name="tag">
-				<option value="-1">Select one...</option>
-				<option value="-1">--------------------------------</option>
-				<?php
-					$tags = db_query("SELECT * FROM tags", 'Retrieving all tags from the database');
-					while ($tag = mysql_fetch_array($tags))
-					{
-						echo '<option value="' . $tag['id'] . '">' . $tag['name'] . '</option>';
-					}
-				?>
-			</select>
-			<br />
-			<small>Due to recent changes in the codebase, the tag system does not work like how tags would be expected to. This will be changed later on.</small>
-		</dd>
-		
-		<dt>
-			<label for="category">Category</label>
-		</dt>
-		<dd>
-			<select id="category" name="category">
-				<option>todo</option>
-			</select>
-		</dd>
-	</dl>
+		<tr class="col-3">
+			<td>
+				<label for="severity">Severity</label>
+				<select id="severity" name="severity">
+					<option value="0">None</option>
+					<option value="1">Very Low</option>
+					<option value="2">Low</option>
+					<option value="3">Medium</option>
+					<option value="4">Severe</option>
+					<option value="5">Very Severe</option>
+				</select>
+			</td>
+			
+			<td>
+				<label for="category">Category</label>
+				<select id="category" name="category">
+					<option>todo</option>
+				</select>
+			</td>
+			
+			<td>
+				--
+			</td>
+		</tr>
+	</table>
 
 	<input type="submit" name="sub" value="Post" />
 </form>
@@ -113,33 +114,43 @@ if (!isset($_POST['sub']))
 }
 else
 {
-	$c = escape_smart($_POST['tag']);
+	$title = escape_smart(htmlentities($_POST['title']));
+	$description = escape_smart(htmlentities($_POST['description']));
+	$severity = escape_smart($_POST['severity']);
 	
-	$cate = db_query_single("SELECT id from tags WHERE id='$c'");
+	$tags = escape_smart(htmlentities($_POST['tags'])); // todo: use the separate table for tags instead of one long string
+	$tagsarr = explode(' ', $tags);
+	$tagsc = count($tagsarr);
+	$tags = '';
+	for ($i=0; $i<$tagsc; $i++)
+	{
+		if (strlen($tagsarr[$i]) > 16) // todo: client side check for this
+		{
+			echo '<p><b>Note:</b> The tag you entered \'' . $tagsarr[$i] . '\' exceeds the maximum length of tags of 16 characters.
+			It will not be included with your ticket. You can edit your tags later.</p>';
+		}
+		else
+		{
+			$tags .= ($i > 0 ? ' ' : '') . $tagsarr[$i];
+		}
+	}
 	
-	if ($cate[0])
-	{
-		$t = escape_smart(htmlentities($_POST['title']));
-		$a = escape_smart($_SESSION['uid']);
-		$d = escape_smart(htmlentities($_POST['description']));
-		$s = escape_smart($_POST['severity']);
-		
-		$query2 = db_query("INSERT INTO issues (name,author,description,category,when_opened,when_updated,tags,severity) VALUES ('$t','$a','$d','1',NOW(),NOW(),'$c','$s')");
-		if ($query2) { echo 'Added issue successfully!'; } else { echo mysql_error(); }
-		
-		$query2_id = mysql_insert_id();
-		
-		echo '<br />';
-		
-		$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(),'$a',1,$query2_id)");
-		if ($query3) { echo 'Logged successfully!'; } else { mysql_error(); }
-		
-		echo '<br /><br /><a href="view_issue.php?id=' . $query2_id . '">Go to issue</a>';
-	}
-	else
-	{
-		echo 'You did not select a proper tag.';
-	}
+	$query2 = db_query("
+		INSERT INTO issues (name, author, description, category, when_opened, when_updated, tags, severity)
+		VALUES ('$title', {$_SESSION['uid']}, '$description', '1', NOW(), NOW(), '$tags', '$severity')
+	");
+	
+	if ($query2) { echo '<p><b>Info:</b> Added issue successfully!</p>'; } else { echo mysql_error(); }
+	
+	$query2_id = mysql_insert_id();
+	
+	echo '<br />';
+	
+	$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(), {$_SESSION['uid']}, 1, $query2_id)");
+	if ($query3) { echo '<p><b>Info:</b> Logged successfully!</p>'; } else { mysql_error(); }
+	
+	echo '<p><a href="view_issue.php?id=' . $query2_id . '">Go to issue</a></p>';
 }
+
 }
 ?>
