@@ -711,9 +711,9 @@ dl.ibox_details dd
 .comment tr:first-child td
 {
 	padding: 6px 12px;
-	border-top: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	background: #e5e5e5;
+	background: #f0f0f0;
+	border-top: 1px solid #d0d0d0;
+	border-bottom: 1px solid #d0d0d0;
 }
 .comment .user
 {
