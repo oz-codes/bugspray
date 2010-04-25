@@ -149,7 +149,7 @@ else
 	$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(), {$_SESSION['uid']}, 1, $query2_id)");
 	if ($query3) { echo '<p><b>Info:</b> Logged successfully!</p>'; } else { mysql_error(); }
 	
-	echo '<p><a href="view_issue.php?id=' . $query2_id . '">Go to issue</a></p>';
+	echo '<p><a href="ticket.php?id=' . $query2_id . '">Go to issue</a></p>';
 }
 
 }
