@@ -307,11 +307,47 @@ hr
 	font-size: 10px;
 }
 
-/* custom form styling :o */
+/* forms */
 
-input[type=text], input[type=password], textarea, select
+.form
 {
-	/* make some new styling because the old one is rubbish */
+	margin-bottom: 12px;
+}
+
+.form label
+{
+	display: block;
+	margin-bottom: 3px;
+	font-weight: bold;
+}
+
+.form textarea
+{
+	width: 75%;
+}
+
+.form .col-3 td
+{
+	width: 25%;
+}
+
+input[type=text], input[type=password], textarea
+{
+	background: url('../img/form/inputbg.png');
+	border: 1px solid #dadada;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	font-family: 'lucida grande', 'lucida sans unicode', verdana, arial, sans-serif;
+	font-size: 12px;
+}
+input[type=text], input[type=password]
+{
+	padding: 3px;
+}
+textarea
+{
+	padding: 4px;
 }
 
 button, input[type=submit], input[type=button]
@@ -471,30 +507,6 @@ input[type=submit]
 {
 	color: #000;
 	text-decoration: none !important;
-}
-
-/* forms */
-
-.form
-{
-	margin-bottom: 12px;
-}
-
-.form label
-{
-	display: block;
-	margin-bottom: 3px;
-	font-weight: bold;
-}
-
-.form textarea
-{
-	width: 75%;
-}
-
-.form .col-3 td
-{
-	width: 25%;
 }
 
 /* ticket listing - normal - uses tables */
