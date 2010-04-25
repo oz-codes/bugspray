@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `issues` (
   `when_opened` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `when_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `category` int(11) NOT NULL,
-  `tags` int(11) NOT NULL COMMENT 'Currently can only reference one tag (used to be category)',
+  `tags` varchar(64) NOT NULL,
   `severity` tinyint(4) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `assign` int(11) NOT NULL DEFAULT '0',
@@ -91,8 +91,7 @@ CREATE TABLE IF NOT EXISTS `log_issues` (
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) NOT NULL,
-  `color` varchar(6) NOT NULL,
-  `projects` varchar(128) NOT NULL,
+  `slug` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
