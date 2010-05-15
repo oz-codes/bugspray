@@ -120,11 +120,16 @@ else
 	
 	$tags = escape_smart(htmlentities($_POST['tags'])); // todo: use the separate table for tags instead of one long string
 	$tagsarr = explode(' ', $tags);
+	sort($tagsarr);
 	$tagsc = count($tagsarr);
 	$tags = '';
 	for ($i=0; $i<$tagsc; $i++)
 	{
-		if (strlen($tagsarr[$i]) > 16) // todo: client side check for this
+		if (strstr($tags, $tagsarr[$i]))
+		{
+			echo '<p><b>Note:</b> The tag you entered \'' . $tagsarr[$i] . '\' has been entered more than once.</p>';
+		}
+		elseif (strlen($tagsarr[$i]) > 16) // todo: client side check for this
 		{
 			echo '<p><b>Note:</b> The tag you entered \'' . $tagsarr[$i] . '\' exceeds the maximum length of tags of 16 characters.
 			It will not be included with your ticket. You can edit your tags later.</p>';
