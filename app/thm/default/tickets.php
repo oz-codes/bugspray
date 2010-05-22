@@ -4,7 +4,7 @@
 		<h1>Tickets</h1>
 	</div>
 	<div class="right">
-		<button type="button" onclick="location.href='add_ticket.php'"><img src="<?php echo $location['images']; ?>/btn/add.png" alt="" />Add a ticket</button>
+		<a class="button" href="add_ticket.php"><img src="<?php echo $location['images']; ?>/btn/add.png" alt="" />Add a ticket</a>
 	</div>
 	<div class="clear"></div>
 </div>
