@@ -356,22 +356,28 @@ textarea
 
 button, input[type=submit], input[type=button]
 {
-	padding: 0 4px;
+	padding: 0 8px;
 	height: 24px;
 	background: url('../img/btn/grad.png');
 	border: 1px solid #bebebe;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
-	text-shadow: 0 1px 0 #fff;
-	font-family: verdana, sans-serif;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
 	font-size: 11px;
 	cursor: pointer;
 }
 
 button img
 {
-	margin: -4px 8px -3px 0px;
+	margin: -6px 8px -2px 0px;
+}
+
+button::-moz-focus-inner, input[type=submit]::-moz-focus-inner, input[type=button]::-moz-focus-inner
+{
+	border: 0;
 }
 
 input[type=submit]
