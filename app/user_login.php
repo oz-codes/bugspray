@@ -26,10 +26,17 @@ include("functions.php");
 $page->setType('account');
 $page->setTitle('Login');
 
+echo '
+<div class="imgtitle imgtitle-32">
+	<img class="image" src="' . $location['images'] . '/titles/login.png" alt="" />
+	<div class="text">
+		<h1>Login</h1>
+	</div>
+	<div class="clear"></div>
+</div>';
+
 if (!isset($_POST['sub']))
 {	
-	echo '<h2>Login</h2>';
-	
 	echo '
 	<form action="" method="post">
 		<p>
@@ -44,7 +51,6 @@ if (!isset($_POST['sub']))
 			<input type="submit" name="sub" value="Login" />
 			<input type="checkbox" name="remember" /> <span class="subtitle">Remember me</span>
 		</p>
-		<p><small>[todo maybe: an ajax version]</small></p>
 	</form>';
 }
 else
