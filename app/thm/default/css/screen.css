@@ -125,6 +125,7 @@ h1
 
 .imgtitle
 {
+	position: relative;
 	margin-bottom: 8px;
 }
 
@@ -441,31 +442,29 @@ input[type=submit]
 
 .tabs
 {
-	border-bottom:1px solid #777;
-	margin-bottom:8px;
-}
-.tabs a:first-child
-{
-	margin-left:16px !important;
+	margin-bottom: 8px;
+	background: url('../img/btn/grad.png');
+	border: 1px solid #bebebe;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+	text-decoration: none;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
 }
 .tabs a
 {
-	position:relative;
-	top:2px;
-	float:left;
-	padding:6px 16px;
-	margin:0px 8px;
-	font-weight:bold;
-	color:#777;
-	font-size:12px;
+	float: left;
+	padding: 7px 32px;
+	color: #777;
+	border-right: 1px solid #bebebe;
 }
 .tabs a.sel
 {
-	top:1px;
-	border:1px solid #777;
-	border-bottom:1px solid #fff;
-	color:#000;
-	font-size:13px;
+	background: rgba(255,255,255,0.33);
+	color: #000;
 }
 
 /* the watchlist */
