@@ -83,6 +83,44 @@ switch ($subpage)
 		echo '<p>This is a temporary home page for your account settings.
 		There\'s nothing to show here yet, perhaps later in mintytracker\'s life there will be. Until then, take a look at the tabs above.</p>';
 		break;
+		
+	case 'profile':
+		echo '
+		<form action="" method="post">
+			<p>
+				<label class="big">Avatar</label>
+				
+				<input type="radio" name="avatar-type" id="avatar-custom" tabindex="1" value="local" checked />
+				<label for="avatar-custom">
+				<img src="' . getav($id) . '" alt="" style="width: 32px; height: 32px;" />
+				<img src="' . getav($id) . '" alt="" style="width: 16px; height: 16px;" />
+				Custom
+				</label>
+				<a href="#" tabindex="2">(change)</a>
+				<br />
+				
+				<input type="radio" name="avatar-type" id="avatar-gravatar" tabindex="3" value="gravatar" />
+				<label for="avatar-gravatar">
+				<img src="http://www.gravatar.com/avatar/' . md5($users->client->info['email']) . '?s=32" alt="" />
+				<img src="http://www.gravatar.com/avatar/' . md5($users->client->info['email']) . '?s=16" alt="" />
+				Gravatar
+				</label>
+				<a href="http://gravatar.com/" tabindex="4">(change)</a>
+			</p>
+			<p>
+				<label class="big" for="email">Email</label>
+				<input class="big" type="text" id="email" name="email" tabindex="5" value="' . $users->client->info['email'] . '" />
+				
+				<input type="checkbox" id="email-show" name="email-show" tabindex="6" /> <label for="email-show">Public</label>
+			</p>
+			<p>
+				<label class="big" for="password">Password</label>
+				<input class="big" type="password" id="password" name="password" tabindex="7" value="you spin me right round" />
+			</p>
+			<p>
+				<input type="submit" value="Save" />
+			</p>
+		</form>';
 }
 
 }

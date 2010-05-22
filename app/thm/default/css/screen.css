@@ -335,6 +335,7 @@ hr
 input[type=text], input[type=password], textarea
 {
 	background: url('../img/form/inputbg.png');
+	color: #3f3f3f;
 	border: 1px solid #dadada;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -398,19 +399,21 @@ input[type=submit]
 	width: 64px;
 }
 
-/* web 2.0 means BIIIIG forms */
+/* larger form things */
 
-.biglabels label
+label.big
 {
-	font-size:16px;
-	font-weight:bold;
+	display: block;
+	margin: 4px 0;
+	font-size: 13px;
+	font-weight: bold;
 }
 
-.biginput
+input[type=text].big, input[type=password].big, textarea.big
 {
-	font-size:24px !important;
-	color:#555;
-	width:512px;
+	padding: 5px;
+	width: 512px;
+	font-size: 14px;
 }
 
 /* avatars (for a <div> wrapping the image) */
@@ -711,7 +714,7 @@ dl.ibox_details dd
 	border:1px solid #b99;
 }
 
-.biglabels .ibox_error
+form.big .ibox_error
 {
 	padding:4px;
 	width:512px;

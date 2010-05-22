@@ -31,23 +31,20 @@ if (!isset($_POST['sub']))
 	echo '<h2>Login</h2>';
 	
 	echo '
-	<form action="" method="post" class="biglabels">
-		<label for="uname">Username</label><br />
-		<input type="text" id="uname" name="uname" class="biginput" tabindex="1" />
-		
-		<br />
-		<br />
-		
-		<label for="pwd">Password</label> <a href="#">(forgot it?)</a><br />
-		<input type="password" id="pwd" name="pwd" class="biginput" tabindex="2" />
-		
-		<br />
-		<br />
-		
-		<input type="submit" name="sub" value="Login" />
-		<input type="checkbox" name="remember" /> <span class="subtitle">Remember me</span>
-		
-		<br /><small>[todo maybe: an ajax version]</small>
+	<form action="" method="post">
+		<p>
+			<label for="uname" class="big">Username</label>
+			<input type="text" id="uname" name="uname" class="big" tabindex="1" />
+		</p>
+		<p>
+			<label for="pwd" class="big">Password</label>
+			<input type="password" id="pwd" name="pwd" class="big" tabindex="2" />
+		</p>
+		<p>
+			<input type="submit" name="sub" value="Login" />
+			<input type="checkbox" name="remember" /> <span class="subtitle">Remember me</span>
+		</p>
+		<p><small>[todo maybe: an ajax version]</small></p>
 	</form>';
 }
 else
