@@ -372,6 +372,11 @@ input[type=submit], input[type=button], button, a.button
 	cursor: pointer;
 }
 
+input[type=submit]:hover, input[type=button]:hover, button:hover, a.button:hover
+{
+	border: 1px solid #aaa;
+}
+
 a.button
 {
 	padding: 4px 10px;
