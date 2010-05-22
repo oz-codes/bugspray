@@ -20,7 +20,7 @@
 						</div>
 					</div>
 					<div id="user_right">
-						<b><?php echo $_SESSION['username']; ?></b> | <a href="profile.php">profile</a> | <a href="user_logout.php">logout</a>
+						<b><a href="profile.php"><?php echo $_SESSION['username']; ?></a></b> | <a href="account.php">account</a> | <a href="user_logout.php">logout</a>
 					</div>
 					<div class="clear"></div>
 					<?php else: ?>
