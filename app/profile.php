@@ -31,19 +31,17 @@ $profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users
 $page->setTitle($profile['username'].'\'s Profile');
 ?>
 
-<header id="profile_header">
-	<div class="avatar_large">
-		<img src="<?php echo getav($id); ?>" />
+<div class="imgtitle imgtitle-32">
+	<img class="image" src="<?php echo getav($id); ?>" alt="" />
+	<div class="text">
+		<h1><?php echo $profile['username']; ?>'s Profile</h1>
 	</div>
-	<div class="heading">
-		<h2><?php echo $profile['username']; ?>'s Profile</h2>
+	<div class="right">
+		<a class="button" href="edit_profile.php"><img src="<?php echo $location['images']; ?>/btn/edit.png" alt="" />Edit</a>
+		<a class="button" href="javascript:alert('not implemented yet')"><img src="<?php echo $location['images']; ?>/btn/mail.png" alt="" /><s>Message</s></a>
 	</div>
-	<div class="fc"></div>
-</header>
-<!--<div class="fr">
-	<button type="button"><img src="img/btn/mail.png" alt="" />Message</button>
+	<div class="clear"></div>
 </div>
-<div class="fc"></div>-->
 
 <section id="profile_overview">
 	<dl id="profile_listing" class="ibox_details">
