@@ -49,7 +49,7 @@ if (!isset($_POST['sub']))
 		</p>
 		<p>
 			<input type="submit" name="sub" value="Login" />
-			<input type="checkbox" name="remember" /> <span class="subtitle">Remember me</span>
+			<input type="checkbox" name="remember" id="remember" /> <label class="subtitle" for="remember">Remember me</label>
 		</p>
 	</form>';
 }
