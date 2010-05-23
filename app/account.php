@@ -66,8 +66,9 @@ $subpage = $_GET['p'];
 
 <div class="tabs">
 	<a href="account.php"<?php echo !$subpage ? ' class="sel"' : '' ?>>Home</a>
-	<a href="account.php?p=profile"<?php echo $subpage == 'profile' ? ' class="sel"' : '' ?>>Profile</a>
-	<a href="account.php?p=pms"<?php echo $subpage == 'pms' ? ' class="sel"' : '' ?>>Private Messages</a>
+	<a href="account.php?p=pms"<?php echo $subpage == 'pms' ? ' class="sel"' : '' ?>><s>Private Messages</s></a>
+	<a href="account.php?p=avatar"<?php echo $subpage == 'avatar' ? ' class="sel"' : '' ?>>Avatar</a>
+	<a href="account.php?p=login"<?php echo $subpage == 'login' ? ' class="sel"' : '' ?>>Login</a>
 	<div class="fc"></div>
 </div>
 
@@ -83,13 +84,11 @@ switch ($subpage)
 		echo '<p>This is a temporary home page for your account settings.
 		There\'s nothing to show here yet, perhaps later in mintytracker\'s life there will be. Until then, take a look at the tabs above.</p>';
 		break;
-		
-	case 'profile':
+	
+	case 'avatar':
 		echo '
-		<form action="" method="post">
+		<form action="" method="post">			
 			<p>
-				<label class="big">Avatar</label>
-				
 				<input type="radio" name="avatar-type" id="avatar-custom" tabindex="1" value="local" checked />
 				<label for="avatar-custom">
 				<img src="' . getav($id) . '" alt="" style="width: 32px; height: 32px;" />
@@ -107,6 +106,12 @@ switch ($subpage)
 				</label>
 				<a href="http://gravatar.com/" tabindex="4">(change)</a>
 			</p>
+		</form>';
+		break;
+		
+	case 'login':
+		echo '
+		<form action="" method="post">
 			<p>
 				<label class="big" for="email">Email</label>
 				<input class="big" type="text" id="email" name="email" tabindex="5" value="' . $users->client->info['email'] . '" />
@@ -121,6 +126,7 @@ switch ($subpage)
 				<input type="submit" value="Save" />
 			</p>
 		</form>';
+		break;
 }
 
 }

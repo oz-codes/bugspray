@@ -37,7 +37,7 @@ $page->setTitle($profile['username'].'\'s Profile');
 		<h1><?php echo $profile['username']; ?>'s Profile</h1>
 	</div>
 	<div class="right">
-		<a class="button" href="account.php?p=profile<?php echo isset($_GET['id']) ? '&id=' . $_GET['id'] : '' ?>"><img src="<?php echo $location['images']; ?>/btn/edit.png" alt="" />Edit</a>
+		<a class="button" href="account.php?<?php echo $_GET['id'] != $_SESSION['id'] ? '?id=' . $_GET['id'] : '' ?>"><img src="<?php echo $location['images']; ?>/btn/edit.png" alt="" />Edit</a>
 		<a class="button" href="javascript:alert('not implemented yet')"><img src="<?php echo $location['images']; ?>/btn/mail.png" alt="" /><s>Message</s></a>
 	</div>
 	<div class="clear"></div>
