@@ -310,26 +310,35 @@ hr
 
 /* forms */
 
-.form
+table.form
 {
 	margin-bottom: 12px;
 }
-
-.form label
+table.form td
 {
-	display: block;
-	margin-bottom: 3px;
+	padding: 2px 0;
+}
+table.form label
+{
 	font-weight: bold;
 }
-
-.form textarea
+table.form textarea
 {
 	width: 75%;
 }
-
-.form .col-3 td
+table.form .col-3 td
 {
 	width: 25%;
+}
+
+dl.form
+{
+	margin: 8px 0 16px;
+}
+dl.form dt, dl.form dd
+{
+	margin: 2px 0;
+	padding: 0;
 }
 
 input[type=text], input[type=password], textarea
@@ -414,15 +423,15 @@ input[type=submit]
 
 /* larger form things */
 
-label.big
+.form.big label
 {
 	display: block;
-	margin: 4px 0;
+	margin: 4px 0 0;
 	font-size: 13px;
 	font-weight: bold;
 }
 
-input[type=text].big, input[type=password].big, textarea.big
+.form.big input[type=text], .form.big input[type=password], .form.big textarea
 {
 	padding: 5px;
 	width: 512px;
@@ -667,9 +676,16 @@ input[type=text].big, input[type=password].big, textarea.big
 
 /* infoboxes */
 
-.ibox_generic, .ibox_details, .ibox_alert, .ibox_error
+.ibox_generic, .ibox_details, .alert, .error
 {
-	padding:8px;
+	margin: 4px 0;
+	padding: 8px;
+}
+dl.form .ibox_generic, dl.form .ibox_details, dl.form .alert, dl.form .error
+{
+	padding: 2px 4px;
+	width: 512px;
+	font-size: 11px;
 }
 
 .ibox_generic, .ibox_details
@@ -715,24 +731,16 @@ dl.ibox_details dd
 	padding-bottom:4px;
 }
 
-.ibox_alert
+.alert
 {
-	background:#ffd;
-	border:1px solid #bb9;
+	background: #ffd;
+	border: 1px solid #bb9;
 }
 
-.ibox_error
+.error
 {
-	background:#fdd;
-	border:1px solid #b99;
-}
-
-form.big .ibox_error
-{
-	padding:4px;
-	width:512px;
-	font-size:12px;
-	margin-bottom:4px;
+	background: #fdd;
+	border: 1px solid #b99;
 }
 
 /* comments */
