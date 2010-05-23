@@ -181,8 +181,7 @@ h1
 
 .subtitle
 {
-	font-family: helvetica, arial, sans-serif;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: normal;
 }
 
@@ -375,6 +374,7 @@ input[type=text].unchanged, input[type=password].unchanged, textarea.unchanged
 
 input[type=submit], input[type=button], button, a.button
 {
+	margin: 8px 0;
 	padding: 0 8px;
 	height: 24px;
 	background-image: url('../img/btn/grad.png');
@@ -690,13 +690,12 @@ input[type=submit]
 .ibox_generic, .ibox_details, .alert, .error
 {
 	margin: 4px 0;
-	padding: 8px;
+	padding: 3px 5px;
+	font-size: 11px;
 }
 dl.form .ibox_generic, dl.form .ibox_details, dl.form .alert, dl.form .error
 {
-	padding: 2px 4px;
 	width: 512px;
-	font-size: 11px;
 }
 
 .ibox_generic, .ibox_details

@@ -67,8 +67,8 @@ $subpage = $_GET['p'];
 <div class="tabs">
 	<a href="account.php"<?php echo !$subpage ? ' class="sel"' : '' ?>>Home</a>
 	<a href="account.php?p=pms"<?php echo $subpage == 'pms' ? ' class="sel"' : '' ?>><s>Private Messages</s></a>
-	<a href="account.php?p=avatar"<?php echo $subpage == 'avatar' ? ' class="sel"' : '' ?>>Avatar</a>
-	<a href="account.php?p=login"<?php echo $subpage == 'login' ? ' class="sel"' : '' ?>>Login</a>
+	<a href="account.php?p=avatar"<?php echo $subpage == 'avatar' ? ' class="sel"' : '' ?>><s>Avatar</s></a>
+	<a href="account.php?p=login"<?php echo $subpage == 'login' ? ' class="sel"' : '' ?>>Email & Password</a>
 	<div class="fc"></div>
 </div>
 
@@ -113,25 +113,92 @@ switch ($subpage)
 		break;
 		
 	case 'login':
+		if (isset($_POST['submit']))
+		{
+			$error = false;
+			
+			$email = escape_smart($_POST['email']);
+			$password = $_POST['password'];
+			
+			// change the email?
+			if ($email != $users->client->info['email'])
+			{
+				if (!is_email($email))
+				{
+					$errors_email[] = 'The email you provided cannot be a valid one, please check it.';
+					$error = true;
+				}
+			}
+			else
+			{
+				$email = '';
+			}
+			
+			// change the password?
+			if ($password != '')
+			{
+				// error check: password too short
+				if (strlen($password) < 5)
+				{
+					$errors_password[] = 'Your desired password is too short, please create a longer password.';
+					$error = true;
+				}
+			}
+			
+			// no errors?
+			if (!$error && ($email || $password))
+			{
+				// show the new email when the form shows up again
+				$newemail = $email;
+				
+				// alright, let's do this!
+				$success = true;
+				
+				if ($email)
+				{
+					db_query("UPDATE users SET email = '$email' WHERE id = $id", 'Updating the user\'s email') or $success = false;
+				}
+				
+				$setpass = $users->generate_password($users->client->info['password_salt'], $_POST['password']);
+				if ($password)
+				{
+					db_query("UPDATE users SET password = '$setpass' WHERE id = $id", 'Updating the user\'s password') or $success = false;
+				}
+				
+				if ($success)
+				{
+					echo '<div class="alert" style="width: 768px;">Your login details have been updated successfully.</div>';
+				}
+				else
+				{
+					echo '<div class="error" style="width: 768px;">Oh dear, something went wrong!<br />' . mysql_error() . '</div>';
+				}
+			}
+		}
+		
 		echo '
-		<form class="config" action="" method="post">
+		<form class="config" action="" method="post">			
 			<dl class="form big">
 				<dt>
 					<label for="email">Email</label>
+					' . output_errors($errors_email) . '
 				</dt>
 				<dd>
-					<input class="unchanged" type="text" id="email" name="email" value="' . $users->client->info['email'] . '" />
+					<input class="unchanged" type="text" id="email" name="email" value="' . (isset($newemail) ? $newemail : $users->client->info['email']) . '" />
 					<input type="checkbox" id="email-show" name="email-show" /> <label class="inline" for="email-show">Public</label>
 				</dd>
 			</dl>
+			
 			<dl class="form big">
 				<dt>
-					<label for="password">Password</label>
+					<label for="password">New password</label>
+					' . output_errors($errors_password) . '
 				</dt>
 				<dd>
-					<input type="password" id="password" name="password" value="" />
+					<input type="password" id="password" name="password" value="" /> <span class="subtitle">(leave blank to keep same)</span>
 				</dd>
 			</dl>
+			
 			<input type="submit" name="submit" value="Save" disabled />
 		</form>';
 		break;
