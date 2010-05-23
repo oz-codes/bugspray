@@ -117,13 +117,13 @@ switch ($subpage)
 		<form class="config" action="" method="post">
 			<p>
 				<label class="big" for="email">Email</label>
-				<input class="big" type="text" id="email" name="email" tabindex="5" value="' . $users->client->info['email'] . '" />
+				<input class="big unchanged" type="text" id="email" name="email" tabindex="5" value="' . $users->client->info['email'] . '" />
 				
 				<input type="checkbox" id="email-show" name="email-show" tabindex="6" /> <label for="email-show">Public</label>
 			</p>
 			<p>
 				<label class="big" for="password">Password</label>
-				<input class="big" type="password" id="password" name="password" tabindex="7" value="you spin me right round" />
+				<input class="big unchanged" type="password" id="password" name="password" tabindex="7" value="you spin me right round" />
 			</p>
 			<p>
 				<input type="submit" value="Save" disabled />

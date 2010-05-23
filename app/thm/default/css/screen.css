@@ -356,6 +356,11 @@ textarea
 	padding: 4px;
 }
 
+input[type=text].unchanged, input[type=password].unchanged, textarea.unchanged
+{
+	color: #999;
+}
+
 input[type=submit], input[type=button], button, a.button
 {
 	padding: 0 8px;

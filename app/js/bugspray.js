@@ -30,9 +30,15 @@ function getNewComments()
 }
 
 $(document).ready(function() {
-	$("input.unsel").focus(function(){
+	// inputs that should clear upon having focus
+	$("input.unsel").focus(function() {
 		$(this).removeClass('unsel');
 		$(this).attr({'value':''});
+	});
+	
+	// inputs that are lighter before being changed
+	$("input.unchanged").live('keydown', function() {
+		$(this).removeClass('unchanged');
 	});
 	
 	// ajax form loading image placeholders
