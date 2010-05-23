@@ -115,19 +115,24 @@ switch ($subpage)
 	case 'login':
 		echo '
 		<form class="config" action="" method="post">
-			<p>
-				<label class="big" for="email">Email</label>
-				<input class="big unchanged" type="text" id="email" name="email" tabindex="5" value="' . $users->client->info['email'] . '" />
-				
-				<input type="checkbox" id="email-show" name="email-show" tabindex="6" /> <label for="email-show">Public</label>
-			</p>
-			<p>
-				<label class="big" for="password">Password</label>
-				<input class="big unchanged" type="password" id="password" name="password" tabindex="7" value="you spin me right round" />
-			</p>
-			<p>
-				<input type="submit" value="Save" disabled />
-			</p>
+			<dl class="form big">
+				<dt>
+					<label for="email">Email</label>
+				</dt>
+				<dd>
+					<input class="unchanged" type="text" id="email" name="email" value="' . $users->client->info['email'] . '" />
+					<input type="checkbox" id="email-show" name="email-show" /> <label class="inline" for="email-show">Public</label>
+				</dd>
+			</dl>
+			<dl class="form big">
+				<dt>
+					<label for="password">Password</label>
+				</dt>
+				<dd>
+					<input type="password" id="password" name="password" value="" />
+				</dd>
+			</dl>
+			<input type="submit" name="submit" value="Save" disabled />
 		</form>';
 		break;
 }
