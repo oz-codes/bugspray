@@ -460,7 +460,7 @@ input[type=text].big, input[type=password].big, textarea.big
 .tabs a
 {
 	float: left;
-	padding: 7px 32px;
+	padding: 7px 24px;
 	color: #777;
 	border-right: 1px solid #bebebe;
 }
