@@ -610,4 +610,11 @@ function parsebbcode($string)
 	
 	return $ret;
 }
+
+function is_email($string)
+{
+	// http://stackoverflow.com/questions/1374881
+	// yeah, sure, could be using a rfc parser, but is it TRULY necessary? for now, probably not.
+	return preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", $string);
+}
 ?>
