@@ -48,64 +48,73 @@ if (!isset($_POST['sub']))
 ?>
 
 <form action="" method="post">
-	<table class="form">
-		<tr>
-			<td colspan="3">
-				<table>
-					<tr>
-						<td>
-							<label for="title">Summary</label>
-						</td>
-						<td>
-							<input id="title" name="title" type="text" size="64" maxlength="128" />
-						</td>
-					</tr>
-					
-					<tr>
-						<td>
-							<label for="tags">Tags</label>
-						</td>
-						<td colspan="2">
-							<input id="tags" name="tags" type="text" size="64" />
-							<small>(seperate tags by spaces)</small>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		
-		<tr>
-			<td colspan="3">
-				<label for="description">Describe the problem</label>
-				<textarea id="description" name="description" style="height: 192px;"></textarea>
-			</td>
-		</tr>
-		
-		<tr class="col-3">
-			<td>
-				<label for="severity">Severity</label>
-				<select id="severity" name="severity">
-					<option value="0">None</option>
-					<option value="1">Very Low</option>
-					<option value="2">Low</option>
-					<option value="3">Medium</option>
-					<option value="4">Severe</option>
-					<option value="5">Very Severe</option>
-				</select>
-			</td>
-			
-			<td>
-				<label for="category">Category</label>
-				<select id="category" name="category">
-					<option>todo</option>
-				</select>
-			</td>
-			
-			<td>
-				--
-			</td>
-		</tr>
-	</table>
+	<dl class="form inline">
+		<dt>
+			<label for="title">Summary</label>
+		</dt>
+		<dd>
+			<input id="title" name="title" type="text" size="64" maxlength="128" />
+		</dd>
+	</dl>
+	
+	<dl class="form inline">
+		<dt>
+			<label for="tags">Tags</label>
+		</dt>
+		<dd>
+			<input id="tags" name="tags" type="text" size="64" />
+			<small>(seperate tags by spaces)</small>
+		</dd>
+	</dl>
+	
+	<div class="clear"></div>
+	
+	<dl class="form">
+		<dt>
+			<label for="description">Describe the problem</label>
+		</dt>
+		<dd>
+			<textarea id="description" name="description" style="height: 192px;"></textarea>
+		</dd>
+	</dl>
+	
+	<dl class="form col-3">
+		<dt>
+			<label for="severity">Severity</label>
+		</dt>
+		<dd>
+			<select id="severity" name="severity">
+				<option value="0">None</option>
+				<option value="1">Very Low</option>
+				<option value="2">Low</option>
+				<option value="3">Medium</option>
+				<option value="4">Severe</option>
+				<option value="5">Very Severe</option>
+			</select>
+		</dd>
+	</dl>
+	
+	<dl class="form col-3">
+		<dt>
+			<label for="category">Category</label>
+		</dt>
+		<dd>
+			<select id="category" name="category">
+				<option>todo</option>
+			</select>
+		</dd>
+	</dl>
+	
+	<dl class="form col-3">
+		<dt>
+			<label>--</label>
+		</dt>
+		<dd>
+			--
+		</dd>
+	</dl>
+	
+	<div class="clear"></div>
 
 	<input type="submit" name="sub" value="Post" />
 </form>

@@ -310,35 +310,38 @@ hr
 
 /* forms */
 
-table.form
-{
-	margin-bottom: 12px;
-}
-table.form td
-{
-	padding: 2px 0;
-}
-table.form label
-{
-	font-weight: bold;
-}
-table.form textarea
-{
-	width: 75%;
-}
-table.form .col-3 td
-{
-	width: 25%;
-}
-
 dl.form
 {
-	margin: 8px 0 16px;
+	clear: both;
+	margin: 8px 0;
 }
 dl.form dt, dl.form dd
 {
 	margin: 2px 0;
 	padding: 0;
+}
+dl.form.inline dt, dl.form.inline dd
+{
+	float: left;
+}
+dl.form.inline dt
+{
+	width: 96px;
+	padding-top: 3px;
+}
+dl.form label
+{
+	font-weight: bold;
+}
+dl.form textarea
+{
+	width: 75%;
+}
+dl.form.col-3
+{
+	clear: none;
+	float: left;
+	width: 25%;
 }
 
 input[type=text], input[type=password], textarea
