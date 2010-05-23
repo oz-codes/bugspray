@@ -39,18 +39,25 @@ if (!isset($_POST['sub']))
 {	
 	echo '
 	<form action="" method="post">
-		<p>
-			<label for="uname" class="big">Username</label>
-			<input type="text" id="uname" name="uname" class="big" tabindex="1" />
-		</p>
-		<p>
-			<label for="pwd" class="big">Password</label>
-			<input type="password" id="pwd" name="pwd" class="big" tabindex="2" />
-		</p>
-		<p>
-			<input type="submit" name="sub" value="Login" />
-			<input type="checkbox" name="remember" id="remember" /> <label class="subtitle" for="remember">Remember me</label>
-		</p>
+		<dl class="form big">
+			<dt>
+				<label for="uname" class="big">Username</label>
+			</dt>
+			<dd>
+				<input type="text" id="uname" name="uname" class="big" tabindex="1" />
+			</dd>
+		</dl>
+		<dl class="form big">
+			<dt>
+				<label for="pwd" class="big">Password</label>
+			</dt>
+			<dd>
+				<input type="password" id="pwd" name="pwd" class="big" tabindex="2" />
+			</dd>
+		</dl>
+		
+		<input type="submit" name="sub" value="Login" />
+		<input type="checkbox" name="remember" id="remember" /> <label class="subtitle" for="remember">Remember me</label>
 	</form>';
 }
 else
