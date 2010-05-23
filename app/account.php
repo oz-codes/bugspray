@@ -106,12 +106,15 @@ switch ($subpage)
 				</label>
 				<a href="http://gravatar.com/" tabindex="4">(change)</a>
 			</p>
+			<p>
+				<input type="submit" value="Save" disabled />
+			</p>
 		</form>';
 		break;
 		
 	case 'login':
 		echo '
-		<form action="" method="post">
+		<form class="config" action="" method="post">
 			<p>
 				<label class="big" for="email">Email</label>
 				<input class="big" type="text" id="email" name="email" tabindex="5" value="' . $users->client->info['email'] . '" />
@@ -123,7 +126,7 @@ switch ($subpage)
 				<input class="big" type="password" id="password" name="password" tabindex="7" value="you spin me right round" />
 			</p>
 			<p>
-				<input type="submit" value="Save" />
+				<input type="submit" value="Save" disabled />
 			</p>
 		</form>';
 		break;

@@ -360,8 +360,9 @@ input[type=submit], input[type=button], button, a.button
 {
 	padding: 0 8px;
 	height: 24px;
+	background-image: url('../img/btn/grad.png');
+	background-position: 0 -6px;
 	color: #000;
-	background: url('../img/btn/grad.png');
 	border: 1px solid #bebebe;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -372,6 +373,13 @@ input[type=submit], input[type=button], button, a.button
 	font-weight: bold;
 	font-size: 11px;
 	cursor: pointer;
+}
+input[type=submit][disabled], input[type=button][disabled], button[disabled]
+{
+	background-position: 0 0;
+	color: #999;
+	border: 1px solid #ccc !important;
+	cursor: default;
 }
 
 input[type=submit]:hover, input[type=button]:hover, button:hover, a.button:hover
