@@ -8,7 +8,7 @@
 		<div class="clear"></div>
 	</div>
 	
-	<table class="ibox_details">
+	<table class="details">
 		<tr>
 			<td>Tag(s)</td>
 			<td>

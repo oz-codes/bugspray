@@ -44,7 +44,7 @@ $page->setTitle($profile['username'].'\'s Profile');
 </div>
 
 <section id="profile_overview">
-	<dl id="profile_listing" class="ibox_details">
+	<dl id="profile_listing" class="details">
 		<dt>Group</dt>
 			<dd>
 				<?php echo $profile['group_name']; ?>

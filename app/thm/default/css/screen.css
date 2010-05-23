@@ -685,48 +685,35 @@ input[type=submit]
 	margin-top:4px;
 }
 
-/* infoboxes */
+/* detail boxes */
 
-.ibox_generic, .ibox_details, .alert, .error
+.details
 {
-	margin: 4px 0;
-	padding: 3px 5px;
+	margin: 8px 0;
+	padding: 6px;
+	background: #f5f5f5;
+	border: 1px solid #ddd;
 	font-size: 11px;
 }
-dl.form .ibox_generic, dl.form .ibox_details, dl.form .alert, dl.form .error
-{
-	width: 512px;
-}
-
-.ibox_generic, .ibox_details
-{
-	background:#f5f5f5;
-	border:1px solid #ddd;
-}
-.ibox_generic em
-{
-	color:#777;
-}
-
-table.ibox_details
+table.details
 {
 	width:100%;
 }
-table.ibox_details td
+table.details td
 {
 	padding-left:8px;
 }
-table.ibox_details td:first-child
+table.details td:first-child
 {
 	padding-left:0px !important;
 	border-right:1px solid #ddd;
 	font-weight:bold;
 }
-dl.ibox_details
+dl.details
 {
 	margin:0px;
 }
-dl.ibox_details dt
+dl.details dt
 {
 	float:left;
 	clear:left;
@@ -734,11 +721,24 @@ dl.ibox_details dt
 	font-weight:bold;
 	padding-bottom:4px;
 }
-dl.ibox_details dd
+dl.details dd
 {
 	position:relative;
 	left:8px;
 	padding-bottom:4px;
+}
+
+/* infoboxes */
+
+.alert, .error
+{
+	margin: 4px 0;
+	padding: 3px 5px;
+	font-size: 11px;
+}
+dl.form .alert, dl.form .error
+{
+	width: 512px;
 }
 
 .alert
