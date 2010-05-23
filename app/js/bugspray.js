@@ -41,6 +41,14 @@ $(document).ready(function() {
 		$(this).removeClass('unchanged');
 	});
 	
+	// forms that have a disabled submit button that enable upon change
+	$("form.config input[type=text], form.config input[type=password], form.config textarea").live('keydown', function() {
+		$(this).closest("form.config").find("input[type=submit]").removeAttr('disabled');
+	});
+	$("form.config input[type!=text][type!=password]").live('change', function() {
+		$(this).closest("form.config").find("input[type=submit]").removeAttr('disabled');
+	});
+	
 	// ajax form loading image placeholders
 	$("#amwnd_btn").prepend(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
 	$("form.ajax input[type=submit]").after(' <img src="img/loading.gif" alt="please wait..." class="loadimg" style="display:none;" />');
