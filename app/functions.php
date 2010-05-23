@@ -617,4 +617,26 @@ function is_email($string)
 	// yeah, sure, could be using a rfc parser, but is it TRULY necessary? for now, probably not.
 	return preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", $string);
 }
+
+function output_errors($arr)
+{
+	$o = '';
+	
+	if (sizeof($arr) > 0)
+	{
+		$o .= '
+		<div class="error">';
+		
+		$i=0;
+		foreach ($arr as $msg)
+		{
+			$o .= '<div>'.$msg.'</div>';
+		}
+		
+		$o .= '
+		</div>';
+	}
+	
+	return $o;
+}
 ?>

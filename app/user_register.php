@@ -88,14 +88,14 @@ if (isset($_POST['submit']))
 	}
 	
 	// error check: password too short
-	if (strlen($_POST['pwd']) < 6)
+	if (strlen($_POST['pwd']) < 5)
 	{
 		$errors_pwd[] = 'Your desired password is too short, please create a longer password.';
 		$error = true;
 	}
 	
 	// error check: invalid email
-	if (!is_email($_POST['email']))
+	if (!is_email($_POST['emal']))
 	{
 		$errors_email[] = 'The email you provided cannot be a valid one, please check it.';
 	}
@@ -106,7 +106,7 @@ if (isset($_POST['submit']))
 		$u = escape_smart($_POST['uname']);
 		$s = md5(rand(0,9001));
 		$p = $users->generate_password($s,$_POST['pwd']);
-		$e = escape_smart($_POST['email']);
+		$e = escape_smart($_POST['emal']);
 		
 		$query = db_query("INSERT INTO users (username,password,password_salt,when_registered,email,avatar_type,avatar_location)".
 		                  "VALUES ('$u','$p','$s',NOW(),'$e',1,'img/defaultava.png')");
@@ -137,9 +137,7 @@ if ($error || !isset($_POST['subregister']))
 		</ul>
 		The password you provide should:
 		<ul>
-			<li>Be at least 6 characters</li>
-			<li>Not contain your username</li>
-			<li>Not contain the word(s) "password"</li>
+			<li>Be at least 5 characters</li>
 		</ul>
 	</div>
 	
@@ -149,8 +147,8 @@ if ($error || !isset($_POST['subregister']))
 	<form action="" method="post">
 		<dl class="form big">
 			<dt>
-				<label for="uname">Username</label>
-				' . outputerrors($errors_user) . '
+				<label for="uname">Us<span style="display:none;">blarghasdkjls</span>ername</label>
+				' . output_errors($errors_user) . '
 			</dt>
 			<dd>
 				<input type="text" id="uname" name="uname" class="biginput" value="' . $_POST['uname'] . '" />
@@ -160,7 +158,7 @@ if ($error || !isset($_POST['subregister']))
 		<dl class="form big">
 			<dt>
 				<label for="pwd">Password</label>
-				' . outputerrors($errors_pwd) . '
+				' . output_errors($errors_pwd) . '
 			</dt>
 			<dd>
 				<input type="password" id="pwd" name="pwd" class="biginput" />
@@ -169,11 +167,11 @@ if ($error || !isset($_POST['subregister']))
 		
 		<dl class="form big">
 			<dt>
-				<label for="email">Email</label>
-				' . outputerrors($errors_email) . '
+				<label for="emal">Ema<span style="display:none;">sddskjfcnx</span>il</label>
+				' . output_errors($errors_email) . '
 			</dt>
 			<dd>
-				<input type="text" id="email" name="email" class="biginput" value="' . $_POST['email'] . '" />
+				<input type="text" id="emal" name="emal" class="biginput" value="' . $_POST['emal'] . '" />
 			</dd>
 		</dl>
 			
@@ -189,27 +187,5 @@ if ($error || !isset($_POST['subregister']))
 			
 		<input type="submit" name="submit" value="Register" />
 	</form>';
-}
-
-function outputerrors($arr)
-{
-	$o = '';
-	
-	if (sizeof($arr) > 0)
-	{
-		$o .= '
-		<div class="error">';
-		
-		$i=0;
-		foreach ($arr as $msg)
-		{
-			$o .= '<div>'.$msg.'</div>';
-		}
-		
-		$o .= '
-		</div>';
-	}
-	
-	return $o;
 }
 ?>
