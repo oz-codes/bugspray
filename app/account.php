@@ -56,7 +56,7 @@ $subpage = $_GET['p'];
 ?>
 
 <div class="imgtitle imgtitle-32">
-	<img class="image" src="<?php echo $location['images']; ?>/titles/account.png" alt="" />
+	<img class="image" src="<?php echo $location['images'] ?>/titles/account.png" alt="" />
 	<img src="<?php echo getav($id); ?>" style="position: absolute; top: 16px; left: 16px; width: 16px; height: 16px;" alt="" />
 	<div class="text">
 		<h1><?php echo $profile['username']; ?>'s account</h1>
@@ -67,7 +67,7 @@ $subpage = $_GET['p'];
 <div class="tabs">
 	<a href="account.php"<?php echo !$subpage ? ' class="sel"' : '' ?>>Home</a>
 	<a href="account.php?p=pms"<?php echo $subpage == 'pms' ? ' class="sel"' : '' ?>><s>Private Messages</s></a>
-	<a href="account.php?p=avatar"<?php echo $subpage == 'avatar' ? ' class="sel"' : '' ?>><s>Avatar</s></a>
+	<a href="account.php?p=avatar"<?php echo $subpage == 'avatar' ? ' class="sel"' : '' ?>>Avatar</a>
 	<a href="account.php?p=login"<?php echo $subpage == 'login' ? ' class="sel"' : '' ?>>Email & Password</a>
 	<div class="fc"></div>
 </div>
@@ -88,20 +88,25 @@ switch ($subpage)
 	case 'avatar':
 		echo '
 		<form action="" method="post">			
+			<p>There is currently no custom avatar functionality. If you wish to change your avatar,
+			please visit the <a href="http://gravatar.com">Gravatar website</a>.</p>
+			<p>Please be aware that currently avatars are restricted to <strong>G</strong>,
+			and this cannot be changed by the administrators of this tracker currently as the functionality
+			has not been implemented yet.</p>
 			<p>
-				<input type="radio" name="avatar-type" id="avatar-custom" tabindex="1" value="local" checked />
+				<input type="radio" name="avatar-type" id="avatar-custom" tabindex="1" value="local" disabled />
 				<label for="avatar-custom">
-				<img src="' . getav($id) . '" alt="" style="width: 32px; height: 32px;" />
-				<img src="' . getav($id) . '" alt="" style="width: 16px; height: 16px;" />
+				<img src="' . $location['images'] . '/defaultava.png" alt="" style="width: 32px; height: 32px;" />
+				<img src="' . $location['images'] . '/defaultava.png" alt="" style="width: 16px; height: 16px;" />
 				Custom
 				</label>
 				<a href="#" tabindex="2">(change)</a>
 				<br />
 				
-				<input type="radio" name="avatar-type" id="avatar-gravatar" tabindex="3" value="gravatar" />
+				<input type="radio" name="avatar-type" id="avatar-gravatar" tabindex="3" value="gravatar" checked />
 				<label for="avatar-gravatar">
-				<img src="http://www.gravatar.com/avatar/' . md5($users->client->info['email']) . '?s=32" alt="" />
-				<img src="http://www.gravatar.com/avatar/' . md5($users->client->info['email']) . '?s=16" alt="" />
+				<img src="http://www.gravatar.com/avatar/' . md5($users->client->info['email']) . '?d=identicon&amp;s=32" alt="" />
+				<img src="http://www.gravatar.com/avatar/' . md5($users->client->info['email']) . '?d=identicon&amp;s=16" alt="" />
 				Gravatar
 				</label>
 				<a href="http://gravatar.com/" tabindex="4">(change)</a>

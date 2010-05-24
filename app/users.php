@@ -195,6 +195,9 @@ class MTUser extends MTUsers
 		
 		// the user's name (as in what they are identified by in the browser)
 		$this->info['name'] = !$this->info['displayname'] ? $this->info['username'] : $this->info['displayname'];
+		
+		// for now, avatars are only taken from gravatar
+		$this->info['avatar_location'] = 'http://www.gravatar.com/avatar/' . md5($this->info['email']) . '?d=identicon&amp;s=32';
 	}
 	
 	function get_favorites()
