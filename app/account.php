@@ -139,6 +139,13 @@ switch ($subpage)
 				$email = '';
 			}
 			
+			// change the show email switch?
+			$showemail = strtolower($_POST['email-show']) == 'on' ? 1 : 0;
+			if ($showemail != $users->client->info['email_show'])
+			{
+				$showemail_changed = true;
+			}
+			
 			// change the password?
 			if ($password != '')
 			{
@@ -151,17 +158,22 @@ switch ($subpage)
 			}
 			
 			// no errors?
-			if (!$error && ($email || $password))
+			if (!$error && ($email || $password || $showemail_changed))
 			{
-				// show the new email when the form shows up again
-				$newemail = $email;
-				
 				// alright, let's do this!
 				$success = true;
 				
 				if ($email)
 				{
 					db_query("UPDATE users SET email = '$email' WHERE id = $id", 'Updating the user\'s email') or $success = false;
+					
+					// show the new email when the form shows up again
+					$newemail = $email;
+				}
+				
+				if ($showemail_changed)
+				{
+					db_query("UPDATE users SET email_show = $showemail WHERE id = $id", 'Updating the user\'s email visibility') or $success = false;
 				}
 				
 				$setpass = $users->generate_password($users->client->info['password_salt'], $_POST['password']);
@@ -181,6 +193,11 @@ switch ($subpage)
 			}
 		}
 		
+		if (!isset($showemail))
+		{
+			$showemail = $users->client->info['email_show'];
+		}
+		
 		echo '
 		<form class="config" action="" method="post">			
 			<dl class="form big">
@@ -190,7 +207,9 @@ switch ($subpage)
 				</dt>
 				<dd>
 					<input class="unchanged" type="text" id="email" name="email" value="' . (isset($newemail) ? $newemail : $users->client->info['email']) . '" />
-					<input type="checkbox" id="email-show" name="email-show" /> <label class="inline" for="email-show">Public</label>
+					
+					<input type="checkbox" id="email-show" name="email-show"' . ($showemail ? ' checked' : '') . ' />
+					<label class="inline" for="email-show">Public</label>
 				</dd>
 			</dl>
 			
