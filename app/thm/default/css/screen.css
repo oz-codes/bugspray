@@ -112,13 +112,21 @@ tr td:last-child
 
 h1, h2, h3, h4, h5
 {
- 	padding: 0 0;
-	margin: 0 0 16px;
+ 	padding: 0;
 	font-family: helvetica, arial, sans-serif;
 }
 h1
 {
 	font-size: 20px;
+	margin: 0 0 16px;
+}
+h2
+{
+	margin: 0 0 12px;
+}
+h3
+{
+	margin: 0 0 8px;
 }
 
 /* titles with an image */
@@ -309,10 +317,10 @@ hr
 
 /* forms */
 
-dl.form
+dl.form, p.form
 {
 	clear: both;
-	margin: 8px 0;
+	margin: 4px 0;
 }
 dl.form dt, dl.form dd
 {
@@ -346,7 +354,7 @@ dl.form.col-3
 input[type=text], input[type=password], textarea
 {
 	background: url('../img/form/inputbg.png');
-	color: #3f3f3f;
+	color: #222;
 	border: 1px solid #dadada;
 	border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -367,7 +375,8 @@ textarea
 	padding: 4px;
 }
 
-input[type=text].unchanged, input[type=password].unchanged, textarea.unchanged
+input[type=text].unchanged, input[type=password].unchanged, textarea.unchanged,
+input[type=text].unsel, input[type=password].unsel, textarea.unsel
 {
 	color: #999;
 }

@@ -31,13 +31,13 @@ function getNewComments()
 
 $(document).ready(function() {
 	// inputs that should clear upon having focus
-	$("input.unsel").focus(function() {
+	$("input.unsel, textarea.unsel").live('focus', function() {
 		$(this).removeClass('unsel');
 		$(this).attr({'value':''});
 	});
 	
 	// inputs that are lighter before being changed
-	$("input.unchanged").live('keydown', function() {
+	$("input.unchanged, textarea.unsel").live('keydown', function() {
 		$(this).removeClass('unchanged');
 	});
 	
@@ -45,7 +45,7 @@ $(document).ready(function() {
 	$("form.config input[type=text], form.config input[type=password], form.config textarea").live('keydown', function() {
 		$(this).closest("form.config").find("input[type=submit]").removeAttr('disabled');
 	});
-	$("form.config input[type!=text][type!=password]").live('change', function() {
+	$("form.config input[type!=text][type!=password], form.config select").live('change', function() {
 		$(this).closest("form.config").find("input[type=submit]").removeAttr('disabled');
 	});
 	
@@ -83,41 +83,6 @@ $(document).ready(function() {
 					}
 				});
 			}
-		});
-		
-		// comment adding
-		$("#comment_form").submit(function() {
-			$(this).find(".loadimg").show();
-			
-			$.ajax({
-				type: 'post',
-				url: 'manage_issue.php?action=comment',
-				data: $(this).serialize(),
-				dataType: 'json',
-				success: function(data) {
-					delay = window.location.hostname == '127.0.0.1' || window.location.hostname == 'localhost' ? 250 : 0;
-					
-					setTimeout(function() {
-						$(this).find(".loadimg").hide();
-						
-						if (!data.success)
-						{
-							$.amwnd({
-								title: 'Error!',
-								content: data.message,
-								buttons: ['ok'],
-								closer: 'ok'
-							});
-						}
-						else
-						{
-							history.go();
-						}
-					}, delay);
-				}
-			});
-			
-			return false;
 		});
 	}
 	

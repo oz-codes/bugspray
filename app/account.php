@@ -230,8 +230,10 @@ switch ($subpage)
 
 }
 // bad id? non-admin? non-existent profile? it am be 404 tiem
+// todo: move this into a dedicated error page. this message is in account.php and ticket.php
 else
 {
+$page->setTitle('Error');
 $page->setType('error');
 ?>
 <div class="imgtitle imgtitle-32">

@@ -170,7 +170,7 @@ class MTTemplate
 	
 	public function setPage($page,$variables=array())
 	{
-		global $debug_log, $client;
+		global $debug_log, $client, $users;
 		
 		extract($variables,EXTR_SKIP);
 		$location = $this->location;

@@ -28,12 +28,6 @@ $a = escape_smart($_SESSION['uid']);
 
 switch ($_GET['action'])
 {	
-	case 'status':
-		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
-		header('Content-type: application/json');
-		echo json_encode(ticket_status($id));
-		break;
-	
 	case 'delete':
 		if ($client['is_admin'])
 		{
@@ -80,62 +74,6 @@ function ticket_delete($ticket)
 	if ($query2) { echo 'Deleted associated comments succesfully!'; } else { mysql_error(); }
 	
 	echo '<br /><br /><a href="index.php">Go to issue index</a>';
-}
-
-// same issue with this and ticket_comment_add....
-// also TODO: pass post variables through the switch not here
-// and rewrite this to use $message properly
-function ticket_status($ticket)
-{	
-	$success = true;
-	
-	// general vars
-	$s = escape_smart($_POST['st']);
-	
-	// first, the status
-	$query = db_query("UPDATE issues SET status='$s' WHERE id='$ticket'") or $success = false;
-	
-	// custom stuff, whoooooo
-	$custom = '';
-	
-	$assign = escape_smart($_POST['st2a']) == $_POST['st2a'] ? $_POST['st2a'] : false;
-	if ($assign)
-	{
-		if ($assign == -1)
-		{
-			$uassigned = 'nobody';
-		}
-		else
-		{
-			$uassigned = 'user id '.$assign; // need to find a way to get the display name w/o becoming incorrect when it changes
-		}
-		
-		$queryassign = db_query("UPDATE issues SET assign='$assign' WHERE id='$ticket'");
-		if ($queryassign)
-		{
-			$custom .= ', assigned to '.$uassigned;
-		}
-		else
-		{
-			$success = false;
-			$message = mysql_error();
-		}
-	}
-	
-	$custom = escape_smart($custom);
-	
-	// and finally the comment
-	if (!ticket_comment_add($ticket, '*** Status changed to \'' . getstatusnm($s) . '\'' . $custom . ' ***', 'success', 'status'))
-	{
-		$success = false;
-		$message = ticket_comment_add_error();
-	}
-	
-	// return
-	return array(
-		'success' => $success,
-		'message' => $message
-	);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

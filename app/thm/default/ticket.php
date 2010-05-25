@@ -42,33 +42,12 @@
 		<tr>
 			<td>Manage</td>
 			<td>
-                <?php
-					$ac = count($issue['assigns']);
-					for ($i=0;$i<$ac;$i++)
-					{
-						$issue['assigns'][$i] = str_replace('"',"\'",$issue['assigns'][$i]);
-					}
-					$assigns = json_encode($issue['assigns']);
-				?>
-				
-				<button type="button" id="manage_status">
-					<img src="<?php echo $location['images']; ?>/btn/change_status.png" alt="" />
-					Change status
-				</button>
 				<button type="button" id="manage_delete">
 					<img src="<?php echo $location['images']; ?>/btn/delete.png" alt="" />
 					Delete issue
 				</button>
 				
 				<script type="text/javascript">
-					$("#manage_status").click(function(){
-						this.blur();
-						changestatus(
-							<?php echo $issue['id']; ?>,
-							<?php echo $issue['status']; ?>,
-							<?php echo $assigns; ?> 
-						);
-					});
 					$("#manage_delete").click(function(){
 						this.blur();
 						confirmurl(
@@ -131,27 +110,46 @@
 			</table>
 		</article>
 		<?php endforeach; ?>
-		<?php if (count($comments) == 0): ?>
-		No comments exist for this issue... yet.<br /><br />
-		<?php endif; ?>
 	</section>
 	
 	<section>
-		<h3>Add a comment</h3>
+		<h3>Update this ticket</h3>
 		<?php if ($client['is_logged']): ?>
-		<form id="comment_form" class="ajax">
-			<input type="hidden" name="id" value="<?php echo $issue['id']; ?>" />
-			<small>You can use BBcode here, like [b] and [url]. If you don't want something to be parsed, use [noparse]!</small><br />
-			<textarea rows="6" style="width:600px;" name="content" id="comment_form"></textarea>
-			<?php if ($issue['discussion_closed']): ?>
-			<div style="margin:4px 0px;">
-				<div class="fl" style="margin-right:4px;"><img src="<?php echo $location['images']; ?>/alert/exclaim.png" alt="" /></div>
-				<div class="fl">Note that discussion has been <b>locked</b>; you are only able to add comments as you are a mod/admin.</div>
-				<div class="fc"></div>
-			</div>
-			<?php endif; ?>
-			<br />
-			<input type="submit" value="Add" />
+		<form id="comment_form" class="config" method="post">			
+			<p class="form">
+				<textarea name="comment" id="comment_form" class="unsel" rows="5" style="width:600px;">Enter a comment...</textarea>
+			</p>
+			
+			<?php if ($users->client->is_admin): ?>
+			
+			<dl class="form col-3">
+				<dt>
+					<label for="status">Status</label>
+				</dt>
+				<dd>
+					<select name="status" id="status">
+						<option value="1">Open</option>
+						<option value="2">Assigned</option>
+						<option value="3">Resolved</option>
+						<option value="4">Postponed</option>
+						<option value="5">Declined</option>
+					</select>
+				</dd>
+			</dl>
+			<dl class="form col-3">
+				<dt>
+					<label for="assign">Assign to</label>
+				</dt>
+				<dd>
+					<select name="assign" id="assign"><?php foreach ($issue['assigns'] as $assign) { echo '<option value="' . $assign[0] . '">' . $assign[1] . '</option>'; } ?></select>
+				</dd>
+			</dl>
+			
+			<div class="clear"></div>
+			
+			<?php endif ?>
+			
+			<input type="submit" name="submit" value="Add" disabled />
 		</form>
 		<?php else: ?>
 		You need to be logged in to comment.
