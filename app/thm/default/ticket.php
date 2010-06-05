@@ -2,8 +2,7 @@
 	<div class="imgtitle imgtitle-32">
 		<img class="image" src="<?php echo $location['images']; ?>/titles/tickets.png" alt="" />
 		<div class="text">
-			<h1 class="has-subtitle"><?php echo $issue['name']; ?></h1>
-			<div class="subtitle">&laquo; <a href="#"><?php echo getcatnm($issue['category']); ?></a></div>
+			<h1><?php echo $issue['name']; ?></h1>
 		</div>
 		<div class="clear"></div>
 	</div>

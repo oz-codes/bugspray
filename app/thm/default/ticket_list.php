@@ -5,7 +5,6 @@
 			<th class="star"></th>
 			<th class="id"><a href="#">#</a></th>
 			<th class="summary"><a href="#">Summary</a></th>
-			<th class="category"><a href="#">Category</a></th>
 			<th class="assigned"><a href="#">Assigned</a></th>
 			<th class="last"><a href="#">Last</a></th>
 		</tr>
@@ -44,7 +43,6 @@
 			?>
 			
 		</td>
-		<td class="category"><a href="#"><?php echo getcatnm($issue['category']) ?></a></td>
 		<td class="assigned<?php echo $issue['assign'] == $_SESSION['uid'] && $issue['status'] < 3 ? ' you' : '' ?>"><?php echo $issue['assign'] > 0 ? '<a href="profile.php?id=' . $issue['assign'] . '">' . getunm($issue['assign']) . '</a>' : '--' ?></td>
 		<td class="last"><?php echo timeago($issue['when_updated'], false, true) ?></td>
 	</tr>

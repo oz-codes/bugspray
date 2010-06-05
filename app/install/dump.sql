@@ -14,23 +14,6 @@ INSERT INTO `actiontypes` (`id`, `color`, `img`, `title`, `logdescription`) VALU
 (2, 'FFBFBF', 'close.png', 'issue-close', 'locked an issue'),
 (3, 'BFE9FF', 'comment.png', 'issue-comment', 'commented on an issue');
 
-CREATE TABLE IF NOT EXISTS `assigns_usercat` (
-  `userid` int(11) NOT NULL,
-  `catid` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-INSERT INTO `assigns_usercat` (`userid`, `catid`) VALUES
-(1, 1);
-
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
-
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Example Category');
-
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author` int(11) NOT NULL,
@@ -67,7 +50,6 @@ CREATE TABLE IF NOT EXISTS `issues` (
   `author` int(11) NOT NULL,
   `when_opened` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `when_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `category` int(11) NOT NULL,
   `tags` varchar(64) NOT NULL,
   `severity` tinyint(4) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',

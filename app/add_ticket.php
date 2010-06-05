@@ -96,12 +96,10 @@ if (!isset($_POST['sub']))
 	
 	<dl class="form col-3">
 		<dt>
-			<label for="category">Category</label>
+			<label>--</label>
 		</dt>
 		<dd>
-			<select id="category" name="category">
-				<option>todo</option>
-			</select>
+			--
 		</dd>
 	</dl>
 	

@@ -25,7 +25,7 @@ include("functions.php");
 $page->setType('statistics');
 $page->setTitle('Statistics');
 
-$projects = db_query_toarray("SELECT id, name FROM categories");
+/*$projects = db_query_toarray("SELECT id, name FROM categories");
 
 $i = 0;
 foreach ($projects as $project)
@@ -57,5 +57,7 @@ $page->setPage(
 	array(
 		'projects' => $projects
 	)
-);
+);*/
+
+echo 'todo';
 ?>

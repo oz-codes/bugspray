@@ -641,18 +641,14 @@ input[type=submit]
 {
 	width: 8px;
 }
-.tickets td.category, .tickets td.assigned, .tickets td.last
+.tickets td.assigned, .tickets td.last
 {
 	color: #a0a0a0;
 	font-size: 10px;
 }
-.tickets td.category a, .tickets td.assigned a
+.tickets td.assigned a
 {
 	color: #637688;
-}
-.tickets .category
-{
-	width: 128px;
 }
 .tickets .assigned
 {

@@ -142,8 +142,8 @@ else
 
 		// get list of assignable users
 		$assignsarr = array(array(0,'nobody'),array(0,'----------------------'));
-		$result_usercat = db_query("SELECT * FROM assigns_usercat WHERE catid = {$issue['category']}", "Retrieving assignable users for category id {$issue['category']} from database");
-		while ($assign = mysql_fetch_array($result_usercat))
+		$result_assignableusers = db_query("SELECT * FROM users WHERE `group` = 2", "Retrieving assignable users");
+		while ($assign = mysql_fetch_array($result_assignableusers))
 		{
 			$enableme = $assign['userid'] == $issue['assign'] ? true : false;
 			

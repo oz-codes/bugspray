@@ -15,7 +15,7 @@ $menu = array(
 	array(
 		'id' => 'statistics',
 		'name' => 'Statistics',
-		'url' => 'statistics.php'
+		//'url' => 'statistics.php'
 	),
 	array(
 		'id' => 'help',

@@ -43,7 +43,6 @@ if ($client['is_admin'])
 	echo '
 	<div class="tabs">
 		<a href="admin.php"' . ($subpage == 'home' ? 'class="sel"' : '') . '>Home</a>
-		<a href="admin.php?p=categories"' . ($subpage == 'categories' ? 'class="sel"' : '') . '>Categories</a>
 		<a href="admin.php?p=tags"' . ($subpage == 'tags' ? 'class="sel"' : '') . '>Tags</a>
 		<a href="#" class="notyet">Commenting</a>
 		<a href="#" class="notyet">Bans</a>
