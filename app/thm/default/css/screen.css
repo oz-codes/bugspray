@@ -145,6 +145,10 @@ h3
 {
 	margin-right: 12px;
 }
+.imgtitle .text
+{
+	margin-right: 4px;
+}
 
 .imgtitle-24 .image
 {
@@ -574,6 +578,11 @@ input[type=submit]
 {
 	color: #000;
 	text-decoration: none !important;
+}
+.imgtitle .tag
+{
+	position: relative;
+	top: 6px;
 }
 
 /* ticket listing - normal - uses tables */

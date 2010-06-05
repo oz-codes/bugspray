@@ -2,26 +2,19 @@
 	<div class="imgtitle imgtitle-32">
 		<img class="image" src="<?php echo $location['images']; ?>/titles/tickets.png" alt="" />
 		<div class="text">
-			<h1><?php echo $issue['name']; ?></h1>
+			<h1 class="left"><?php echo $issue['name']; ?></h1>
 		</div>
+		<?php
+			$tags = explode(' ', $issue['tags']); // todo: use the separate table for tags instead of one long string
+			foreach ($tags as $tag)
+			{
+				echo '<span class="tag">' . $tag . '</span>';
+			}
+		?>
 		<div class="clear"></div>
 	</div>
 	
 	<table class="details">
-		<tr>
-			<td>Tag(s)</td>
-			<td>
-			
-			<?php
-				$tags = explode(' ', $issue['tags']); // todo: use the separate table for tags instead of one long string
-				foreach ($tags as $tag)
-				{
-					echo '<span class="tag">' . $tag . '</span>';
-				}
-			?>
-			
-			</td>
-		</tr>
 		<tr>
 			<td>Status</td>
 			<td><?php echo getstatusnm($issue['status']); ?></td>
