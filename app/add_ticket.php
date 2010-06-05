@@ -43,38 +43,123 @@ if (!$client['is_logged'])
 }
 else
 {
-if (!isset($_POST['sub']))
+
+if (isset($_POST['submit']))
+{
+	$title = escape_smart(htmlentities($_POST['title']));
+	$description = escape_smart(htmlentities($_POST['description']));
+	$severity = escape_smart($_POST['severity']);
+	
+	$error = false;
+	$errors_title = array();
+	$errors_tags = array();
+	$errors_description = array();
+	
+	$tags = escape_smart(htmlentities($_POST['tags'])); // todo: use the separate table for tags instead of one long string
+	$tagsarr = explode(' ', $tags);
+	sort($tagsarr);
+	$tagsc = count($tagsarr);
+	
+	if ($tagsc > 5)
+	{
+		$error = true;
+		$errors_tags[] = 'You may only provide up to 5 tags.';
+	}
+	
+	if ($tagsc > 0) // we still want to run this even if there's more than 5 tags to check for other errors
+	{
+		$tags = '';
+		for ($i=0; $i<$tagsc; $i++)
+		{
+			if (strstr($tags, $tagsarr[$i]))
+			{
+				$error = true;
+				$errors_tags[] = 'The tag you entered \'' . $tagsarr[$i] . '\' has been entered more than once.';
+			}
+			elseif (strlen($tagsarr[$i]) > 16) // todo: client side check for this
+			{
+				$error = true;
+				$errors_tags[] = 'The tag you entered \'' . $tagsarr[$i] . '\' exceeds the maximum length of tags of 16 characters.';
+			}
+			else
+			{
+				$tags .= ($i > 0 ? ' ' : '') . $tagsarr[$i];
+			}
+		}
+	}
+	
+	if (!hascharacters($title))
+	{
+		$error = true;
+		$errors_title[] = 'The summary you provided for your ticket is blank.';
+	}
+	if (!hascharacters($description))
+	{
+		$error = true;
+		$errors_description[] = 'The description you provided for your ticket is blank.';
+	}
+	
+	if (!$error)
+	{
+		$query2 = db_query("
+			INSERT INTO issues (name, author, description, category, when_opened, when_updated, tags, severity)
+			VALUES ('$title', {$_SESSION['uid']}, '$description', '1', NOW(), NOW(), '$tags', '$severity')
+		");
+		
+		if ($query2) { echo '<p><b>Info:</b> Added issue successfully!</p>'; } else { echo mysql_error(); }
+		
+		$query2_id = mysql_insert_id();
+		
+		echo '<br />';
+		
+		$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(), {$_SESSION['uid']}, 1, $query2_id)");
+		if ($query3) { echo '<p><b>Info:</b> Logged successfully!</p>'; } else { mysql_error(); }
+		
+		echo '<p><a href="ticket.php?id=' . $query2_id . '">Go to issue</a></p>';
+	}
+}
+
+if (!isset($error) || $error)
 {
 ?>
 
 <form action="" method="post">
+	
+	<?php echo output_errors($errors_title) ?>
+	
 	<dl class="form inline">
 		<dt>
 			<label for="title">Summary</label>
 		</dt>
 		<dd>
-			<input id="title" name="title" type="text" size="64" maxlength="128" />
+			<input id="title" name="title" type="text" size="64" maxlength="128" value="<?php echo $_POST['title'] ?>" />
 		</dd>
 	</dl>
+	
+	<div class="clear"></div>
+	
+	<?php echo output_errors($errors_tags) ?>
 	
 	<dl class="form inline">
 		<dt>
 			<label for="tags">Tags</label>
 		</dt>
 		<dd>
-			<input id="tags" name="tags" type="text" size="64" />
+			<input id="tags" name="tags" type="text" size="64" value="<?php echo $_POST['tags'] ?>" />
 			<small>(seperate tags by spaces)</small>
 		</dd>
 	</dl>
 	
 	<div class="clear"></div>
 	
+	<?php echo output_errors($errors_description) ?>
+	
 	<dl class="form">
 		<dt>
 			<label for="description">Describe the problem</label>
 		</dt>
 		<dd>
-			<textarea id="description" name="description" style="height: 192px;"></textarea>
+			<textarea id="description" name="description" style="height: 192px;"><?php echo $_POST['description'] ?></textarea>
 		</dd>
 	</dl>
 	
@@ -114,70 +199,10 @@ if (!isset($_POST['sub']))
 	
 	<div class="clear"></div>
 
-	<input type="submit" name="sub" value="Post" />
+	<input type="submit" name="submit" value="Post" />
 </form>
 
 <?php
-}
-else
-{
-	$title = escape_smart(htmlentities($_POST['title']));
-	$description = escape_smart(htmlentities($_POST['description']));
-	$severity = escape_smart($_POST['severity']);
-	
-	$tags = escape_smart(htmlentities($_POST['tags'])); // todo: use the separate table for tags instead of one long string
-	$tagsarr = explode(' ', $tags);
-	sort($tagsarr);
-	$tagsc = count($tagsarr);
-	$tags = '';
-	for ($i=0; $i<$tagsc; $i++)
-	{
-		if (strstr($tags, $tagsarr[$i]))
-		{
-			echo '<p><b>Note:</b> The tag you entered \'' . $tagsarr[$i] . '\' has been entered more than once.</p>';
-		}
-		elseif (strlen($tagsarr[$i]) > 16) // todo: client side check for this
-		{
-			echo '<p><b>Note:</b> The tag you entered \'' . $tagsarr[$i] . '\' exceeds the maximum length of tags of 16 characters.
-			It will not be included with your ticket. You can edit your tags later.</p>';
-		}
-		else
-		{
-			$tags .= ($i > 0 ? ' ' : '') . $tagsarr[$i];
-		}
-	}
-	
-	$prefail = false;
-	
-	if (!hascharacters($title))
-	{
-		$prefail = true;
-		echo '<p><b>Error:</b> The title you provided for your ticket is blank.</p>';
-	}
-	if (!hascharacters($description))
-	{
-		$prefail = true;
-		echo '<p><b>Error:</b> The description you provided for your ticket is blank.</p>';
-	}
-	
-	if (!$prefail)
-	{
-		$query2 = db_query("
-			INSERT INTO issues (name, author, description, category, when_opened, when_updated, tags, severity)
-			VALUES ('$title', {$_SESSION['uid']}, '$description', '1', NOW(), NOW(), '$tags', '$severity')
-		");
-		
-		if ($query2) { echo '<p><b>Info:</b> Added issue successfully!</p>'; } else { echo mysql_error(); }
-		
-		$query2_id = mysql_insert_id();
-		
-		echo '<br />';
-		
-		$query3 = db_query("INSERT INTO log_issues (when_occured,userid,actiontype,issue) VALUES (NOW(), {$_SESSION['uid']}, 1, $query2_id)");
-		if ($query3) { echo '<p><b>Info:</b> Logged successfully!</p>'; } else { mysql_error(); }
-		
-		echo '<p><a href="ticket.php?id=' . $query2_id . '">Go to issue</a></p>';
-	}
 }
 
 }
