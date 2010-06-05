@@ -568,8 +568,9 @@ input[type=submit]
 	margin-left: 4px;
 	padding: 0 3px 0 10px; /* need at least 1px of vertical padding for linux and osx - the font windows renders is 1px higher, but how? */
 	height: 12px;
+	border-right: 1px solid #c3c3b3;
 	background: url('../img/tag.png') no-repeat;
-	border-right: 1px solid #a9a99b;
+	color: #65655c;
 	font-family: arial, sans-serif;
 	font-size: 9px;
 	letter-spacing: -1px;
