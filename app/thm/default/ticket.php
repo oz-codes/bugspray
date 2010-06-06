@@ -16,7 +16,10 @@
 		<div class="right">
 			<a class="button drop-button" data-drop="drop-config" href="#"><img src="<?php echo $location['images']; ?>/btn/config.png" alt="" /></a>
 			<div class="drop drop-right" id="drop-config">
-				Hello there
+				<ul>
+					<li>Hello aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
+					<li>Hi</li>
+				</ul>
 			</div>
 		</div>
 		

@@ -421,6 +421,10 @@ input[type=submit]::-moz-focus-inner, input[type=button]::-moz-focus-inner, butt
 {
 	border: 0;
 }
+a.button
+{
+	outline: 0;
+}
 
 input[type=submit]
 {
@@ -447,16 +451,29 @@ button img, a.button img
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	word-wrap: break-word;
 	font-size: 11px;
 }
 
-a.button.drop-button img
+a.button.drop-button img, button.drop-button img
 {
 	margin: -6px -8px -2px -2px;
 	padding-right: 18px;
 	background-image: url('../img/btn/drop.png');
 	background-repeat: no-repeat;
 	background-position: 18px 1px;
+}
+
+.drop ul
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: 192px;
+}
+.drop ul a
+{
+	margin: 0 -4px;
 }
 
 /* larger form things */
