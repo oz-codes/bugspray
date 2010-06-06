@@ -13,15 +13,17 @@
 			}
 		?>
 		
-		<div class="right">
+		<?php if ($users->client->is_admin): ?><div class="right">
 			<a class="button drop-button" data-drop="drop-config" href="#"><img src="<?php echo $location['images']; ?>/btn/config.png" alt="" /></a>
 			<div class="drop drop-right" id="drop-config">
 				<ul>
-					<li>Hello aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
-					<li>Hi</li>
+					<li>
+						<a href="#" onclick="confirmurl('Delete ticket', 'manage_issue.php?id=<?php echo $issue['id']; ?>&action=delete', true)">Delete this ticket</a>
+					</li>
 				</ul>
 			</div>
 		</div>
+		<?php endif; ?>
 		
 		<div class="clear"></div>
 	</div>
@@ -42,28 +44,6 @@
 				<div class="fc"></div>
 			</td>
 		</tr>
-		<?php if ($client['is_admin']): ?>
-		<tr>
-			<td>Manage</td>
-			<td>
-				<button type="button" id="manage_delete">
-					<img src="<?php echo $location['images']; ?>/btn/delete.png" alt="" />
-					Delete issue
-				</button>
-				
-				<script type="text/javascript">
-					$("#manage_delete").click(function(){
-						this.blur();
-						confirmurl(
-							'Delete issue',
-							'manage_issue.php?id=<?php echo $issue['id']; ?>&action=delete',
-							true
-						);
-					});
-				</script>
-			</td>
-		</tr>
-        <?php endif; ?>
 	</table>
 	
 	<br />
