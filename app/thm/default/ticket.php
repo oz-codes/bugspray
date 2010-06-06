@@ -133,7 +133,7 @@
 					<label for="assign">Assign to</label>
 				</dt>
 				<dd>
-					<select name="assign" id="assign"><?php foreach ($issue['assigns'] as $assign) { echo '<option value="' . $assign[0] . '">' . $assign[1] . '</option>'; } ?></select>
+					<select name="assign" id="assign"><?php foreach ($issue['assigns'] as $assign) { echo '<option value="' . $assign[0] . '"' . ($assign[2] ? ' selected' : '') . '>' . $assign[1] . '</option>'; } ?></select>
 				</dd>
 			</dl>
 			

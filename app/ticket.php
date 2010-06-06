@@ -143,14 +143,12 @@ else
 		// get list of assignable users
 		$assignsarr = array(array(0,'nobody'),array(0,'----------------------'));
 		$result_assignableusers = db_query("SELECT * FROM users WHERE `group` = 2", "Retrieving assignable users");
-		while ($assign = mysql_fetch_array($result_assignableusers))
-		{
-			$enableme = $assign['userid'] == $issue['assign'] ? true : false;
-			
+		while ($user = mysql_fetch_array($result_assignableusers))
+		{			
 			$assignsarr[] = array(
-				$assign['userid'],
-				getunm($assign['userid']),
-				$enableme
+				$user['id'],
+				getunm($user['id']),
+				$user['id'] == $issue['assign'] ? true : false
 			);
 		}
 		$issue['assigns'] = $assignsarr;
