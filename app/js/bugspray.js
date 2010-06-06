@@ -46,11 +46,25 @@ $(document).ready(function() {
 					'top': $(this).position().top + ($(this).innerHeight() - $(this).height()) + $(this).outerHeight()
 				}).hide();
 				
-				// the click event
-				$(this).toggle(function() {
-					droptarget.show();
-				}, function() {
-					droptarget.hide();
+				// the main click event
+				$(this).click(function() {
+					if (droptarget.is(':hidden'))
+					{
+						droptarget.show();
+					}
+					else
+					{
+						droptarget.hide();
+					}
+				});
+				
+				// allow closing by clicking elsewhere
+				var dropbutton = this;
+				$("body").click(function(e) {
+					if (!$(e.target).closest(".button-drop").length && !$(e.target).closest(".drop").length )
+					{
+						droptarget.hide();
+					}
 				});
 			}
 		}
