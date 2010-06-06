@@ -67,11 +67,11 @@ $(document).ready(function() {
 				dropbutton.click(function(e) {
 					if (droptarget.is(':hidden'))
 					{
-						droptarget.stop().fadeIn(250);
+						droptarget.fadeIn(250);
 					}
 					else
 					{
-						droptarget.stop().fadeOut(250);
+						droptarget.fadeOut(250);
 					}
 					
 					// links used for buttons... well...
@@ -82,7 +82,7 @@ $(document).ready(function() {
 				$("body").click(function(e) {
 					if (!$(e.target).closest(".drop-button").length && !$(e.target).closest(".drop").length )
 					{
-						droptarget.stop().fadeOut(250);
+						droptarget.fadeOut(250);
 					}
 				});
 			}
