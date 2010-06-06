@@ -37,15 +37,18 @@ $(document).ready(function() {
 		{
 			if ($('#' + dropbutton.attr('data-drop')).length)
 			{
-				// position the drop down
+				// alright, we have a valid target!
 				var droptarget = $('#' + dropbutton.attr('data-drop'));
-				droptarget.hide();
-				droptarget.parent().wrapInner('<div style="position:relative;">'); // move elms into this instead
 				
-				// are we dropping to the left or right?
+				// move the button and target into an element to help with positioning
+				var dropposhelper = $('<div style="position: relative;">').insertBefore(dropbutton);
+				dropbutton.appendTo(dropposhelper);
+				droptarget.appendTo(dropposhelper);
+				
+				// positioning time! are we dropping to the left or right?
 				if (!droptarget.hasClass('drop-right'))
 				{
-					droptarget.show().css({
+					droptarget.css({
 						'position': 'absolute',
 						'left': dropbutton.position().left,
 						'top': dropbutton.position().top + (dropbutton.innerHeight() - dropbutton.height()) + dropbutton.outerHeight()
@@ -53,7 +56,7 @@ $(document).ready(function() {
 				}
 				else
 				{
-					droptarget.show().css({
+					droptarget.css({
 						'position': 'absolute',
 						'left': dropbutton.position().left + dropbutton.outerWidth() - droptarget.outerWidth(),
 						'top': dropbutton.position().top + (dropbutton.innerHeight() - dropbutton.height()) + dropbutton.outerHeight()
