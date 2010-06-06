@@ -14,8 +14,8 @@
 		?>
 		
 		<div class="right">
-			<a class="button button-drop" data-drop="drop-config" href="#"><img src="<?php echo $location['images']; ?>/btn/config.png" alt="" /></a>
-			<div class="drop" id="drop-config">
+			<a class="button drop-button" data-drop="drop-config" href="#"><img src="<?php echo $location['images']; ?>/btn/config.png" alt="" /></a>
+			<div class="drop drop-right" id="drop-config">
 				Hello there
 			</div>
 		</div>

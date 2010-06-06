@@ -437,15 +437,6 @@ button img, a.button img
 	margin: -6px 8px -2px 0;
 }
 
-a.button.button-drop img
-{
-	margin: -6px -8px -2px -2px;
-	padding-right: 18px;
-	background-image: url('../img/btn/drop.png');
-	background-repeat: no-repeat;
-	background-position: 18px 1px;
-}
-
 /* drop downs */
 
 .drop
@@ -457,6 +448,15 @@ a.button.button-drop img
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	font-size: 11px;
+}
+
+a.button.drop-button img
+{
+	margin: -6px -8px -2px -2px;
+	padding-right: 18px;
+	background-image: url('../img/btn/drop.png');
+	background-repeat: no-repeat;
+	background-position: 18px 1px;
 }
 
 /* larger form things */

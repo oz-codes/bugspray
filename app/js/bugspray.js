@@ -31,23 +31,37 @@ function getNewComments()
 
 $(document).ready(function() {
 	// drop downs
-	$(".button-drop").each(function() {
-		if ($(this).get(0).hasAttribute('data-drop'))
+	$(".drop-button").each(function() {
+		var dropbutton = $(this);
+		if (dropbutton.get(0).hasAttribute('data-drop'))
 		{
-			if ($('#' + $(this).attr('data-drop')).length)
+			if ($('#' + dropbutton.attr('data-drop')).length)
 			{
 				// position the drop down
-				var droptarget = $('#' + $(this).attr('data-drop'));
+				var droptarget = $('#' + dropbutton.attr('data-drop'));
 				droptarget.hide();
-				droptarget.parent().wrapInner('<div style="position:relative;">');
-				droptarget.show().css({
-					'position': 'absolute',
-					'left': $(this).position().left + $(this).outerWidth() - droptarget.outerWidth(),
-					'top': $(this).position().top + ($(this).innerHeight() - $(this).height()) + $(this).outerHeight()
-				}).hide();
+				droptarget.parent().wrapInner('<div style="position:relative;">'); // move elms into this instead
+				
+				// are we dropping to the left or right?
+				if (!droptarget.hasClass('drop-right'))
+				{
+					droptarget.show().css({
+						'position': 'absolute',
+						'left': dropbutton.position().left,
+						'top': dropbutton.position().top + (dropbutton.innerHeight() - dropbutton.height()) + dropbutton.outerHeight()
+					}).hide();
+				}
+				else
+				{
+					droptarget.show().css({
+						'position': 'absolute',
+						'left': dropbutton.position().left + dropbutton.outerWidth() - droptarget.outerWidth(),
+						'top': dropbutton.position().top + (dropbutton.innerHeight() - dropbutton.height()) + dropbutton.outerHeight()
+					}).hide();
+				}
 				
 				// the main click event
-				$(this).click(function() {
+				dropbutton.click(function() {
 					if (droptarget.is(':hidden'))
 					{
 						droptarget.show();
@@ -59,9 +73,8 @@ $(document).ready(function() {
 				});
 				
 				// allow closing by clicking elsewhere
-				var dropbutton = this;
 				$("body").click(function(e) {
-					if (!$(e.target).closest(".button-drop").length && !$(e.target).closest(".drop").length )
+					if (!$(e.target).closest(".drop-button").length && !$(e.target).closest(".drop").length )
 					{
 						droptarget.hide();
 					}
