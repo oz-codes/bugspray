@@ -64,22 +64,25 @@ $(document).ready(function() {
 				}
 				
 				// the main click event
-				dropbutton.click(function() {
+				dropbutton.click(function(e) {
 					if (droptarget.is(':hidden'))
 					{
-						droptarget.show();
+						droptarget.stop().fadeIn(250);
 					}
 					else
 					{
-						droptarget.hide();
+						droptarget.stop().fadeOut(250);
 					}
+					
+					// links used for buttons... well...
+					e.preventDefault();
 				});
 				
 				// allow closing by clicking elsewhere
 				$("body").click(function(e) {
 					if (!$(e.target).closest(".drop-button").length && !$(e.target).closest(".drop").length )
 					{
-						droptarget.hide();
+						droptarget.stop().fadeOut(250);
 					}
 				});
 			}
