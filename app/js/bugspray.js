@@ -80,7 +80,7 @@ $(document).ready(function() {
 				
 				// allow closing by clicking elsewhere
 				$("body").click(function(e) {
-					if (!$(e.target).closest(".drop-button").length && !$(e.target).closest(".drop").length )
+					if (!$(e.target).closest(".drop-button").length)
 					{
 						droptarget.fadeOut(250);
 					}

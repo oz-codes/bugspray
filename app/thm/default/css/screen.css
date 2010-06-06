@@ -445,12 +445,12 @@ button img, a.button img
 
 .drop
 {
-	padding: 4px;
+	padding: 4px 0;
 	background: #f8f8f8;
 	border: 1px solid #777;
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	word-wrap: break-word;
 	font-size: 11px;
 }
@@ -471,9 +471,24 @@ a.button.drop-button img, button.drop-button img
 	list-style: none;
 	width: 192px;
 }
-.drop ul a
+.drop ul li
 {
-	margin: 0 -4px;
+	padding: 2px 4px;
+}
+.drop ul li a
+{
+	display: block;
+	width: 100%;
+	color: #333;
+}
+.drop ul li:hover
+{
+	background: #6f6f6f;
+}
+.drop ul li:hover a
+{
+	color: #fff;
+	text-decoration: none;
 }
 
 /* larger form things */
