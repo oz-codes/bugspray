@@ -417,6 +417,16 @@ input[type=submit]:hover, input[type=button]:hover, button:hover, a.button:hover
 	border: 1px solid #aaa;
 }
 
+input[type=submit]::-moz-focus-inner, input[type=button]::-moz-focus-inner, button::-moz-focus-inner
+{
+	border: 0;
+}
+
+input[type=submit]
+{
+	width: 64px;
+}
+
 a.button
 {
 	padding: 4px 10px;
@@ -436,14 +446,17 @@ a.button.button-drop img
 	background-position: 18px 1px;
 }
 
-input[type=submit]::-moz-focus-inner, input[type=button]::-moz-focus-inner, button::-moz-focus-inner
-{
-	border: 0;
-}
+/* drop downs */
 
-input[type=submit]
+.drop
 {
-	width: 64px;
+	padding: 4px;
+	background: #f8f8f8;
+	border: 1px solid #777;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	font-size: 11px;
 }
 
 /* larger form things */

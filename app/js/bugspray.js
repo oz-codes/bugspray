@@ -30,6 +30,32 @@ function getNewComments()
 }
 
 $(document).ready(function() {
+	// drop downs
+	$(".button-drop").each(function() {
+		if ($(this).get(0).hasAttribute('data-drop'))
+		{
+			if ($('#' + $(this).attr('data-drop')).length)
+			{
+				// position the drop down
+				var droptarget = $('#' + $(this).attr('data-drop'));
+				droptarget.hide();
+				droptarget.parent().wrapInner('<div style="position:relative;">');
+				droptarget.show().css({
+					'position': 'absolute',
+					'left': $(this).position().left + $(this).outerWidth() - droptarget.outerWidth(),
+					'top': $(this).position().top + ($(this).innerHeight() - $(this).height()) + $(this).outerHeight()
+				}).hide();
+				
+				// the click event
+				$(this).toggle(function() {
+					droptarget.show();
+				}, function() {
+					droptarget.hide();
+				});
+			}
+		}
+	});
+	
 	// inputs that should clear upon having focus
 	$("input.unsel, textarea.unsel").live('focus', function() {
 		$(this).removeClass('unsel');
