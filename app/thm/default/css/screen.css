@@ -6,12 +6,12 @@
  * @name Silky
  * @description A smooth, clean theme with plenty of breathing room
  * @tags clean, white, fixed width
- * @version 0.2
+ * @version 0.3
  * @copyright Copyright (c) a2h 2009-2010
  *
  * Silk icons (c) Mark James
  * WooFunction icons (c) WooThemes and WeFunction 2009
- * btnmini icons and titles/ticket.png (c) a2h 2009-2010
+ * btnmini icons, img/titles/ticket.png and non-silk icons in img/btn/ are (c) a2h 2009-2010
  */
 
 /* main stuff */
@@ -127,74 +127,6 @@ h2
 h3
 {
 	margin: 0 0 8px;
-}
-
-/* titles with an image */
-
-.imgtitle
-{
-	position: relative;
-	margin-bottom: 8px;
-}
-
-.imgtitle .image, .imgtitle .text
-{
-	float: left;
-}
-.imgtitle .image
-{
-	margin-right: 12px;
-}
-.imgtitle .text
-{
-	margin-right: 4px;
-}
-
-.imgtitle-24 .image
-{
-	width: 24px;
-	height: 24px;
-}
-.imgtitle-24 .text
-{
-	height: 24px;
-}
-.imgtitle-24 h1, .imgtitle-24 h2, .imgtitle-24 h3
-{
-	font-size: 14px;
-}
-
-.imgtitle-32 .image
-{
-	width: 32px;
-	height: 32px;
-}
-.imgtitle-32 .text
-{
-	height: 32px;
-}
-.imgtitle-32 h1, .imgtitle-32 h2, .imgtitle-32 h3
-{
-	margin: 4px 0 0;
-	font-size: 18px;
-}
-
-.imgtitle-32 .has-subtitle
-{
-	margin: -1px 0 0;
-}
-.imgtitle .subtitle
-{
-	margin-left: 12px;
-	font-size: 11px;
-}
-
-/* various font size modifiers */
-
-.subtitle
-{
-	font-size: 11px;
-	font-weight: normal;
 }
 
 /* lists */
@@ -319,6 +251,74 @@ hr
 	font-size: 10px;
 }
 
+/* titles with an image */
+
+.imgtitle
+{
+	position: relative;
+	margin-bottom: 8px;
+}
+
+.imgtitle .image, .imgtitle .text
+{
+	float: left;
+}
+.imgtitle .image
+{
+	margin-right: 12px;
+}
+.imgtitle .text
+{
+	margin-right: 4px;
+}
+
+.imgtitle-24 .image
+{
+	width: 24px;
+	height: 24px;
+}
+.imgtitle-24 .text
+{
+	height: 24px;
+}
+.imgtitle-24 h1, .imgtitle-24 h2, .imgtitle-24 h3
+{
+	font-size: 14px;
+}
+
+.imgtitle-32 .image
+{
+	width: 32px;
+	height: 32px;
+}
+.imgtitle-32 .text
+{
+	height: 32px;
+}
+.imgtitle-32 h1, .imgtitle-32 h2, .imgtitle-32 h3
+{
+	margin: 4px 0 0;
+	font-size: 18px;
+}
+
+.imgtitle-32 .has-subtitle
+{
+	margin: -1px 0 0;
+}
+.imgtitle .subtitle
+{
+	margin-left: 12px;
+	font-size: 11px;
+}
+
+/* various font size modifiers */
+
+.subtitle
+{
+	font-size: 11px;
+	font-weight: normal;
+}
+
 /* forms */
 
 dl.form, p.form
@@ -425,6 +425,15 @@ a.button
 button img, a.button img
 {
 	margin: -6px 8px -2px 0;
+}
+
+a.button.button-drop img
+{
+	margin: -6px -8px -2px -2px;
+	padding-right: 18px;
+	background-image: url('../img/btn/drop.png');
+	background-repeat: no-repeat;
+	background-position: 18px 1px;
 }
 
 input[type=submit]::-moz-focus-inner, input[type=button]::-moz-focus-inner, button::-moz-focus-inner
@@ -577,7 +586,7 @@ input[type=submit]
 }
 .tag a
 {
-	color: #000;
+	color: #65655c;
 	text-decoration: none !important;
 }
 .imgtitle .tag
@@ -845,50 +854,8 @@ dl.form .alert, dl.form .error
 
 .mono
 {
-	font-family:'lucida console',monospace;
-	font-size:12px;
-}
-
-/* the bar graph thing for the watchlist */
-
-.bar_bottom
-{
-	height:22px;
-	width:222px;
-	margin-left:1px;
-}
-.bar_bottom div
-{
-	float:left;
-	height:22px;
-}
-.bar_bottom .gray
-{
-	background:url('../img/graph/bar_bottom_gray.png');
-}
-.bar_bottom .red
-{
-	background:url('../img/graph/bar_bottom_red.png');
-}
-.bar_bottom .green
-{
-	background:url('../img/graph/bar_bottom_green.png');
-}
-.bar_bottom .blue
-{
-	background:url('../img/graph/bar_bottom_blue.png');
-}
-.bar_top
-{
-	height:22px;
-	width:224px;
-	position:relative;
-	top:-22px;
-	float:left;
-}
-.ibox_generic .bar_top
-{
-	background:url('../img/graph/bar_top_ibox_gen.png');
+	font-family: 'lucida console', monospace;
+	font-size: 12px;
 }
 
 /* profile */

@@ -4,6 +4,7 @@
 		<div class="text">
 			<h1 class="left"><?php echo $issue['name']; ?></h1>
 		</div>
+		
 		<?php
 			$tags = explode(' ', $issue['tags']); // todo: use the separate table for tags instead of one long string
 			foreach ($tags as $tag)
@@ -11,6 +12,11 @@
 				echo '<span class="tag"><a href="#">' . $tag . '</a></span>';
 			}
 		?>
+		
+		<div class="right">
+			<a class="button button-drop" href="#"><img src="<?php echo $location['images']; ?>/btn/config.png" alt="" /></a>
+		</div>
+		
 		<div class="clear"></div>
 	</div>
 	
