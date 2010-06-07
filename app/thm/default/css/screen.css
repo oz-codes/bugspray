@@ -140,8 +140,13 @@ ul
 
 hr
 {
+	margin: 8px 0;
 	border: solid #888;
 	border-width: 1px 0px 0px 0px;
+}
+hr.invisible
+{
+	visibility: hidden;
 }
 
 /* wrapper! */
@@ -316,6 +321,11 @@ hr
 .subtitle
 {
 	font-size: 11px;
+	font-weight: normal;
+}
+.small
+{
+	font-size: 10px;
 	font-weight: normal;
 }
 

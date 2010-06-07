@@ -102,8 +102,8 @@ if (isset($_POST['submit']))
 	if (!$error)
 	{
 		$query2 = db_query("
-			INSERT INTO issues (name, author, description, category, when_opened, when_updated, tags, severity)
-			VALUES ('$title', {$_SESSION['uid']}, '$description', '1', NOW(), NOW(), '$tags', '$severity')
+			INSERT INTO issues (name, author, description, when_opened, when_updated, tags, severity)
+			VALUES ('$title', {$_SESSION['uid']}, '$description', NOW(), NOW(), '$tags', '$severity')
 		");
 		
 		if ($query2) { echo '<p><b>Info:</b> Added issue successfully!</p>'; } else { echo mysql_error(); }
@@ -125,6 +125,8 @@ if (!isset($error) || $error)
 
 <form action="" method="post">
 	
+	<!-- title -->
+	
 	<?php echo output_errors($errors_title) ?>
 	
 	<dl class="form inline">
@@ -136,7 +138,7 @@ if (!isset($error) || $error)
 		</dd>
 	</dl>
 	
-	<div class="clear"></div>
+	<!-- tags -->
 	
 	<?php echo output_errors($errors_tags) ?>
 	
@@ -146,11 +148,50 @@ if (!isset($error) || $error)
 		</dt>
 		<dd>
 			<input id="tags" name="tags" type="text" size="64" value="<?php echo $_POST['tags'] ?>" />
-			<small>(seperate tags by spaces)</small>
+			<span class="small">(seperate tags by spaces)</span>
+		</dd>
+	</dl>
+	
+	<!-- severity -->
+	
+	<dl class="form inline">
+		<dt>
+			<label>Severity</label>
+		</dt>
+		<dd>
+			<input id="severity" name="severity" type="hidden" value="0" />
+			<div id="severity-slider" class="left" style="width: 410px; margin-top: 6px;"></div>
+			<span id="severity-name" class="left small" style="margin-left: 4px; margin-top: 4px;">none</span>
+			<script type="text/javascript">
+				$("#severity-slider").slider({
+					value: 0,
+					min: 0,
+					max: 5,
+					slide: function(e, ui) {
+						$("#severity").val(ui.value);
+						
+						var severityName = 'invalid';
+						switch (ui.value)
+						{
+							case 0: severityName = 'none'; break;
+							case 1: severityName = 'very low'; break;
+							case 2: severityName = 'low'; break;
+							case 3: severityName = 'medium'; break;
+							case 4: severityName = 'severe'; break;
+							case 5: severityName = 'very severe'; break;
+						}
+						$("#severity-name").html(severityName);
+					}
+				});
+			</script>
 		</dd>
 	</dl>
 	
 	<div class="clear"></div>
+	
+	<hr class="invisible" />
+	
+	<!-- description -->
 	
 	<?php echo output_errors($errors_description) ?>
 	
@@ -162,42 +203,6 @@ if (!isset($error) || $error)
 			<textarea id="description" name="description" style="height: 192px;"><?php echo $_POST['description'] ?></textarea>
 		</dd>
 	</dl>
-	
-	<dl class="form col-3">
-		<dt>
-			<label for="severity">Severity</label>
-		</dt>
-		<dd>
-			<select id="severity" name="severity">
-				<option value="0">None</option>
-				<option value="1">Very Low</option>
-				<option value="2">Low</option>
-				<option value="3">Medium</option>
-				<option value="4">Severe</option>
-				<option value="5">Very Severe</option>
-			</select>
-		</dd>
-	</dl>
-	
-	<dl class="form col-3">
-		<dt>
-			<label>--</label>
-		</dt>
-		<dd>
-			--
-		</dd>
-	</dl>
-	
-	<dl class="form col-3">
-		<dt>
-			<label>--</label>
-		</dt>
-		<dd>
-			--
-		</dd>
-	</dl>
-	
-	<div class="clear"></div>
 
 	<input type="submit" name="submit" value="Post" />
 </form>

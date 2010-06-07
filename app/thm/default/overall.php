@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<?php $this->outputHead(); ?>
+		<script type="text/javascript" src="<?php echo $this->location['theme'] ?>/js/jquery-ui-1.8.2.slideronly.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo $this->location['styles'] ?>/jquery.ui.css" />
 	</head>
 	
 	<body>
@@ -10,7 +12,7 @@
 		
 		<div id="wrap">
 			<header id="header">
-				<h1><a href="index.php"><?php echo $this->sitename; ?></a></h1>
+				<h1><a href="index.php"><?php echo $this->sitename ?></a></h1>
 				
 				<div id="user_wrapper">
 					<?php if ($client['is_logged']): ?>

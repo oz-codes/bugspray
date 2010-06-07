@@ -625,7 +625,7 @@ function output_errors($arr)
 	if (sizeof($arr) > 0)
 	{
 		$o .= '
-		<div class="error">';
+		<div class="clear error">';
 		
 		$i=0;
 		foreach ($arr as $msg)
