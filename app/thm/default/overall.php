@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<?php $this->outputHead(); ?>
+		<script type="text/javascript" src="<?php echo $this->location['theme'] ?>/js/jquery.amwnd.js"></script>
 		<script type="text/javascript" src="<?php echo $this->location['theme'] ?>/js/jquery-ui-1.8.2.slideronly.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="<?php echo $this->location['styles'] ?>/jquery.ui.css" />
 	</head>

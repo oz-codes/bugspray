@@ -49,7 +49,6 @@ class MTTemplate
 		$this->title = 'bugspray';
 		$this->addCSS($this->location['styles'].'/screen.css');
 		$this->addJS('js/jquery-1.4.2.min.js');
-		$this->addJS('js/jquery.amwnd.js');
 		$this->addJS('js/html5.js');
 		$this->addJS('js/bugspray.js');
 		
