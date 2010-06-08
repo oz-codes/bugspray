@@ -35,7 +35,7 @@ echo '<div class="imgtitle imgtitle-32">
 
 if ($client['is_admin'])
 {
-	if (file_exists("adm/{$_GET['p']}.php"))
+	if (file_exists("admin/{$_GET['p']}.php"))
 		$subpage = $_GET['p'];
 	else
 		$subpage = 'home';
@@ -54,7 +54,7 @@ if ($client['is_admin'])
 	$uri = $_SERVER['REQUEST_URI'];
 	$uri2 = $_SERVER['SCRIPT_NAME'].'?p='.$_GET['p'];
 	
-	include("adm/$subpage.php");
+	include("admin/$subpage.php");
 }
 else
 {
