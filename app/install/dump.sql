@@ -26,6 +26,16 @@ CREATE TABLE IF NOT EXISTS `comments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 
+CREATE TABLE IF NOT EXISTS `config` (
+  `name` varchar(16) NOT NULL,
+  `value` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO `config` (`name`, `value`) VALUES
+('sitename', 'My Issue Tracker'),
+('theme', 'default');
+
+
 CREATE TABLE IF NOT EXISTS `favorites` (
   `ticketid` int(11) NOT NULL,
   `userid` int(11) NOT NULL

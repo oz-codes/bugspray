@@ -41,6 +41,25 @@ include("settings.php");
 $con = mysql_connect($mysql_server, $mysql_username, $mysql_password) or die(mysql_error());
 mysql_select_db($mysql_database, $con);
 
+// grab config from the db
+$config = array();
+$configquery = mysql_query("SELECT * FROM config");
+while($row = mysql_fetch_array($configquery))
+{
+	try
+	{
+		$config[$row['name']] = $row['value'];
+	}
+	catch (Exception $e)
+	{
+		$debug_log[] = array(
+			'type' => 'error',
+			'success' => false,
+			'text' => 'The config setting <i>' . $row['config_value'] . '</i> has an invalid name.'
+		);
+	}
+}
+
 // include the other important files
 include("template.php");
 include("users.php");

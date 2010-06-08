@@ -5,8 +5,6 @@ $mysql_password = 'password';
 $mysql_database = 'bugspray';
 $mysql_prefix   = 'bugspray_'; // not implemented
 
-$sitename = 'My Issue Tracker';
-
 $debug = false;
 
 $recaptcha_use = true;

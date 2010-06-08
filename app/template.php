@@ -22,7 +22,7 @@
  */
 
 // define the locations of everything
-$theme = 'default';
+$theme = $config['theme'];
 $location = array(
 	'theme'  => "thm/$theme",
 	'images' => "thm/$theme/img",
@@ -39,10 +39,10 @@ class MTTemplate
 	
 	function __construct()
 	{
-		global $sitename, $location;
+		global $sitename, $location, $config;
 		
 		// outside stuff
-		$this->sitename = $sitename;
+		$this->sitename = $config['sitename'];
 		$this->location = $location;
 		
 		// default stuff to output header
