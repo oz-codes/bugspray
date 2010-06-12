@@ -1,8 +1,10 @@
 <p>This is a temporary home page for the admin panel. There's nothing to show here yet,
-perhaps later in mintytracker's life there will be. Until then, take a look at the tabs above.</p>
+perhaps later there will be. Until then, take a look at the tabs above.</p>
 
 <h3>About</h3>
 
-<p>Thanks for using mintytracker 0.1-dev!</p>
-
-<p>This stuff is open source goodness hosted on GitHub! Check out <a href="http://github.com/a2h/bugspray">the repository</a>!</p>
+<p>
+	You're running <b>Spray 0.3-dev</b>.
+	Support Spray (and its sole developer)! <a href="http://github.com/a2h/bugspray">Contribute code</a> or
+	<a href="http://pledgie.com/campaigns/11111">donate</a>! Credits and free hugs for each respectively :D
+</p>

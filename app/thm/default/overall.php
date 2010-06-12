@@ -63,7 +63,7 @@
 			</div>
 			
 			<footer id="footer">
-				powered by bugspray | version 0.3-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
+				spray 0.3-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
 			</footer>
 		</div>
 	</body>
