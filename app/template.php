@@ -116,11 +116,11 @@ class MTTemplate
 		
 		foreach ($this->stylesheets as $stylesheet)
 		{
-			echo "\t\t".'<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />'."\n";
+			echo "\t".'<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />'."\n";
 		}
 		foreach ($this->javascripts as $javascript)
 		{
-			echo "\t\t".'<script type="text/javascript" src="'.$javascript.'"></script>'."\n";
+			echo "\t".'<script type="text/javascript" src="'.$javascript.'"></script>'."\n";
 		}
 	}
 	
