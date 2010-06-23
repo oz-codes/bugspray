@@ -279,19 +279,19 @@ function ticket_list($type, $status, $order='desc')
 {
 	global $page, $client;
 	
-	// the myriad of status filters
+	// Ah, the myriad of status filters
 	switch ($status)
 	{
 		case 'unassigned': $whereclause = 'WHERE issues.status = 1'; break;
 		case 'assigned': $whereclause = 'WHERE issues.status = 2'; break;
 		case 'resolved': $whereclause = 'WHERE issues.status = 3'; break;
-		//case 'postponed': $whereclause = 'WHERE issues.status = 4'; break;
+		case 'postponed': $whereclause = 'WHERE issues.status = 4'; break;
 		case 'declined': $whereclause = 'WHERE issues.status = 5'; break;
-		case 'all': $whereclause = ''; break;
+		case 'all': $whereclause = 'WHERE 1'; break; // This seems to be okay, see http://stackoverflow.com/questions/1983655
 		case 'open': default: $status = 'open'; $whereclause = 'WHERE (issues.status = 1 OR issues.status = 2)'; break;
 	}
 	
-	// if we don't have a proper order than force descending
+	// If we don't have a proper order defined, just make it descending
 	if ($order)
 	{
 		$order = strtoupper($order);
@@ -304,45 +304,36 @@ function ticket_list($type, $status, $order='desc')
 	{
 		$order = 'DESC';
 	}
-
-	// and what query do we need?
-	switch ($type)
+	
+	// Do we want tickets that we're following only?
+	if ($type == 'following')
 	{
-		case 'following':
-			$whereclause = str_replace('WHERE', 'AND', $whereclause);
-			
-			$query = "
-				SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
-				LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
-				LEFT JOIN favorites ON favorites.ticketid = issues.id
-				WHERE ((favorites.ticketid = issues.id AND favorites.userid = {$_SESSION['uid']}) OR issues.assign = {$_SESSION['uid']})
-				$whereclause
-				ORDER BY issues.when_updated $order"; break;
-		
-		case 'standard': default:
-			$query = "
-				SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
-				LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
-				LEFT JOIN favorites ON favorites.ticketid = issues.id AND favorites.userid = '{$_SESSION['uid']}'
-				$whereclause
-				ORDER BY issues.when_updated $order"; break;
+		$whereclause .= ' AND ((favorites.ticketid = issues.id AND favorites.userid = ' . $_SESSION['uid'] . ') OR issues.assign = ' . $_SESSION['uid'] . ')';
 	}
+	
+	// Finally, generate the query!
+	$query = '
+		SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
+		LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
+		LEFT JOIN favorites ON favorites.ticketid = issues.id AND favorites.userid = \'' . $_SESSION['uid'] . '\'
+		' . $whereclause . '
+		ORDER BY issues.when_updated ' . $order;
 
-	// now run it!
+	// And then run it!
 	$result_issues = db_query_toarray($query, false, 'Retrieving a list of issues');
 
-	// extra variables
+	// Look ma, extra variables
 	$count = count($result_issues);
 	for ($i=0;$i<$count;$i++)
 	{
-		// is the issue favoUrited? (db uses "favorite" because everyone favoUrs the americans)
+		// Is the issue favoUrited? (The database uses "favorite" because everyone favoUrs the americans)
 		$result_issues[$i]['favorite'] = $result_issues[$i]['favorited'] ? true : false;
 		
-		// determine the colour of the listing (!!!!!!!!!!!!!!!!!!!move into template?)
+		// Determine the colour of the listing (>>>>>>>>>>move into template?<<<<<<<<<<)
 		$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'], $result_issues[$i]['severity']);
 	}
 
-	// status types
+	// Status types
 	$statuses = array(
 		array(
 			'name' => 'Open',
@@ -376,7 +367,7 @@ function ticket_list($type, $status, $order='desc')
 		)
 	);
 
-	// and we're off! even though this is called "setPage" it's just an include, probably should change that [TODO]
+	// And we're off! even though this is called "setPage" it's just an include, probably should change that [TODO]
 	ob_start();
 	$page->setPage(
 		'ticket_list.php',
