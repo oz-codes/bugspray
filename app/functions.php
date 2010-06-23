@@ -275,7 +275,7 @@ function issuecol($status, $severity)
 	return $col;
 }
 
-function ticket_list($type, $status, $order='desc')
+function ticket_list($status, $order='desc', $pinfollowing=false)
 {
 	global $page, $client;
 	
@@ -292,45 +292,55 @@ function ticket_list($type, $status, $order='desc')
 	}
 	
 	// If we don't have a proper order defined, just make it descending
-	if ($order)
-	{
-		$order = strtoupper($order);
-		if ($order != 'ASC' || $order != 'DESC')
-		{
-			$order = 'DESC';
-		}
-	}
-	else
+	$order = strtoupper($order);
+	if ($order != 'ASC' || $order != 'DESC')
 	{
 		$order = 'DESC';
 	}
 	
-	// Do we want tickets that we're following only?
-	if ($type == 'following')
-	{
-		$whereclause .= ' AND ((favorites.ticketid = issues.id AND favorites.userid = ' . $_SESSION['uid'] . ') OR issues.assign = ' . $_SESSION['uid'] . ')';
-	}
-	
-	// Finally, generate the query!
+	// Alright, create our lovely little query
 	$query = '
 		SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
 		LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
 		LEFT JOIN favorites ON favorites.ticketid = issues.id AND favorites.userid = \'' . $_SESSION['uid'] . '\'
 		' . $whereclause . '
 		ORDER BY issues.when_updated ' . $order;
-
+	
 	// And then run it!
-	$result_issues = db_query_toarray($query, false, 'Retrieving a list of issues');
+	$result_tickets = db_query_toarray($query, false, 'Retrieving a list of issues');
+	
+	// If we want to pin tickets, move them up top!
+	if ($pinfollowing)
+	{
+		// We do the magic by pushing stuff onto a temporary array and removing from the original array :O
+		$result_tickets2 = array();
+		$count = count($result_tickets);
+		for ($i=0; $i<$count; $i++)
+		{
+			if ($result_tickets[$i]['favorited'] || $result_tickets[$i]['assign'] == $_SESSION['uid'])
+			{
+				$result_tickets[$i]['pinned'] = true; // Since it's going to get deleted from the original array it doesn't matter
+				$result_tickets2[] = $result_tickets[$i];
+				unset($result_tickets[$i]);
+			}
+		}
+		
+		// But unset screws up indexes so we need to fix them...
+		$result_tickets = array_values($result_tickets);
+		
+		// And now we just join the two
+		$result_tickets = array_merge($result_tickets2, $result_tickets);
+	}
 
 	// Look ma, extra variables
-	$count = count($result_issues);
-	for ($i=0;$i<$count;$i++)
+	$count = count($result_tickets);
+	for ($i=0; $i<$count; $i++)
 	{
 		// Is the issue favoUrited? (The database uses "favorite" because everyone favoUrs the americans)
-		$result_issues[$i]['favorite'] = $result_issues[$i]['favorited'] ? true : false;
+		$result_tickets[$i]['favorite'] = $result_tickets[$i]['favorited'] ? true : false;
 		
 		// Determine the colour of the listing (>>>>>>>>>>move into template?<<<<<<<<<<)
-		$result_issues[$i]['status_color'] = issuecol($result_issues[$i]['status'], $result_issues[$i]['severity']);
+		$result_tickets[$i]['status_color'] = issuecol($result_tickets[$i]['status'], $result_tickets[$i]['severity']);
 	}
 
 	// Status types
@@ -374,7 +384,7 @@ function ticket_list($type, $status, $order='desc')
 		array(
 			'type' => $type,
 			'statuses' => $statuses,
-			'issues' => $result_issues
+			'issues' => $result_tickets
 		)
 	);
 	return ob_get_clean();

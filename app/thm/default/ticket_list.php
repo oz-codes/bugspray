@@ -27,7 +27,7 @@
 	<tbody>
 	<?php foreach ($issues as $issue): ?>
 	
-	<tr class="ticket" data-id="<?php echo $issue['id'] ?>">
+	<tr class="ticket<?php echo $issue['pinned'] ? ' pinned' : '' ?>" data-id="<?php echo $issue['id'] ?>">
 		<td class="status"><div style="background:<?php echo $issue['status_color'] ?>"></div></td>
 		<td class="favorite"><a href="javascript:;"><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></a></td>
 		<td class="id"><?php echo $issue['id']; ?></td>

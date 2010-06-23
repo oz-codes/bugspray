@@ -25,7 +25,7 @@ include("functions.php");
 $page->setType('tickets');
 $page->setTitle('Tickets');
 
-$tickets = ticket_list('', $_GET['status'], 'desc');
+$tickets = ticket_list($_GET['status'], 'desc', true);
 
 $page->setPage(
 	'tickets.php',

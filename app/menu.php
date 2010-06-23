@@ -3,14 +3,9 @@ global $client;
 
 $menu = array(
 	array(
-		'id' => 'dashboard',
-		'name' => 'Dashboard',
-		'url' => 'index.php'
-	),
-	array(
 		'id' => 'tickets',
 		'name' => 'Tickets',
-		'url' => 'tickets.php'
+		'url' => 'index.php'
 	),
 	array(
 		'id' => 'statistics',

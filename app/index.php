@@ -22,25 +22,22 @@
  */
 
 include("functions.php");
-$page->setType('dashboard');
-$page->setTitle('Dashboard');
+$page->setType('tickets');
+$page->setTitle('Tickets');
 
-// installer completion screen
+// Installer completion screen
 if (isset($_GET['installerdone']) && is_dir('install'))
 {
 	$page->addCSS('install/installer.css');
 	include("install/index.php");
 }
 
-if ($client['is_logged'])
-{
-	$tickets_following = ticket_list('following', $_GET['status'], 'desc');
-}
-
+// Get the tickets and show them!
+$tickets = ticket_list($_GET['status'], 'desc', true);
 $page->setPage(
-	'dashboard.php',
+	'tickets.php',
 	array(
-		'tickets_following' => $tickets_following
+		'tickets' => $tickets
 	)
 );
 ?>
