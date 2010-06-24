@@ -752,6 +752,26 @@ a.button.drop-button img, button.drop-button img
 {
 	width: 16px;
 }
+.ticket .favorite a
+{
+	position: relative;
+}
+.ticket .favorite-count
+{
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	padding: 0 1px;
+	background: #444;
+	color: #fff;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	text-align: center;
+	font-family: helvetica, arial, sans-serif;
+	font-weight: bold;
+	font-size: 7px;
+}
 .ticket .id
 {
 	width: 8px;

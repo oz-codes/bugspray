@@ -239,18 +239,18 @@ function getstatustype($id)
 
 function ticket_list($status, $order='desc', $pinfollowing=false)
 {
-	global $page, $client;
+	global $page, $users;
 	
 	// Ah, the myriad of status filters
 	switch ($status)
 	{
-		case 'unassigned': $whereclause = 'WHERE issues.status = 1'; break;
-		case 'assigned': $whereclause = 'WHERE issues.status = 2'; break;
-		case 'resolved': $whereclause = 'WHERE issues.status = 3'; break;
-		case 'postponed': $whereclause = 'WHERE issues.status = 4'; break;
-		case 'declined': $whereclause = 'WHERE issues.status = 5'; break;
-		case 'all': $whereclause = 'WHERE 1'; break; // This seems to be okay, see http://stackoverflow.com/questions/1983655
-		case 'open': default: $status = 'open'; $whereclause = 'WHERE (issues.status = 1 OR issues.status = 2)'; break;
+		case 'unassigned': $whereclause = 'issues.status = 1'; break;
+		case 'assigned': $whereclause = 'issues.status = 2'; break;
+		case 'resolved': $whereclause = 'issues.status = 3'; break;
+		case 'postponed': $whereclause = 'issues.status = 4'; break;
+		case 'declined': $whereclause = 'issues.status = 5'; break;
+		case 'all': $whereclause = '1'; break; // This seems to be okay, see http://stackoverflow.com/questions/1983655
+		case 'open': default: $status = 'open'; $whereclause = '(issues.status = 1 OR issues.status = 2)'; break;
 	}
 	
 	// If we don't have a proper order defined, just make it descending
@@ -260,62 +260,83 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 		$order = 'DESC';
 	}
 	
-	// Alright, create our lovely little query
+	// Are we logged in?
+	$l = $users->client->is_logged;
+	
+	// Alright, create our lovely little query [TODO(maybe): if possible, rewrite the subquery as a join]
 	$query = '
-		SELECT issues.*, comments.author AS commentauthor, favorites.userid AS favorited FROM issues
-		LEFT JOIN comments ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
-		LEFT JOIN favorites ON favorites.ticketid = issues.id AND favorites.userid = \'' . $_SESSION['uid'] . '\'
-		' . $whereclause . '
+		SELECT issues.*,
+		       comments.author AS commentauthor,
+			   ' . ($l ? 'favorites.userid AS favorited,' : '') . '
+			   (SELECT COUNT(favoritescount.userid) FROM favorites AS favoritescount WHERE ticketid = issues.id) AS favoritecount
+		FROM issues
+		
+		-- This join is used for getting the comment author
+		LEFT JOIN comments
+			ON comments.issue = issues.id AND comments.when_posted = issues.when_updated
+		
+		-- This one lets us find out whether the user has favourited the ticket or not
+		' . ($l ? '
+		LEFT JOIN favorites
+			ON favorites.ticketid = issues.id AND favorites.userid = ' . $_SESSION['uid'] : '') . '
+		
+		WHERE ' . $whereclause . '
+		
 		ORDER BY issues.when_updated ' . $order;
 	
 	// And then run it!
-	$result_tickets = db_query_toarray($query, false, 'Retrieving all tickets <code>' . $whereclause . '</code>');
+	$result_tickets = db_query_toarray($query, false, 'Retrieving all tickets <code>WHERE ' . $whereclause . '</code>');
 	
 	// Do we want to pin tickets that the client has favourited or has assigned to them?
-	if ($pinfollowing)
+	if ($pinfollowing && $l)
 	{
 		// If so, we'll need another query to get those only
+		$uid = $_SESSION['uid'];
 		$query2 = str_replace(
-			'WHERE', 'WHERE ((favorites.ticketid = issues.id AND favorites.userid = ' . $_SESSION['uid'] . ') OR issues.assign = ' . $_SESSION['uid'] . ') AND ',
+			'WHERE', 'WHERE ((favorites.ticketid = issues.id AND favorites.userid = ' . $uid . ') OR issues.assign = ' . $uid . ') AND ',
 			$query
 		);
 		
 		// And of course, run it
-		$result_tickets2 = db_query_toarray($query2, false, 'Retrieving all tickets favourited or assigned to the client <code>' . $whereclause . '</code>');
+		$result_tickets2 = db_query_toarray($query2, false, 'Retrieving all tickets favourited or assigned to the client <code>WHERE ' . $whereclause . '</code>');
 		
-		// We now have to take out all the non pinned tickets from the first query
-		$result_tickets2_ids = array();
-		$c = count($result_tickets2);
-		for ($i=0; $i<$c; $i++)
+		// Have we got anything?
+		$c2 = count($result_tickets2);
+		if ($c2)
 		{
-			// We get all the IDs for extraction
-			$result_tickets2_ids[] = $result_tickets2[$i]['id'];
+			// We now have to take out all the non pinned tickets from the first query
+			$result_tickets2_ids = array();
+			for ($i=0; $i<$c2; $i++)
+			{
+				// We get all the IDs for extraction
+				$result_tickets2_ids[] = $result_tickets2[$i]['id'];
+				
+				// And for convenience, we'll also mark the ticket as pinned now
+				$result_tickets2[$i]['pinned'] = true;
+			}
 			
-			// And for convenience, we'll also mark the ticket as pinned now
-			$result_tickets2[$i]['pinned'] = true;
-		}
-		
-		// Now for the actual removal
-		$c = count($result_tickets);
-		for ($i=0; $i<$c; $i++)
-		{
-			// Do we have a matching ID?
-			if (in_array($result_tickets[$i]['id'], $result_tickets2_ids))
+			// Now for the actual removal
+			$c = count($result_tickets);
+			for ($i=0; $i<$c; $i++)
 			{
-				unset($result_tickets[$i]);
+				// Do we have a matching ID?
+				if (in_array($result_tickets[$i]['id'], $result_tickets2_ids))
+				{
+					unset($result_tickets[$i]);
+				}
+				// Nope? We'll mark it as non pinned, then.
+				else
+				{
+					$result_tickets[$i]['pinned'] = false;
+				}
 			}
-			// Nope? We'll mark it as non pinned, then.
-			else
-			{
-				$result_tickets[$i]['pinned'] = false;
-			}
+			
+			// Since unset screws up indexes in arrays we'll need to fix them.
+			$result_tickets = array_values($result_tickets);
+			
+			// We're done now, so we'll just join up the two arrays, et voila!
+			$result_tickets = array_merge($result_tickets2, $result_tickets);
 		}
-		
-		// Since unset screws up indexes in arrays we'll need to fix them.
-		$result_tickets = array_values($result_tickets);
-		
-		// We're done now, so we'll just join up the two arrays, et voila!
-		$result_tickets = array_merge($result_tickets2, $result_tickets);
 	}
 
 	// Look ma, extra variables
