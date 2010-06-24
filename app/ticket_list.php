@@ -21,8 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// used for ajax
+// This file is used for AJAX requests
 include("functions.php");
 $page->disableTemplate();
-echo ticket_list($_POST['type'], $_POST['status'], 'desc');
+echo ticket_list($_POST['status'], 'desc', true);
 ?>
