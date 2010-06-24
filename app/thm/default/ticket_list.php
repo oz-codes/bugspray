@@ -25,17 +25,17 @@
 		</tr>
 	</tfoot>
 	<tbody>
-	<?php foreach ($issues as $issue): ?>
+	<?php foreach ($tickets as $ticket): ?>
 	
-	<tr class="ticket<?php echo $issue['pinned'] ? ' pinned' : '' ?>" data-id="<?php echo $issue['id'] ?>">
-		<td class="status"><div style="background:<?php echo $issue['status_color'] ?>"></div></td>
-		<td class="favorite"><a href="javascript:;"><img src="<?php echo $location['images']; ?>/star-<?php echo $issue['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $issue['favorite'] ? '&#9733;' : '&#9734;' ?>" /></a></td>
-		<td class="id"><?php echo $issue['id']; ?></td>
+	<tr class="ticket<?php echo $ticket['pinned'] ? ' pinned' : '' ?>" data-id="<?php echo $ticket['id'] ?>">
+		<td class="status"><div style="background:<?php echo $ticket['status_color'] ?>"></div></td>
+		<td class="favorite"><a href="javascript:;"><img src="<?php echo $location['images']; ?>/star-<?php echo $ticket['favorite'] ? 'on' : 'off' ?>.png" alt="<?php echo $ticket['favorite'] ? '&#9733;' : '&#9734;' ?>" /></a></td>
+		<td class="id"><?php echo $ticket['id']; ?></td>
 		<td class="summary">
-			<a href="ticket.php?id=<?php echo $issue['id'] ?>"><?php echo $issue['name'] ?></a>
+			<a href="ticket.php?id=<?php echo $ticket['id'] ?>"><?php echo $ticket['name'] ?></a>
 			
 			<?php
-			$tags = explode(' ', $issue['tags']); // todo: use the separate table for tags instead of one long string
+			$tags = explode(' ', $ticket['tags']); // todo: use the separate table for tags instead of one long string
 			foreach ($tags as $tag)
 			{
 				echo '<span class="tag"><a href="#">' . $tag . '</a></span>';
@@ -43,8 +43,8 @@
 			?>
 			
 		</td>
-		<td class="assigned<?php echo $issue['assign'] == $_SESSION['uid'] && $issue['status'] < 3 ? ' you' : '' ?>"><?php echo $issue['assign'] > 0 ? '<a href="profile.php?id=' . $issue['assign'] . '">' . getunm($issue['assign']) . '</a>' : '--' ?></td>
-		<td class="last"><?php echo timeago($issue['when_updated'], false, true) ?></td>
+		<td class="assigned<?php echo $ticket['assign'] == $_SESSION['uid'] && $ticket['status'] < 3 ? ' you' : '' ?>"><?php echo $ticket['assign'] > 0 ? '<a href="profile.php?id=' . $ticket['assign'] . '">' . getunm($ticket['assign']) . '</a>' : '--' ?></td>
+		<td class="last"><?php echo timeago($ticket['when_updated'], false, true) ?></td>
 	</tr>
 	
 	<?php endforeach; ?>

@@ -408,7 +408,7 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 		array(
 			'type' => $type,
 			'statuses' => $statuses,
-			'issues' => $result_tickets
+			'tickets' => $result_tickets
 		)
 	);
 	return ob_get_clean();
