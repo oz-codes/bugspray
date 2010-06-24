@@ -13,10 +13,6 @@ $menu = array(
 		//'url' => 'statistics.php'
 	),
 	array(
-		'id' => 'help',
-		'name' => 'Help'
-	),
-	array(
 		'id' => 'admin',
 		'name' => 'Admin',
 		'hide' => !$client['is_admin'],
