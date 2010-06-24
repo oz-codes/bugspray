@@ -711,10 +711,42 @@ a.button.drop-button img, button.drop-button img
 	padding-right: 0;
 	width: 4px;
 }
-.ticket .status div
+.ticket .status-color
 {
 	width: 4px;
 	height: 24px;
+}
+.ticket.severity-0 .status-color
+{
+	background: #e7f4fc;
+}
+.ticket.severity-1 .status-color
+{
+	background: #fffa6c;
+}
+.ticket.severity-2 .status-color
+{
+	background: #ffe400;
+}
+.ticket.severity-3 .status-color
+{
+	background: #ffae00;
+}
+.ticket.severity-4 .status-color
+{
+	background: #ff6600;
+}
+.ticket.severity-5 .status-color
+{
+	background: #ff0000;
+}
+.ticket.resolved .status-color
+{
+	background: #c8ffa3;
+}
+.ticket.declined .status-color
+{
+	background: #ededed;
 }
 .ticket .favorite
 {

@@ -237,44 +237,6 @@ function getstatustype($id)
 	return $statuses[$id-1]['type'];
 }
 
-function issuecol($status, $severity)
-{	
-	if (getstatustype($status) == 'declined')
-	{
-		$col = '#ededed';
-	}
-	elseif (getstatustype($status) == 'resolved')
-	{
-		$col = '#c8ffa3';
-	}
-	else
-	{
-		switch ($severity)
-		{
-			case 0:
-				$col = '#e7f4fc';
-				break;
-			case 1:
-				$col = '#fffa6c';
-				break;
-			case 2:
-				$col = '#ffe400';
-				break;
-			case 3:
-				$col = '#ffae00';
-				break;
-			case 4:
-				$col = '#ff6600';
-				break;
-			case 5:
-				$col = '#ff0000';
-				break;
-		}
-	}
-	
-	return $col;
-}
-
 function ticket_list($status, $order='desc', $pinfollowing=false)
 {
 	global $page, $client;
@@ -363,8 +325,30 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 		// Is the issue favoUrited? (The database uses "favorite" because everyone favoUrs the americans)
 		$result_tickets[$i]['favorite'] = $result_tickets[$i]['favorited'] ? true : false;
 		
-		// Determine the colour of the listing (>>>>>>>>>>move into template?<<<<<<<<<<)
-		$result_tickets[$i]['status_color'] = issuecol($result_tickets[$i]['status'], $result_tickets[$i]['severity']);
+		// The classes of the ticket, of course, we just start off with "ticket"
+		$classes = array('ticket');
+		
+		// The severity shall be addded something like .severity-0
+		$classes[] = 'severity-' . $result_tickets[$i]['severity'];
+		
+		// Pinned ticket? Add the class!
+		if ($result_tickets[$i]['pinned'])
+		{
+			$classes[] = 'pinned';
+		}
+		
+		// Declined or resolved? Add the class!
+		if (getstatustype($result_tickets[$i]['status']) == 'declined')
+		{
+			$classes[] = 'declined';
+		}
+		elseif (getstatustype($result_tickets[$i]['status']) == 'resolved')
+		{
+			$classes[] = 'resolved';
+		}
+		
+		// And now we implode the classes into a nice string
+		$result_tickets[$i]['classes'] = implode(' ', $classes);
 	}
 
 	// Status types
