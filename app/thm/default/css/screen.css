@@ -694,11 +694,11 @@ a.button.drop-button img, button.drop-button img
 
 .tickets .tag
 {
-	opacity: 0.33;
+	opacity: 0.4;
 }
 .tickets .ticket:hover .tag
 {
-	opacity: 0.50;
+	opacity: 0.66;
 }
 .tickets .ticket:hover .tag:hover
 {
