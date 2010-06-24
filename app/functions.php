@@ -307,28 +307,52 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 		ORDER BY issues.when_updated ' . $order;
 	
 	// And then run it!
-	$result_tickets = db_query_toarray($query, false, 'Retrieving a list of issues');
+	$result_tickets = db_query_toarray($query, false, 'Retrieving all tickets <code>' . $whereclause . '</code>');
 	
-	// If we want to pin tickets, move them up top!
+	// Do we want to pin tickets that the client has favourited or has assigned to them?
 	if ($pinfollowing)
 	{
-		// We do the magic by pushing stuff onto a temporary array and removing from the original array :O
-		$result_tickets2 = array();
-		$count = count($result_tickets);
-		for ($i=0; $i<$count; $i++)
+		// If so, we'll need another query to get those only
+		$query2 = str_replace(
+			'WHERE', 'WHERE ((favorites.ticketid = issues.id AND favorites.userid = ' . $_SESSION['uid'] . ') OR issues.assign = ' . $_SESSION['uid'] . ') AND ',
+			$query
+		);
+		
+		// And of course, run it
+		$result_tickets2 = db_query_toarray($query2, false, 'Retrieving all tickets favourited or assigned to the client <code>' . $whereclause . '</code>');
+		
+		// We now have to take out all the non pinned tickets from the first query
+		$result_tickets2_ids = array();
+		$c = count($result_tickets2);
+		for ($i=0; $i<$c; $i++)
 		{
-			if ($result_tickets[$i]['favorited'] || $result_tickets[$i]['assign'] == $_SESSION['uid'])
+			// We get all the IDs for extraction
+			$result_tickets2_ids[] = $result_tickets2[$i]['id'];
+			
+			// And for convenience, we'll also mark the ticket as pinned now
+			$result_tickets2[$i]['pinned'] = true;
+		}
+		
+		// Now for the actual removal
+		$c = count($result_tickets);
+		for ($i=0; $i<$c; $i++)
+		{
+			// Do we have a matching ID?
+			if (in_array($result_tickets[$i]['id'], $result_tickets2_ids))
 			{
-				$result_tickets[$i]['pinned'] = true; // Since it's going to get deleted from the original array it doesn't matter
-				$result_tickets2[] = $result_tickets[$i];
 				unset($result_tickets[$i]);
+			}
+			// Nope? We'll mark it as non pinned, then.
+			else
+			{
+				$result_tickets[$i]['pinned'] = false;
 			}
 		}
 		
-		// But unset screws up indexes so we need to fix them...
+		// Since unset screws up indexes in arrays we'll need to fix them.
 		$result_tickets = array_values($result_tickets);
 		
-		// And now we just join the two
+		// We're done now, so we'll just join up the two arrays, et voila!
 		$result_tickets = array_merge($result_tickets2, $result_tickets);
 	}
 
