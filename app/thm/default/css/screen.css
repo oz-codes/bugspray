@@ -1016,8 +1016,9 @@ dl.form .alert, dl.form .error
 
 #debug
 {
-	background: #f5f5f5;
+	margin: 32px 0 0;
 	padding: 4px;
+	background: #f5f5f5;
 	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
