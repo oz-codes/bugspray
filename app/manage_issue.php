@@ -227,16 +227,16 @@ function ticket_comment_delete($comment)
 // this function has the same issue as with ticket_comment_add
 function ticket_favorite($ticket, $return)
 {
-	global $client;
+	global $users;
 	
 	$success = true;
 	$message = '';
 	
-	if ($client['is_logged'])
+	if ($users->client->is_logged)
 	{
-		if (!mysql_num_rows(db_query("SELECT * FROM favorites WHERE ticketid='$ticket'")))
+		if (!mysql_num_rows(db_query("SELECT * FROM favorites WHERE ticketid='$ticket' AND userid={$_SESSION['uid']}")))
 		{
-			if (!db_query("INSERT INTO favorites (ticketid, userid) VALUES ('$ticket', '{$_SESSION['uid']}')"))
+			if (!db_query("INSERT INTO favorites (ticketid, userid) VALUES ('$ticket', {$_SESSION['uid']})"))
 			{
 				$success = false;
 				$message = 'Could not favourite this issue';
@@ -244,7 +244,7 @@ function ticket_favorite($ticket, $return)
 		}
 		else
 		{
-			if (!db_query("DELETE FROM favorites WHERE ticketid='$ticket' AND userid='{$_SESSION['uid']}'"))
+			if (!db_query("DELETE FROM favorites WHERE ticketid='$ticket' AND userid={$_SESSION['uid']}"))
 			{
 				$success = false;
 				$message = 'Could not unfavourite this issue';
