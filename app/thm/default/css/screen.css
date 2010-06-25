@@ -25,7 +25,7 @@ body
 }
 body, td
 {
-	font-family: 'lucida grande', 'lucida sans unicode', verdana, arial, sans-serif;
+	font-family: verdana, arial, sans-serif;
 	font-size: 12px;
 }
 
@@ -373,7 +373,7 @@ input[type=text], input[type=password], textarea
 	border-radius: 2px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
-	font-family: 'lucida grande', 'lucida sans unicode', verdana, arial, sans-serif;
+	font-family: verdana, arial, sans-serif;
 	font-size: 12px;
 }
 input[type=text]:focus, input[type=password]:focus, textarea:focus
@@ -675,7 +675,7 @@ a.button.drop-button img, button.drop-button img
 .tickets tfoot select
 {
 	font-size: 11px;
-	font-family: 'lucida grande', 'lucida sans unicode', verdana, sans-serif;
+	font-family: verdana, sans-serif;
 }
 
 .tickets .ticket:hover
