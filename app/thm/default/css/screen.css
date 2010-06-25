@@ -902,7 +902,7 @@ dl.form .alert, dl.form .error
 .comment td
 {
 	vertical-align:top;
-	word-wrap:break-word;
+	word-wrap: break-word;
 }
 .comment tr:first-child td
 {
@@ -926,14 +926,9 @@ dl.form .alert, dl.form .error
 {
 	margin-bottom: 32px;
 }
-.comment .main
+.comment .content
 {
-	padding: 12px;
-}
-.comment .main .content
-{
-	min-height: 48px;
-	margin-bottom: 16px;
+	padding: 12px 12px 32px;
 	font-size: 12px;
 }
 .comment .actions

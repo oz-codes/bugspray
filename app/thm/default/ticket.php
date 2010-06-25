@@ -60,8 +60,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="main">
-						<div class="content"><?php echo parsebbcode($issue['description']); ?></div>
+					<td class="content">
+						<?php echo parsebbcode($issue['description']); ?>
 					</td>
 				</tr>
 			</table>
@@ -77,8 +77,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="main">
-						<div class="content"><?php echo parsebbcode($comment['content']); ?></div>
+					<td class="content">
+						<?php echo parsebbcode($comment['content']); ?>
 					</td>
 					<td class="actions">
 						<?php if ($comment['type'] == ''): ?>
