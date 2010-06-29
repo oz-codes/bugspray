@@ -60,10 +60,6 @@
 <?php $this->outputContent(); ?>
 <!-- content end -->
 		</div>
-		
-		<footer id="footer">
-			spray 0.3-dev | <?php /*dumb but oh well*/ echo footerinfo('time').' | '.footerinfo('queries'); ?>
-		</footer>
 	</div>
 </body>
 </html>

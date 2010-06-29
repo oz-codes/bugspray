@@ -248,14 +248,6 @@ hr.invisible
 	margin: 16px 0 32px;
 }
 
-/* footer */
-
-#footer
-{
-	margin: 32px 0 16px;
-	font-size: 10px;
-}
-
 /* titles with an image */
 
 .imgtitle
@@ -1031,12 +1023,19 @@ dl.form .alert, dl.form .error
 
 #debug
 {
-	margin: 32px 0 0;
-	padding: 4px;
-	background: #f5f5f5;
-	border-radius: 8px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
+	margin: 32px 24px 24px;
+	padding: 8px;
+	width: 960px;
+	background: #eee;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	font-size: 11px;
+}
+#debug h1
+{
+	margin: 4px 0 8px;
+	font-size: 14px;
 }
 
 /* fullscreen overlay */
