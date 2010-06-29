@@ -35,7 +35,8 @@ register_shutdown_function(array($page,'outputAll'));
 
 class MTTemplate
 {
-	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $sitename, $location;
+	public $sitename;
+	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $location;
 	
 	function __construct()
 	{

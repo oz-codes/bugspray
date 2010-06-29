@@ -26,20 +26,95 @@ include("functions.php");
 $page->setType('account');
 $page->setTitle('Login');
 
-echo '
-<div class="imgtitle imgtitle-32">
-	<img class="image" src="' . $location['images'] . '/titles/login.png" alt="" />
-	<div class="text">
-		<h1>Login</h1>
-	</div>
-	<div class="clear"></div>
-</div>';
-
-if (!isset($_POST['sub']))
-{	
-	echo '
+if (!isset($_POST['submit']))
+{
+$page->disableTemplate();
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login to <?php echo $page->sitename ?></title>
+<style type="text/css">
+html, body
+{
+	margin: 0;
+	padding: 0;
+}
+body
+{
+	background: #e9e9e9;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+}
+a
+{
+	text-decoration: none;
+}
+a:hover
+{
+	text-decoration: underline;
+}
+#container
+{
+	margin: 48px auto;
+	width: 540px;
+}
+h1
+{
+	float: left;
+	font-size: 20px;
+}
+#back
+{
+	float: left;
+	margin: 22px 0 0 8px;
+}
+form
+{
+	clear: both;
+	padding: 24px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+dl, dt
+{
+	margin: 0;
+}
+dd
+{
+	margin: 4px 0 16px;
+}
+footer
+{
+	display: block;
+	margin-top: 8px;
+	color: #aaa;
+	font-size: 10px;
+}
+footer a
+{
+	color: #888;
+}
+#powered
+{
+	float: left;
+}
+#by
+{
+	float: right;
+}
+</style>
+</head>
+<body>
+<div id="container">
+	<h1>Login to <?php echo $page->sitename ?></h1>
+	<div id="back"><a href="index.php">&laquo; back</a></div>
+	
 	<form action="" method="post">
-		<dl class="form big">
+		<dl>
 			<dt>
 				<label for="uname" class="big">Username</label>
 			</dt>
@@ -56,9 +131,18 @@ if (!isset($_POST['sub']))
 			</dd>
 		</dl>
 		
-		<input type="submit" name="sub" value="Login" />
+		<input type="submit" name="submit" value="Login" />
 		<input type="checkbox" name="remember" id="remember" /> <label class="subtitle" for="remember">Remember me</label>
-	</form>';
+	</form>
+	
+	<footer>
+		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> 0.3-dev</div>
+		<div id="by">a project by <a href="http://a2h.uni.cc/">a2h</a></div>
+	</footer>
+</div>
+</body>
+</html>
+<?php
 }
 else
 {	
