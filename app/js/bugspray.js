@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$.fn.slideFadeOut = function(speed, easing, callback) {
+jQuery.fn.slideFadeOut = function(speed, easing, callback) {
 	return this.animate({opacity:'hide',height:'hide'}, speed, easing, callback);
 };
 
@@ -29,7 +29,7 @@ function getNewComments()
 	history.go();
 }
 
-$(document).ready(function() {
+jQuery(function($) {
 	// drop downs
 	$(".drop-button").each(function() {
 		var dropbutton = $(this);

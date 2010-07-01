@@ -42,24 +42,71 @@ class MTTemplate
 	{
 		global $sitename, $location, $config;
 		
-		// outside stuff
+		// Outside stuff
 		$this->sitename = $config['sitename'];
 		$this->location = $location;
 		
-		// default stuff to output header
+		// Default stuff to output to the header
 		$this->title = 'bugspray';
 		$this->addCSS($this->location['styles'].'/screen.css');
-		$this->addJS('js/jquery-1.4.2.min.js');
-		$this->addJS('js/html5.js');
-		$this->addJS('js/bugspray.js');
 		
-		// start capturing the content
+		// Enqueue the bugspray JavaScript, which we always need
+		$this->script_enqueue('spray', 'js/bugspray.js', array('jquery'));
+		
+		// Alrighty, let's start capturing content!
 		ob_start();
 	}
 	
 	public function theme_disable($do)
 	{
 		$this->disabled = $do;
+	}
+	
+	public function script_enqueue($id, $path='', $depends=array())
+	{
+		// Don't reinclude things, of course
+		if (!$this->javascripts[$id])
+		{			
+			// Predetermined stuff and... stuff
+			switch ($id)
+			{
+				// jQuery, of course
+				case 'jquery':
+					$this->javascripts['jquery'] = 'js/jquery-1.4.2.min.js';
+					break;
+				
+				// Allow for HTML5 support in Internet Explorer
+				case 'html5ie':
+					$this->javascripts['html5'] = 'js/html5.js';
+					break;
+				
+				// Something we don't know about?
+				default:
+					// If there's no path, ignore the request (and of course log it)
+					if (!$path)
+					{
+						global $debug, $debug_log;
+						$debug_log[] = array(
+							'text' => 'Something tried to enqueue a script with an unrecognised id "' . $id . '", but there was no path supplied!'
+						);
+					}
+					else
+					{
+						// Do we have dependencies?
+						if (!empty($depends))
+						{
+							foreach ($depends as $depend)
+							{
+								$this->script_enqueue($depend);
+							}
+						}
+						
+						// Alright, let's enqueue our actual script!
+						$this->javascripts[$id] = $path;
+						break;
+					}
+			}
+		}
 	}
 	
 	public function setTitle($title)
@@ -114,6 +161,8 @@ class MTTemplate
 	public function outputHead()
 	{
 		echo '<title>'.$this->title.'</title>'."\n";
+		
+		echo "\t".'<meta charset="UTF-8">'."\n";
 		
 		foreach ($this->stylesheets as $stylesheet)
 		{

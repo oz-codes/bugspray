@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<?php $this->outputHead(); ?>
-	<script type="text/javascript" src="<?php echo $this->location['theme'] ?>/js/jquery.amwnd.js"></script>
-	<script type="text/javascript" src="<?php echo $this->location['theme'] ?>/js/jquery-ui-1.8.2.slideronly.min.js"></script>
+	<?php
+	$this->script_enqueue('html5ie');
+	$this->script_enqueue('amwnd', $this->location['theme'] . '/js/jquery.amwnd.js', array('jquery'));
+	$this->script_enqueue('jquery-ui-slideronly', $this->location['theme'] . '/js/jquery-ui-1.8.2.slideronly.min.js', array('jquery'));
+	$this->outputHead();
+	?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->location['styles'] ?>/jquery.ui.css" />
 </head>
 <body>
