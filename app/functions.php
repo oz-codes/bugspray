@@ -142,18 +142,6 @@ function logwhencmp($a,$b)
 	return ($a['when'] > $b['when']) ? -1 : 1;
 }
 
-function query_acttypes($id)
-{
-	global $queries_acttypes;
-	
-	if (!$queries_acttypes[$id])
-	{
-		$queries_acttypes[$id] = db_query_single("SELECT * FROM actiontypes WHERE id = $id", "Retrieving info for action type id $id from database");
-	}
-	
-	return $queries_acttypes[$id];
-}
-
 function query_cats($id) /* queries don't have 9 lives though */
 {
 	global $queries_cats;
@@ -176,24 +164,6 @@ function query_tags($id)
 	}
 	
 	return $queries_tags[$id];
-}
-
-function getactimg($id)
-{
-	$q = query_acttypes($id);
-	return $q['img'];
-}
-
-function getactcol($id)
-{
-	$q = query_acttypes($id);
-	return $q['color'];
-}
-
-function getactlogdsc($id)
-{
-	$q = query_acttypes($id);
-	return $q['logdescription'];
 }
 
 function gettagnm($id)

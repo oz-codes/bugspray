@@ -1,19 +1,5 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-CREATE TABLE IF NOT EXISTS `actiontypes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `color` varchar(6) NOT NULL,
-  `img` varchar(32) NOT NULL,
-  `title` varchar(24) NOT NULL,
-  `logdescription` varchar(24) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
-
-INSERT INTO `actiontypes` (`id`, `color`, `img`, `title`, `logdescription`) VALUES
-(1, 'BFFFBF', 'open.png', 'issue-open', 'opened an issue'),
-(2, 'FFBFBF', 'close.png', 'issue-close', 'locked an issue'),
-(3, 'BFE9FF', 'comment.png', 'issue-comment', 'commented on an issue');
-
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author` int(11) NOT NULL,
