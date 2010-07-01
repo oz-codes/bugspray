@@ -23,6 +23,6 @@
 
 // This file is used for AJAX requests
 include("functions.php");
-$page->disableTemplate();
+$page->theme_disable(true);
 echo ticket_list($_POST['status'], 'desc', true);
 ?>

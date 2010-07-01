@@ -47,7 +47,7 @@ if (isset($_POST['submit']))
 // Open the form? Or show an error? :O
 if (!isset($_POST['submit']) || $error)
 {
-$page->disableTemplate();
+$page->theme_disable(true);
 ?>
 <!DOCTYPE html>
 <html>

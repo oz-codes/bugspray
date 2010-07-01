@@ -57,9 +57,9 @@ class MTTemplate
 		ob_start();
 	}
 	
-	public function disableTemplate()
+	public function theme_disable($do)
 	{
-		$this->disabled = true;
+		$this->disabled = $do;
 	}
 	
 	public function setTitle($title)
