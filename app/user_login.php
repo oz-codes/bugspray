@@ -42,12 +42,16 @@ html, body
 }
 body
 {
-	background: #e9e9e9;
-	font-family: verdana, arial, sans-serif;
+	background: #eee;
 	font-size: 12px;
+}
+*
+{
+	font-family: 'helvetica neue', arial, sans-serif;
 }
 a
 {
+	color: #4183c4;
 	text-decoration: none;
 }
 a:hover
@@ -79,13 +83,32 @@ form
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
 }
-dl, dt
+form dl, form dt
 {
 	margin: 0;
 }
-dd
+form dd
 {
 	margin: 4px 0 16px;
+}
+form label
+{
+	display: block;
+	font-size: 13px;
+}
+form label.inline
+{
+	display: inline;
+}
+form input[type=text], form input[type=password]
+{
+	padding: 4px;
+	width: 482px;
+	border: 1px solid #dfdfdf;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	font-size: 18px;
 }
 footer
 {
@@ -116,23 +139,25 @@ footer a
 	<form action="" method="post">
 		<dl>
 			<dt>
-				<label for="uname" class="big">Username</label>
+				<label for="uname">Username</label>
 			</dt>
 			<dd>
-				<input type="text" id="uname" name="uname" class="big" tabindex="1" />
+				<input type="text" id="uname" name="uname" tabindex="1" />
 			</dd>
 		</dl>
-		<dl class="form big">
+		<dl>
 			<dt>
-				<label for="pwd" class="big">Password</label>
+				<label for="pwd">Password</label>
 			</dt>
 			<dd>
-				<input type="password" id="pwd" name="pwd" class="big" tabindex="2" />
+				<input type="password" id="pwd" name="pwd" tabindex="2" />
 			</dd>
 		</dl>
 		
-		<input type="submit" name="submit" value="Login" />
-		<input type="checkbox" name="remember" id="remember" /> <label class="subtitle" for="remember">Remember me</label>
+		<input type="submit" name="submit" value="Login" tabindex="4" />
+		
+		<input type="checkbox" name="remember" id="remember" tabindex="3" />
+		<label class="inline" for="remember">Remember me</label>
 	</form>
 	
 	<footer>
