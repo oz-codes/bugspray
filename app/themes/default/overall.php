@@ -41,7 +41,7 @@
 					if (!$item['hide'])
 					echo '
 					<li id="menu_'.$item['id'].'"'.($item['selected']?' class="selected"':'').'>
-						<a href="'.(isset($item['url'])?$item['url']:'javascript:void(0)').'">'.(isset($item['url'])?'':'<s>').''.$item['name'].''.(isset($item['url'])?'':'</s>').'</a>
+						<a href="'.(isset($item['url'])?$item['url']:'#').'">'.(isset($item['url'])?'':'<s>').''.$item['name'].''.(isset($item['url'])?'':'</s>').'</a>
 					</li>';
 				}
 				?>

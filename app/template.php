@@ -47,8 +47,8 @@ class MTTemplate
 		$this->location = $location;
 		
 		// Default stuff to output to the header
-		$this->title = 'bugspray';
-		$this->addCSS($this->location['styles'].'/screen.css');
+		$this->title = 'spray';
+		$this->addCSS($this->location['styles'] . '/screen.css');
 		
 		// Enqueue the bugspray JavaScript, which we always need
 		$this->script_enqueue('spray', 'js/bugspray.js', array('jquery'));
@@ -112,7 +112,7 @@ class MTTemplate
 	public function setTitle($title)
 	{
 		global $sitename;
-		$this->title = $title . ' | ' . $this->sitename;
+		$this->title = $title . ' &laquo; ' . $this->sitename;
 	}
 	
 	public function setType($type)
@@ -246,7 +246,7 @@ class MTTemplate
 		return "\n" . str_replace(array("\n","\r","\r\n","\t"), '', $debugout) . "\n";
 	}
 	
-	private function build()
+	private function build_page()
 	{
 		global $debug, $client;
 		
@@ -280,7 +280,7 @@ class MTTemplate
 		$this->content = ob_get_clean();
 		
 		// Build the page
-		echo $this->build();
+		echo $this->build_page();
 	}
 }
 
