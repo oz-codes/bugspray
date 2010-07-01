@@ -24,9 +24,9 @@
 // define the locations of everything
 $theme = $config['theme'];
 $location = array(
-	'theme'  => "thm/$theme",
-	'images' => "thm/$theme/img",
-	'styles' => "thm/$theme/css"
+	'theme'  => "themes/$theme",
+	'images' => "themes/$theme/img",
+	'styles' => "themes/$theme/css"
 );
 
 // set up everything
@@ -187,7 +187,7 @@ class MTTemplate
 		$location = $this->location;
 		if (!file_exists($this->location['theme'].'/'.$page))
 		{
-			include('thm/default/'.$page);
+			include('themes/default/'.$page);
 		}
 		else
 		{
