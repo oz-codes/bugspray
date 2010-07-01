@@ -591,9 +591,9 @@ function parsebbcode($string)
 		'<small>Quote:</small><blockquote>\\1</blockquote>'
 	);
 
-	$ret = preg_replace($original,$replaces,$string);
+	$ret = preg_replace($original, $replaces, $string);
 	
-	$ret = str_replace(array('&#91;','&#93;'),array('[',']'),$ret);
+	$ret = str_replace(array('&#91;', '&#93;'), array('[', ']'), $ret);
 	
 	return $ret;
 }
@@ -602,7 +602,7 @@ function is_email($string)
 {
 	// http://stackoverflow.com/questions/1374881
 	// yeah, sure, could be using a rfc parser, but is it TRULY necessary? for now, probably not.
-	return preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", $string);
+	return preg_match('/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i', $string);
 }
 
 function output_errors($arr)
