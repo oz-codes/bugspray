@@ -125,11 +125,6 @@ class MTTemplate
 		$this->stylesheets[] = $path;
 	}
 	
-	public function addJS($path)
-	{
-		$this->javascripts[] = $path;
-	}
-	
 	public function addBodyPre($content)
 	{
 		$this->bodypre .= $content;
