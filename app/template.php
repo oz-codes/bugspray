@@ -31,7 +31,7 @@ $location = array(
 
 // set up everything
 $page = new MTTemplate();
-register_shutdown_function(array($page,'outputAll'));
+register_shutdown_function(array($page, 'finish'));
 
 class MTTemplate
 {
@@ -184,17 +184,17 @@ class MTTemplate
 	
 	public function include_template($page, $variables=array())
 	{
-		global $debug_log, $client, $users;
+		global $client, $users;
 		
-		extract($variables,EXTR_SKIP);
+		extract($variables, EXTR_SKIP);
 		$location = $this->location;
-		if (!file_exists($this->location['theme'].'/'.$page))
+		if (!file_exists($this->location['theme'] . '/' . $page))
 		{
-			include('themes/default/'.$page);
+			include('themes/default/' . $page);
 		}
 		else
 		{
-			include($this->location['theme'].'/'.$page);
+			include($this->location['theme'] . '/' . $page);
 		}
 		echo "\n";
 	}
@@ -254,41 +254,33 @@ class MTTemplate
 		return "\n" . str_replace(array("\n","\r","\r\n","\t"), '', $debugout) . "\n";
 	}
 	
-	private function build_page()
+	public function finish()
 	{
 		global $debug, $client;
+		
+		// Stop capturing all that lovely content
+		$this->content = ob_get_clean();
 		
 		// Don't want the overall stuff? All coo' :D
 		if ($this->disabled)
 		{
-			return $this->content;
+			echo $this->content;
+			return true;
 		}
-		// Well, we actually do then!
-		else
-		{
-			// Alright, the overall stuff can handle the content
-			ob_start();
-			$location = $this->location;
-			include($this->location['theme'] . '/overall.php');
-			$content = ob_get_clean();
-			
-			// To ensure nothing at all is run (at least, most stuff) after debug info, we stick it at the end :O
-			if ($debug)
-			{
-				$content = str_replace('</body>', $this->build_debug() . '</body>', $content);
-			}
-			
-			return $content;
-		}
-	}
-	
-	public function outputAll()
-	{
-		// Stop capturing all that lovely content
-		$this->content = ob_get_clean();
 		
-		// Build the page
-		echo $this->build_page();
+		// Alright, the overall stuff can handle the content
+		ob_start();
+		$this->include_template('overall.php');
+		$out = ob_get_clean();
+		
+		// To ensure nothing at all is run (at least, most stuff) after debug info, we stick it at the end :O
+		if ($debug)
+		{
+			$out = str_replace('</body>', $this->build_debug() . '</body>', $out);
+		}
+		
+		echo $out;
+		return true;
 	}
 }
 
