@@ -27,7 +27,7 @@ $page->setTitle('Tickets');
 
 $tickets = ticket_list($_GET['status'], 'desc', true);
 
-$page->setPage(
+$page->include_template(
 	'tickets.php',
 	array(
 		'tickets' => $tickets

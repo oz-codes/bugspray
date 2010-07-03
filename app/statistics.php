@@ -52,7 +52,7 @@ foreach ($projects as $project)
 	$i+=1;
 }
 
-$page->setPage(
+$page->include_template(
 	'statistics.php',
 	array(
 		'projects' => $projects

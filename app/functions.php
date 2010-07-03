@@ -376,9 +376,9 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 		)
 	);
 
-	// And we're off! even though this is called "setPage" it's just an include, probably should change that [TODO]
+	// And we're off!
 	ob_start();
-	$page->setPage(
+	$page->include_template(
 		'ticket_list.php',
 		array(
 			'type' => $type,

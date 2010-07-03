@@ -34,7 +34,7 @@ if (isset($_GET['installerdone']) && is_dir('install'))
 
 // Get the tickets and show them!
 $tickets = ticket_list($_GET['status'], 'desc', true);
-$page->setPage(
+$page->include_template(
 	'tickets.php',
 	array(
 		'tickets' => $tickets

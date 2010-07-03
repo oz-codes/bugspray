@@ -182,7 +182,7 @@ class MTTemplate
 		echo $this->content;
 	}
 	
-	public function setPage($page,$variables=array())
+	public function include_template($page, $variables=array())
 	{
 		global $debug_log, $client, $users;
 		

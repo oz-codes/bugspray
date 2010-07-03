@@ -157,7 +157,7 @@ else
 		$result_comments = db_query_toarray("SELECT * FROM comments WHERE issue = $id ORDER BY when_posted ASC", "Retrieving comments for issue $id from database");
 		
 		// output the page
-		$page->setPage(
+		$page->include_template(
 			'ticket.php',
 			array(
 				'issue' => $issue,
