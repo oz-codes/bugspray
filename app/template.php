@@ -36,7 +36,7 @@ register_shutdown_function(array($page, 'finish'));
 class MTTemplate
 {
 	public $sitename;
-	private $title, $content, $stylesheets=array(), $javascripts=array(), $bodypre, $disabled=false, $location;
+	private $title, $content, $stylesheets=array(), $javascripts=array(), $disabled=false, $location;
 	
 	function __construct()
 	{
@@ -123,16 +123,6 @@ class MTTemplate
 	public function addCSS($path)
 	{
 		$this->stylesheets[] = $path;
-	}
-	
-	public function addBodyPre($content)
-	{
-		$this->bodypre .= $content;
-	}
-	
-	public function outputBodyPre()
-	{
-		echo $this->bodypre;
 	}
 	
 	public function get_menu()

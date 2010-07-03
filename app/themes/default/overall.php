@@ -9,9 +9,7 @@
 	?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->location['styles'] ?>/jquery.ui.css" />
 </head>
-<body>
-	<?php $this->outputBodyPre(); ?>
-	
+<body>	
 	<div id="wrap">
 		<header id="header">
 			<h1><a href="index.php"><?php echo $this->sitename ?></a></h1>
