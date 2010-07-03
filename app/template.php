@@ -24,9 +24,13 @@
 // define the locations of everything
 $theme = $config['theme'];
 $location = array(
-	'theme'  => "themes/$theme",
-	'images' => "themes/$theme/img",
-	'styles' => "themes/$theme/css"
+	'includes'    => "sp-includes",
+	'javascripts' => "sp-includes/js",
+	'content'     => "sp-content",
+	'themes'      => "sp-content/themes",
+	'theme'       => "sp-content/themes/$theme",
+	'images'      => "sp-content/themes/$theme/img",
+	'styles'      => "sp-content/themes/$theme/css"
 );
 
 // set up everything
@@ -51,7 +55,7 @@ class MTTemplate
 		$this->addCSS($this->location['styles'] . '/screen.css');
 		
 		// Enqueue the bugspray JavaScript, which we always need
-		$this->script_enqueue('spray', 'js/bugspray.js', array('jquery'));
+		$this->script_enqueue('spray', $this->location['javascripts'] . '/bugspray.js', array('jquery'));
 		
 		// Alrighty, let's start capturing content!
 		ob_start();
@@ -72,12 +76,12 @@ class MTTemplate
 			{
 				// jQuery, of course
 				case 'jquery':
-					$this->javascripts['jquery'] = 'js/jquery-1.4.2.min.js';
+					$this->javascripts['jquery'] = $this->location['javascripts'] . '/jquery-1.4.2.min.js';
 					break;
 				
 				// Allow for HTML5 support in Internet Explorer
 				case 'html5ie':
-					$this->javascripts['html5'] = 'js/html5.js';
+					$this->javascripts['html5'] = $this->location['javascripts'] . '/html5.js';
 					break;
 				
 				// Something we don't know about?
@@ -180,7 +184,7 @@ class MTTemplate
 		$location = $this->location;
 		if (!file_exists($this->location['theme'] . '/' . $page))
 		{
-			include('themes/default/' . $page);
+			include($this->location['themes'] . '/default/' . $page);
 		}
 		else
 		{
