@@ -112,7 +112,7 @@ class MTTemplate
 	public function setTitle($title)
 	{
 		global $sitename;
-		$this->title = $title . ' &laquo; ' . $this->sitename;
+		$this->title = $title;
 	}
 	
 	public function setType($type)
@@ -153,20 +153,27 @@ class MTTemplate
 		return $menu;
 	}
 	
-	public function outputHead()
-	{
-		echo '<title>'.$this->title.'</title>'."\n";
+	public function get_head()
+	{		
+		$string = '<title>' . $this->title . ' &laquo; ' . $this->sitename . '</title>'."\n";
 		
-		echo "\t".'<meta charset="UTF-8">'."\n";
+		$string .=  "\t".'<meta charset="UTF-8">'."\n";
 		
 		foreach ($this->stylesheets as $stylesheet)
 		{
-			echo "\t".'<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />'."\n";
+			$string .=  "\t".'<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />'."\n";
 		}
 		foreach ($this->javascripts as $javascript)
 		{
-			echo "\t".'<script type="text/javascript" src="'.$javascript.'"></script>'."\n";
+			$string .=  "\t".'<script type="text/javascript" src="'.$javascript.'"></script>'."\n";
 		}
+		
+		return $string;
+	}
+	
+	public function output_head()
+	{
+		echo $this->get_head();
 	}
 	
 	public function outputContent()
