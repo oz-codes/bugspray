@@ -36,7 +36,7 @@
 			<nav>
 				<ul>
 				<?php
-				foreach ($this->getMenu() as $item)
+				foreach ($this->get_menu() as $item)
 				{
 					if (!$item['hide'])
 					echo '

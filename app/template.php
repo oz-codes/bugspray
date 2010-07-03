@@ -135,11 +135,12 @@ class MTTemplate
 		echo $this->bodypre;
 	}
 	
-	public function getMenu()
+	public function get_menu()
 	{
 		include("menu.php");
 		
-		for ($i=0;$i<sizeof($menu);$i++)
+		$c = count($menu);
+		for ($i=0; $i<$c; $i++)
 		{
 			if ($menu[$i]['id'] == $this->type)
 			{
