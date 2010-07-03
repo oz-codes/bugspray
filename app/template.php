@@ -158,7 +158,7 @@ class MTTemplate
 	{		
 		$string = '<title>' . $this->title . ' &laquo; ' . $this->sitename . '</title>'."\n";
 		
-		$string .=  "\t".'<meta charset="UTF-8">'."\n";
+		$string .=  "\t".'<meta charset="UTF-8" />'."\n";
 		
 		foreach ($this->stylesheets as $stylesheet)
 		{
