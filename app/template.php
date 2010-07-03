@@ -66,7 +66,7 @@ class MTTemplate
 	{
 		// Don't reinclude things, of course
 		if (!$this->javascripts[$id])
-		{			
+		{
 			// Predetermined stuff and... stuff
 			switch ($id)
 			{
