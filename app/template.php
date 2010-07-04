@@ -34,10 +34,10 @@ $location = array(
 );
 
 // set up everything
-$page = new MTTemplate();
+$page = new SPTemplate();
 register_shutdown_function(array($page, 'finish'));
 
-class MTTemplate
+class SPTemplate
 {
 	public $sitename;
 	private $title, $content, $stylesheets=array(), $javascripts=array(), $disabled=false, $location;
