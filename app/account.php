@@ -69,7 +69,7 @@ $subpage = $_GET['p'];
 	<a href="account.php?p=pms"<?php echo $subpage == 'pms' ? ' class="sel"' : '' ?>><s>Private Messages</s></a>
 	<a href="account.php?p=avatar"<?php echo $subpage == 'avatar' ? ' class="sel"' : '' ?>>Avatar</a>
 	<a href="account.php?p=login"<?php echo $subpage == 'login' ? ' class="sel"' : '' ?>>Email & Password</a>
-	<div class="fc"></div>
+	<div class="clear"></div>
 </div>
 
 <?php

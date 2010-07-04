@@ -110,10 +110,10 @@ $page->setTitle($profile['username'].'\'s Profile');
 		while ($issue_profile = mysql_fetch_array($result_issues_profile))
 		{
 			echo '
-			<div class="fl fc" style="background:#ddd;font-weight:bold;padding:4px 6px;width:16px;text-align:center;margin-right:8px;">'.$issue_profile['num_comments'].'</div>
-			<div class="fl" style="margin-top:4px;"><a href="view_issue.php?id='.$issue_profile['id'].'">'.$issue_profile['name'].'</a></div>';
+			<div class="left clear" style="background:#ddd;font-weight:bold;padding:4px 6px;width:16px;text-align:center;margin-right:8px;">'.$issue_profile['num_comments'].'</div>
+			<div class="left" style="margin-top:4px;"><a href="view_issue.php?id='.$issue_profile['id'].'">'.$issue_profile['name'].'</a></div>';
 		}
-		echo '<div class="fc"></div>
+		echo '<div class="clear"></div>
 		</div>';
 	}
 	else

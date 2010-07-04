@@ -49,7 +49,7 @@ if ($client['is_admin'])
 		<a href="#" class="notyet">Bans</a>
 		<a href="#" class="notyet">Pages</a>
 		<a href="#" class="notyet">Appearance</a>
-		<div class="fc"></div>
+		<div class="clear"></div>
 	</div>';
 	
 	$uri = $_SERVER['REQUEST_URI'];

@@ -218,9 +218,9 @@ class MTUser extends MTUsers
 	function get_info($clear=true) //need a better name for this
 	{		
 		$string = '
-		<div class="avatar fl" style="margin-right:4px;"><img src="' . $this->info['avatar_location'] . '" alt="" /></div>
+		<div class="avatar left" style="margin-right:4px;"><img src="' . $this->info['avatar_location'] . '" alt="" /></div>
 		<a href="profile.php?id=' . $this->info['id'] . '" class="username' . ($this->info['banned'] ? ' banned' : '') . '">' . $this->info['name'] . '</a>
-		' . ($clear ? '<div class="fc"></div>' : '');
+		' . ($clear ? '<div class="clear"></div>' : '');
 		
 		return str_replace(array("\n", "\r", "\r\n", "\t"), '', $string);
 	}

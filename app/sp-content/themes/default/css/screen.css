@@ -87,15 +87,15 @@ tr td:last-child
 
 /* floating */
 
-.left, .fl /* compatibility */
+.left
 {
 	float: left;
 }
-.right, .fr /* compatibility */
+.right
 {
 	float: right;
 }
-.clear, .fc /* compatibility */
+.clear
 {
 	clear: both;
 }
