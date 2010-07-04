@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,27 +21,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// generation time tracking
+// Generation time tracking
 $starttime = explode(' ', microtime());
 $starttime = $starttime[1] + $starttime[0];
 
-// some variable(s) to use
+// Some variable(s) to use
 $datetimenull = '0000-00-00 00:00:00';
 
-// users!
+// User stuff!
 session_start();
 
-// debugging
+// Debugging
 $debug_log = array();
 
-// grab the settings
-include("settings.php");
+// Grab the settings
+include('settings.php');
 
-// connect up to the db
+// Connect up to the database
 $con = mysql_connect($mysql_server, $mysql_username, $mysql_password) or die(mysql_error());
 mysql_select_db($mysql_database, $con);
 
-// grab config from the db
+// Grab the config from the database
 $config = array();
 $configquery = mysql_query("SELECT * FROM config");
 while($row = mysql_fetch_array($configquery))
@@ -60,12 +60,14 @@ while($row = mysql_fetch_array($configquery))
 	}
 }
 
-// include the other important files
-include("template.php");
-include("users.php");
+// Include the other important files
+include('template.php');
+include('users.php');
 
 
-// functions begin here
+
+
+// Functions begin here
 function db_query($query, $purpose='<i>No purpose given</i>')
 {	
 	global $debug, $debug_log, $db_queries;
