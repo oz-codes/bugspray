@@ -1,7 +1,7 @@
 <?php
-/*
- * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+/**
+ * spray issue tracking software
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 // any function from functions.php would do
@@ -54,9 +53,9 @@ ob_start('install_callback');
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>bugspray installer</title>
-		<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-		<script type="text/javascript" src="../js/html5.js"></script>
+		<title>spray installer</title>
+		<script type="text/javascript" src="../sp-includes/js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="../sp-includes/js/html5.js"></script>
 		<link rel="stylesheet" type="text/css" href="installer.css" />
 		<style type="text/css">
 			header,section,footer,aside,nav,article,figure
@@ -95,8 +94,8 @@ ob_start('install_callback');
 						<section id="installer_content">
 							<?php if (!$done): ?>
 							<div id="installer_content_1" class="installer_content_slide">
-								<h2>Welcome to the bugspray installer</h2>
-								<p>Hello and thank you for choosing to install bugspray!</p>
+								<h2>Welcome to the spray installer</h2>
+								<p>Hello and thank you for choosing to install spray!</p>
 								<?php
 									$prqmsg = '';
 									if (!function_exists('json_encode'))
@@ -104,10 +103,10 @@ ob_start('install_callback');
 										$prqerr = true;
 										$prqmsg .= 'Your PHP version needs to be at least 5.2.0 to run bugspray.<br />';
 									}
-									if (!is_writable('../settings.php'))
+									if (!is_writable('../'))
 									{
 										$prqerr = true;
-										$prqmsg .= 'The <code>settings.php</code> file does not exist or is not writable (CHMOD 777 on UNIX systems).<br />';
+										$prqmsg .= 'The spray folder does not seem to be writable! (CHMOD 777 on UNIX systems).<br />';
 									}
 									
 									if ($prqerr)
@@ -124,7 +123,7 @@ ob_start('install_callback');
 							<div id="installer_content_2" class="installer_content_slide">
 								<h2>Install configuration</h2>
 								<p>Just fill out the form to get started. You can change more stuff after you install<br />
-								bugspray. Make sure the details are correct, as the next step will install bugspray!</p>
+								spray. Make sure the details are correct, as the next step will install spray!</p>
 								<form id="installer_form">
 									<table id="installer_tableform">
 										<tr>
@@ -147,22 +146,22 @@ ob_start('install_callback');
 											<td colspan="2"><hr /></td>
 										</tr>
 										<tr>
-											<td>Bugspray username</td>
+											<td>Your username</td>
 											<td><input type="text" name="bugspray_username" /></td>
 										</tr>
 										<tr>
-											<td>Bugspray e-mail</td>
+											<td>Your e-mail</td>
 											<td><input type="text" name="bugspray_email" /></td>
 										</tr>
 										<tr>
-											<td>Bugspray password</td>
+											<td>Your password</td>
 											<td><input type="password" name="bugspray_password" /></td>
 										</tr>
 									</table>
 								</form>
 							</div>
 							<div id="installer_content_3" class="installer_content_slide">
-								<h2>Installing bugspray...</h2>
+								<h2>Installing spray...</h2>
 								<p>This won't take long, sit tight...</p>
 								<p id="installer_steps">
 									<div id="mysqltest">MySQL connection test... <img src="loading.gif" alt="" /></div>
@@ -177,7 +176,7 @@ ob_start('install_callback');
 							</div>
 							<?php else: ?>
 							<div id="installer_content_1" class="installer_content_slide">
-								<h2>Installing bugspray...</h2>
+								<h2>Installing spray...</h2>
 								<p>This won't take long, sit tight...</p>
 								<p>
 									MySQL connection test... <img src="install/tick.png" alt="" /><br />
@@ -260,13 +259,13 @@ ob_start('install_callback');
 								{
 									$("#installer_nav .left").addClass('disabled');
 									$("#installer_nav .right").addClass('disabled');
-									setTimeout(installrun,$.fx.speeds._default);
+									setTimeout(installrun, 1000);
 								}
 								<?php endif; ?>
 								
 								$(".installer_content_slide").each(function(){
 									i = $(this).attr('id').replace('installer_content','');
-									$(this).animate({'left':offsets[i]-(page-1)*slidewidth+8},$.fx.speeds._default);
+									$(this).animate({'left':offsets[i]-(page-1)*slidewidth+8}, 1000);
 								});
 							}
 							
@@ -331,20 +330,37 @@ elseif ($_POST['act'] == 'mysqltest')
 {
 	$arr = array();
 	
-	$con = mysql_connect($_POST['mysql_server'],$_POST['mysql_username'],$_POST['mysql_password']);
+	// Turn off all error reporting
+	error_reporting(0);
+	
+	// A try block is needed as PHP may throw errors itself
+	try
+	{
+		$con = mysql_connect($_POST['mysql_server'], $_POST['mysql_username'], $_POST['mysql_password']);
+	}
+	catch (Exception $e)
+	{
+		$arr['success'] = false;
+		$arr['message'] = 'Could not connect to the MySQL server with provided details, reason: ' . $e;
+	}
+	
+	// Alright, MySQL connection error
 	if (!$con)
 	{
 		$arr['success'] = false;
 		$arr['message'] = 'Could not connect to the MySQL server with provided details, reason: ' . mysql_error();
 	}
+	// ... or not?
 	else
 	{
+		// Okay then, try and see if we can get to the database?
 		$dbcon = mysql_select_db($_POST['mysql_database']);
 		if (!$dbcon)
 		{
 			$arr['success'] = false;
 			$arr['message'] = 'Could not select provided database name in MySQL, reason: ' . mysql_error();
 		}
+		// Oh, we can!
 		else
 		{
 			$arr['success'] = true;
@@ -369,12 +385,14 @@ elseif ($_POST['act'] == 'settings')
 \$mysql_username = '$mysql_username';
 \$mysql_password = '$mysql_password';
 \$mysql_database = '$mysql_database';
-\$mysql_prefix   = '$mysql_prefix'; // not implemented
+\$mysql_prefix   = '$mysql_prefix'; // not implemented".'
 
-\$recaptcha_use = false; // this will probably be moved to the database
-\$recaptcha_key_public = '';
-\$recaptcha_key_private = '';
-?>";
+$debug = false;
+
+$recaptcha_use = false; // this will probably be moved to the database
+$recaptcha_key_public = \'\';
+$recaptcha_key_private = \'\';
+?>';
 	
 	$sffile = fopen('../settings.php','w');
 	if ($sffile)
