@@ -2,5 +2,5 @@ site
 app/_temp.php
 app/settings.php
 app/sp-content/themes/default/img/dev
-app/install/dev
+app/sp-includes/install/dev
 imgold

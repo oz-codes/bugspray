@@ -54,8 +54,8 @@ ob_start('install_callback');
 	<head>
 		<meta charset="UTF-8">
 		<title>spray installer</title>
-		<script type="text/javascript" src="../sp-includes/js/jquery-1.4.2.min.js"></script>
-		<script type="text/javascript" src="../sp-includes/js/html5.js"></script>
+		<script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="../js/html5.js"></script>
 		<link rel="stylesheet" type="text/css" href="installer.css" />
 		<style type="text/css">
 			header,section,footer,aside,nav,article,figure
@@ -103,7 +103,7 @@ ob_start('install_callback');
 										$prqerr = true;
 										$prqmsg .= 'Your PHP version needs to be at least 5.2.0 to run bugspray.<br />';
 									}
-									if (!is_writable('../'))
+									if (!is_writable('../../'))
 									{
 										$prqerr = true;
 										$prqmsg .= 'The spray folder does not seem to be writable! (CHMOD 777 on UNIX systems).<br />';
@@ -394,7 +394,7 @@ $recaptcha_key_public = \'\';
 $recaptcha_key_private = \'\';
 ?>';
 	
-	$sffile = fopen('../settings.php','w');
+	$sffile = fopen('../../settings.php','w');
 	if ($sffile)
 	{
 		if (fwrite($sffile,$sfstr))

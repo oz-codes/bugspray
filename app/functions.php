@@ -35,7 +35,30 @@ session_start();
 $debug_log = array();
 
 // Grab the settings
-include('settings.php');
+if (file_exists('settings.php'))
+{
+	include('settings.php');
+}
+// But wait, we can't!
+else
+{
+	exit('
+	<link rel="stylesheet" type="text/css" href="sp-includes/_spray.css" />
+	<div id="container">
+	<h1 id="heading">Surprisingly fatal error, old bean!</h1>
+	<div id="main">
+		<img class="primary left" src="sp-includes/gentlemanne.jpg" alt="" style="width: 96px;" />
+		<p>Well, from the looks of it, spray couldn\'t find a <code>settings.php</code> file to use!</p>
+		<p>That probably means it\'s not installed. Hop over to the <a href="sp-includes/install">installer</a> if that\'s the case!</p>
+		<p class="small">image by <a href="http://www.flickr.com/photos/stevendepolo/4002542760/">stevendepolo</a> (cc-by 2.0)</p>
+		<div class="clear"></div>
+	</div>
+	<footer>
+		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> 0.3-dev</div>
+		<div id="by">a project by <a href="http://a2h.uni.cc/">a2h</a></div>
+	</footer>
+	</div>');
+}
 
 // Connect up to the database
 $con = mysql_connect($mysql_server, $mysql_username, $mysql_password) or die(mysql_error());
