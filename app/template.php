@@ -135,17 +135,9 @@ class SPTemplate
 		include("menu.php");
 		
 		// Cycle through the menu to see if we have an item matching our current page type
-		$c = count($menu);
-		for ($i=0; $i<$c; $i++)
+		foreach ($menu as &$menuitem)
 		{
-			if ($menu[$i]['id'] == $this->type)
-			{
-				$menu[$i]['selected'] = true;
-			}
-			else
-			{
-				$menu[$i]['selected'] = false;
-			}
+			$menuitem['selected'] = $menuitem['id'] == $this->type ? true : false;
 		}
 		
 		// And we're done with this!
