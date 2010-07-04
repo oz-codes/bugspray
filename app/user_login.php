@@ -53,67 +53,14 @@ $page->theme_disable(true);
 <html>
 <head>
 <title>Login to <?php echo $page->sitename ?></title>
-<style type="text/css">
-/* override the default margins */
-html, body { margin: 0; padding: 0; }
-
-/* colours and fonts */
-body { background: #eaeeee; color: #000; font-size: 13px; }
-* { font-family: 'helvetica neue', helvetica, arial, sans-serif; }
-a { color: #4183c4; text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-/* text shadow */
-body { text-shadow: 0 1px 0 #fff; }
-form { text-shadow: none; }
-
-/* the header */
-#container { margin: 48px auto; width: 540px; }
-#heading { float: left; font-size: 20px; }
-#back { float: left; margin: 22px 0 0 8px; font-size: 12px; }
-
-/* the form */
-form
-{
-	clear: both; padding: 24px; background: #fff; border: 1px solid #d5d5d5;
-	border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px;
-	box-shadow: 0 0 8px rgba(0,0,0,0.05); -moz-box-shadow: 0 0 8px rgba(0,0,0,0.05); -webkit-box-shadow: 0 0 8px rgba(0,0,0,0.05);
-}
-
-.error { margin: 0 0 12px; padding: 4px 6px; background: #fdd; border: 1px solid #b99; }
-form dl, form dt { margin: 0; }
-form dd { margin: 4px 0 16px; }
-form dl label { display: block; }
-#remember-wrap { float: left; }
-#submit { float: right; }
-form input[type=text], form input[type=password]
-{
-	padding: 4px;
-	width: 482px;
-	box-shadow: inset 1px 1px 3px rgba(0,0,0,0.07);
-	-moz-box-shadow: inset 1px 1px 3px rgba(0,0,0,0.07);
-	-webkit-box-shadow: inset 1px 1px 3px rgba(0,0,0,0.07);
-	border: 1px solid #e0e0e0;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	color: #222;
-	font-size: 18px;
-}
-
-/* the footer */
-footer { display: block; margin-top: 12px; color: #aaa; font-size: 10px; }
-footer a { color: #888; }
-#powered { float: left; }
-#by { float: right; }
-</style>
+<link rel="stylesheet" type="text/css" href="sp-includes/_spray.css" />
 </head>
 <body>
 <div id="container">
 	<h1 id="heading">Login to <?php echo $page->sitename ?></h1>
 	<div id="back"><a href="index.php">&laquo; back</a></div>
 	
-	<form action="" method="post">
+	<form id="main" action="" method="post">
 		
 		<?php echo output_errors($errors) ?>
 		
