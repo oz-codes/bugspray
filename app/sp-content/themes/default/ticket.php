@@ -98,7 +98,7 @@
 	
 	<section>
 		<h3>Update this ticket</h3>
-		<?php if ($client['is_logged']): ?>
+		<?php if ($users->client->is_logged): ?>
 		<form id="comment_form" class="config" method="post">			
 			<p class="form">
 				<textarea name="comment" id="comment_form" class="unsel" rows="5" style="width:600px;">Enter a comment...</textarea>

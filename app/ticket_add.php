@@ -28,7 +28,7 @@ $page->setType('tickets');
 $page->setTitle('Add a ticket');
 
 // We need to be logged in for this, of course
-if (!$client['is_logged'])
+if (!$users->client->is_logged)
 {
 	echo 'You are not logged in.';
 }
