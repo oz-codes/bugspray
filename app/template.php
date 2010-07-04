@@ -131,8 +131,10 @@ class SPTemplate
 	
 	public function get_menu()
 	{
+		// Grab the menu
 		include("menu.php");
 		
+		// Cycle through the menu to see if we have an item matching our current page type
 		$c = count($menu);
 		for ($i=0; $i<$c; $i++)
 		{
@@ -145,19 +147,26 @@ class SPTemplate
 				$menu[$i]['selected'] = false;
 			}
 		}
+		
+		// And we're done with this!
 		return $menu;
 	}
 	
 	public function get_head()
-	{		
+	{
+		// Form the title
 		$string = '<title>' . $this->title . ' &laquo; ' . $this->sitename . '</title>'."\n";
 		
+		// We'll just have it UTF-8 at all times for now
 		$string .=  "\t".'<meta charset="UTF-8" />'."\n";
 		
+		// Output the inclusion of stylesheet files
 		foreach ($this->stylesheets as $stylesheet)
 		{
 			$string .=  "\t".'<link rel="stylesheet" type="text/css" href="'.$stylesheet.'" />'."\n";
 		}
+		
+		// Output the inclusion of JavaScript files
 		foreach ($this->javascripts as $javascript)
 		{
 			$string .=  "\t".'<script type="text/javascript" src="'.$javascript.'"></script>'."\n";
@@ -180,8 +189,13 @@ class SPTemplate
 	{
 		global $client, $users;
 		
+		// Grab the variables
 		extract($variables, EXTR_SKIP);
+		
+		// For convenience
 		$location = $this->location;
+		
+		// If the desired file doesn't exist, we include it from the default theme
 		if (!file_exists($this->location['theme'] . '/' . $page))
 		{
 			include($this->location['themes'] . '/default/' . $page);
@@ -190,6 +204,8 @@ class SPTemplate
 		{
 			include($this->location['theme'] . '/' . $page);
 		}
+		
+		// This is to allow for nice spacing
 		echo "\n";
 	}
 	
