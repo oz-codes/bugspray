@@ -33,7 +33,7 @@ echo '<div class="imgtitle imgtitle-32">
 	<div class="clear"></div>
 </div>';
 
-if ($client['is_admin'])
+if ($users->client->is_admin)
 {
 	if (file_exists("sp-includes/admin_{$_GET['p']}.php"))
 		$subpage = $_GET['p'];

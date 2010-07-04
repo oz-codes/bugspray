@@ -1,5 +1,5 @@
 <?php
-global $client;
+global $client, $users;
 
 $menu = array(
 	array(
@@ -15,7 +15,7 @@ $menu = array(
 	array(
 		'id' => 'admin',
 		'name' => 'Admin',
-		'hide' => !$client['is_admin'],
+		'hide' => !$users->client->is_admin,
 		'url' => 'admin.php'
 	),
 );
