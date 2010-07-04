@@ -65,10 +65,6 @@ include("template.php");
 include("users.php");
 
 
-// temp
-$client = array('is_logged' => $users->client->is_logged, 'is_admin' => $users->client->is_admin);
-
-
 // functions begin here
 function db_query($query, $purpose='<i>No purpose given</i>')
 {	

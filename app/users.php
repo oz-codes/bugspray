@@ -21,21 +21,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$users = new MTUsers();
+$users = new SPUsers();
 
-class MTUsers
+class SPUsers
 {
 	public $client;
 	
 	function __construct()
 	{
-		// TEMPORARY: KILL BUGSPRAY COOKIES
-		setcookie("bs_username", "", time()-60*60*24*100, "/");
-		setcookie("bs_password", "", time()-60*60*24*100, "/");
-		setcookie("bs_uid", "", time()-60*60*24*100, "/");
-		
-		// the client
-		$this->client = new MTClient();
+		// Create the client stuff
+		$this->client = new SPClient();
 	}
 	
 	public function login($username, $password)
@@ -44,18 +39,21 @@ class MTUsers
 		
 		if ($isuser)
 		{			
-			// set the session
+			// Set the session stuff
 			$_SESSION['username'] = stripslashes($username);
 			$_SESSION['password'] = $this->generate_password($isuser['salt'], $password);
 			$_SESSION['uid'] = $isuser['uid'];
 		
-			// does the user want to be remembered?
+			// Does the user want to be remembered?
 			if (isset($_POST['remember']))
 			{
 				setcookie("mt_username", $_SESSION['username'], time()+60*60*24*100, "/");
 				setcookie("mt_password", $_SESSION['password'], time()+60*60*24*100, "/");
 				setcookie("mt_uid", $_SESSION['uid'], time()+60*60*24*100, "/");
 			}
+			
+			// Refresh the client info so that user info is grabbed correctly
+			$this->client = new SPClient();
 			
 			return true;
 		}
@@ -69,7 +67,7 @@ class MTUsers
 	{
 		if ($this->client->is_logged)
 		{
-			// kill ze cookies
+			// Kill ze cookies
 			if (isset($_COOKIE['mt_username']) && isset($_COOKIE['mt_password']))
 			{
 				setcookie("mt_username", "", time()-60*60*24*100, "/");
@@ -77,14 +75,17 @@ class MTUsers
 				setcookie("mt_uid", "", time()-60*60*24*100, "/");
 			}
 			
-			// kill ze session variables
+			// We also kill ze session variables
 			unset($_SESSION['username']);
 			unset($_SESSION['password']);
 			unset($_SESSION['uid']);
 			
-			// kill ze session
+			// And then ze session
 			$_SESSION = array();
 			session_destroy();
+			
+			// And zen ve refresh ze client class, so zat ze user information zis displayed correctly!
+			$this->client = new SPClient();
 			
 			return true;
 		}
@@ -95,15 +96,17 @@ class MTUsers
 	}
 	
 	public function is_user($username, $password, $passwordishash=false)
-	{		
+	{
+		// Sanity
 		$username2 = escape_smart($username);
 		
+		// It am be query time??
 		$result = db_query("SELECT * FROM users WHERE username = '$username2'", 'Checking whether a given username/password matches a user') or die(mysql_error());
 		
+		// Variables for the checking
 		$hit = 0;
 		$gotone = false;
 		$salt = '';
-		
 		$isuser = false;
 		
 		while ($row = mysql_fetch_array($result))
@@ -115,13 +118,13 @@ class MTUsers
 			{
 				$gotone = true;
 				
-				// we got a match for the username
+				// We got a match for the username
 				if ($username == $row['username'])
 				{
 					$hit = 2;
 				}
 				
-				// the password to check against needs to be generated
+				// The password we need to check against needs to be generated
 				if (!$passwordishash)
 				{
 					$supposedpass = $this->generate_password($salt, $password);
@@ -135,23 +138,23 @@ class MTUsers
 				{
 					if ($hit == 2)
 					{
-						$hit = 1; // we got a match for everything!
+						$hit = 1; // We got a match for everything!
 					}
 					else
 					{
-						$hit = 3; // we only got a match for the password...
+						$hit = 3; // We only got a match for the password...
 					}
 				}
 			}
 			else
 			{
-				$hit = -1; // for some reason more than one user has this username
+				$hit = -1; // For some reason more than one user has this username
 			}
 		}
 		
 		if ($hit === 1)
 		{
-			return array('salt' => $salt, 'uid' => $uid); // should always equate to true
+			return array('salt' => $salt, 'uid' => $uid); // This should *always* equate to true
 		}
 		else
 		{
@@ -172,7 +175,7 @@ class MTUsers
 			
 			if (!$mtusers[$id])
 			{
-				$mtusers[$id] = new MTUser($id);
+				$mtusers[$id] = new SPUser($id);
 			}
 			
 			return $mtusers[$id];
@@ -184,7 +187,7 @@ class MTUsers
 	}
 }
 
-class MTUser extends MTUsers
+class SPUser extends SPUsers
 {
 	public $info, $favorites;
 	
@@ -226,7 +229,7 @@ class MTUser extends MTUsers
 	}
 }
 
-class MTClient extends MTUser
+class SPClient extends SPUser
 {
 	public $is_logged, $is_admin;
 	
@@ -234,8 +237,8 @@ class MTClient extends MTUser
 	{		
 		// whether the client is logged in
 		$this->is_logged = false;
-		$sessionactive = isset($_SESSION['username']) && isset($_SESSION['password']) && isset($_SESSION['uid']);
-		if (isset($_COOKIE['mt_username']) && isset($_COOKIE['mt_password']))
+		$sessionactive = !empty($_SESSION['username']) && !empty($_SESSION['password']) && !empty($_SESSION['uid']);
+		if (!empty($_COOKIE['mt_username']) && !empty($_COOKIE['mt_password']))
 		{
 			if (!$sessionactive) // don't set the session repeatedly if it's already set
 			{

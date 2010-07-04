@@ -15,7 +15,7 @@
 			<h1><a href="index.php"><?php echo $this->sitename ?></a></h1>
 			
 			<div id="user_wrapper">
-				<?php if ($client['is_logged']): ?>
+				<?php if ($users->client->is_logged): ?>
 				<div id="user_left">
 					<div class="avatar">
 						<img src="<?php echo getav($_SESSION['uid']); ?>" alt="" />
