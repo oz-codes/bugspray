@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS `comments` (
 
 CREATE TABLE IF NOT EXISTS `config` (
   `name` varchar(16) NOT NULL,
-  `value` text
+  `value` text,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `config` (`name`, `value`) VALUES

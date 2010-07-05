@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,17 @@
  */
 
 if (isset($_POST['submit']))
-{
+{	
 	$error = false;
 	
 	$sitename = escape_smart($_POST['sitename']);
 	$theme = escape_smart($_POST['theme']);
 	
+	$gzip = $_POST['gzip'] == 'on' ? 1 : 0;
+	$stripwhitespace = $_POST['stripwhitespace'] == 'on' ? 1 : 0;
+	
 	// invalid theme?
-	if (!file_exists("thm/$theme"))
+	if (!file_exists("sp-content/themes/$theme"))
 	{
 		$error = true;
 		$errors_theme[] = 'The theme id you provided does not exist on your server.';
@@ -44,13 +47,24 @@ if (isset($_POST['submit']))
 		// a new site name!
 		if ($sitename != $config['sitename'])
 		{
-			db_query("UPDATE config SET `value` = '$sitename' WHERE `name` = 'sitename'", 'Updating the site name') or $success = false;
+			db_query("REPLACE INTO config(name, value) VALUES ('sitename', '$sitename')", 'Updating the site name') or $success = false;
 		}
 		
 		// a new theme!
 		if ($theme != $config['theme'])
 		{
-			db_query("UPDATE config SET `value` = '$theme' WHERE `name` = 'theme'", 'Updating the theme') or $success = false;
+			db_query("REPLACE INTO config(name, value) VALUES ('theme', '$theme')", 'Updating the theme') or $success = false;
+		}
+		
+		// gzip!
+		if ($gzip != $config['gzip'])
+		{
+			db_query("REPLACE INTO config(name, value) VALUES ('gzip', '$gzip')", 'Updating the gzip option') or $success = false;
+		}
+		// stripping whitespace!
+		if ($stripwhitespace != $config['stripwhitespace'])
+		{
+			db_query("REPLACE INTO config(name, value) VALUES ('stripwhitespace', '$stripwhitespace')", 'Updating the stripwhitespace option') or $success = false;
 		}
 		
 		// do we have success?
@@ -96,6 +110,22 @@ if (isset($_POST['submit']))
 		<dd>
 			<input class="unchanged" id="theme" name="theme" type="text" value="<?php echo $config['theme'] ?>" />
 			<span class="small">(no select box for now)</small>
+		</dd>
+	</dl>
+	
+	<dl class="form big">
+		<dt>
+			<label>Compression</label>
+		</dt>
+		<dd>
+			<div>
+				<input type="checkbox" id="gzip" name="gzip" <?php echo $config['gzip'] ? ' checked' : '' ?> />
+				<label for="gzip" class="inline">Gzip compression <b>(NOT WORKING)</b></label> <a target="_blank" href="http://code.google.com/speed/articles/gzip.html">(?)</a>
+			</div>
+			<div>
+				<input type="checkbox" id="stripwhitespace" name="stripwhitespace" <?php echo $config['stripwhitespace'] ? ' checked' : '' ?> />
+				<label for="stripwhitespace" class="inline">Strip readability whitespace from source</label>
+			</div>
 		</dd>
 	</dl>
 	

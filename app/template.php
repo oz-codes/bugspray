@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -253,12 +253,12 @@ class SPTemplate
 			</section>
 		';
 		
-		return "\n" . str_replace(array("\n","\r","\r\n","\t"), '', $debugout) . "\n";
+		return "\n" . $debugout . "\n";
 	}
 	
 	public function finish()
 	{
-		global $debug, $client;
+		global $config, $client, $debug;
 		
 		// Stop capturing all that lovely content
 		$this->content = ob_get_clean();
@@ -270,7 +270,7 @@ class SPTemplate
 			return true;
 		}
 		
-		// Alright, the overall stuff can handle the content
+		// Alright, the overall template can handle the content...
 		ob_start();
 		$this->include_template('overall.php');
 		$out = ob_get_clean();
@@ -281,8 +281,17 @@ class SPTemplate
 			$out = str_replace('</body>', $this->build_debug() . '</body>', $out);
 		}
 		
+		// Do we want to strip whitespace used for making the source readable?
+		if ($config['stripwhitespace'])
+		{
+			// Tabs are interpreted as spaces by browsers, so keep in mind usage of that
+			$out = str_replace("\n\t", "\n ", $out);
+			
+			// And now we get rid of the rest
+			$out = str_replace(array("\n","\r","\r\n","\t"), '', $out);
+		}
+		
 		echo $out;
-		return true;
 	}
 }
 
