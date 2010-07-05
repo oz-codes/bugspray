@@ -42,22 +42,14 @@ if (file_exists('settings.php'))
 // But wait, we can't!
 else
 {
-	exit('
-	<link rel="stylesheet" type="text/css" href="sp-includes/_spray.css" />
-	<div id="container">
-	<h1 id="heading">Surprisingly fatal error, old bean!</h1>
-	<div id="main">
-		<img class="primary left" src="sp-includes/gentlemanne.jpg" alt="" style="width: 96px;" />
+	sp_die(
+		'<img class="primary left" src="sp-includes/gentlemanne.jpg" alt="" style="width: 96px;" />
 		<p>Well, from the looks of it, spray couldn\'t find a <code>settings.php</code> file to use!</p>
 		<p>That probably means it\'s not installed. Hop over to the <a href="sp-includes/install">installer</a> if that\'s the case!</p>
 		<p class="small">image by <a href="http://www.flickr.com/photos/stevendepolo/4002542760/">stevendepolo</a> (cc-by 2.0)</p>
-		<div class="clear"></div>
-	</div>
-	<footer>
-		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> 0.3-dev</div>
-		<div id="by">a project by <a href="http://a2h.uni.cc/">a2h</a></div>
-	</footer>
-	</div>');
+		<div class="clear"></div>',
+		'Surprisingly fatal error, old bean!'
+	);
 }
 
 // Connect up to the database
@@ -85,7 +77,7 @@ while($row = mysql_fetch_array($configquery))
 
 // Include the other important files
 include('template.php');
-include('users.php');
+include('sp-includes/users.php');
 
 
 
@@ -152,6 +144,46 @@ function db_query_toarray($query, $properid=false, $purpose='<i>No purpose given
 	}
 	
 	return $result ? $ret : false;
+}
+
+function sp_die($message, $title='Error!')
+{
+	// Disable templating if it's already loaded
+	global $page;
+	if (isset($page))
+	{
+		$page->theme_disable(true);
+	}
+	
+	// And now for the content...
+	ob_start();
+	
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title><?php echo $title ?></title>
+		<link rel="stylesheet" type="text/css" href="sp-includes/_spray.css" />
+	</head>
+	<div id="container">
+	<h1 id="heading"><?php echo $title ?></h1>
+	<div id="main">
+		<?php echo $message ?>
+	</div>
+	<footer>
+		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> 0.3-dev</div>
+		<div id="by">a project by <a href="http://a2h.uni.cc/">a2h</a></div>
+	</footer>
+	</div>
+	<?php
+	
+	// Strip out all the tabs and all
+	$out = ob_get_clean();
+	$out = str_replace("\t", '', $out);
+	
+	// And now to output it!
+	die($out);
 }
 
 function logwhencmp($a,$b)
