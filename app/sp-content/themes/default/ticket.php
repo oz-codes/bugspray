@@ -71,24 +71,24 @@
 		<article id="comment_<?php echo $comment['id']; ?>" class="comment<?php echo $comment['type'] != '' ? ' moderation' : ''; ?>">
 			<table>
 				<tr>
-					<td colspan="2">
+					<td>
 						<div class="user"><?php echo getuinfo($comment['author'], false); ?></div>
 						<div class="time">Posted on <?php echo timehtml5($comment['when_posted'], true); ?></div>
+						<div class="actions">
+							<?php if ($comment['type'] == ''): ?>
+							<!--<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />-->
+							<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
+							<!--<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />-->
+							<?php endif; ?>
+							<?php if ($comment['author'] == $_SESSION['uid'] || $client['is_admin']): ?>
+							<img class="comment_delete" src="<?php echo $location['images']; ?>/btnmini/delete.png" alt="" />
+							<?php endif; ?>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td class="content">
 						<?php echo parsebbcode($comment['content']); ?>
-					</td>
-					<td class="actions">
-						<?php if ($comment['type'] == ''): ?>
-						<!--<img src="<?php echo $location['images']; ?>/btnmini/edit.png" alt="" />-->
-						<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
-						<!--<img src="<?php echo $location['images']; ?>/btnmini/report.png" alt="" />-->
-						<?php endif; ?>
-						<?php if ($comment['author'] == $_SESSION['uid'] || $client['is_admin']): ?>
-						<img class="comment_delete" src="<?php echo $location['images']; ?>/btnmini/delete.png" alt="" />
-						<?php endif; ?>
 					</td>
 				</tr>
 			</table>
