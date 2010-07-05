@@ -328,17 +328,10 @@ dl.form, p.form
 	clear: both;
 	margin: 4px 0;
 }
-dl.form dt, dl.form dd
+.form dt, .form dd
 {
+	margin: 2px 0;
 	padding: 0;
-}
-dl.form dt
-{
-	margin: 8px 0 0;
-}
-dl.form dd
-{
-	margin: 4px 0 16px;
 }
 dl.form.inline dt, dl.form.inline dd
 {
@@ -364,6 +357,14 @@ dl.form.col-3
 	width: 25%;
 }
 
+.form.big dt
+{
+	margin: 8px 0 0;
+}
+.form.big dd
+{
+	margin: 4px 0 16px;
+}
 .form.big label
 {
 	display: block;
