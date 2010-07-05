@@ -56,24 +56,8 @@ else
 $con = mysql_connect($mysql_server, $mysql_username, $mysql_password) or die(mysql_error());
 mysql_select_db($mysql_database, $con);
 
-// Grab the config from the database
-$config = array();
-$configquery = mysql_query("SELECT * FROM config");
-while($row = mysql_fetch_array($configquery))
-{
-	try
-	{
-		$config[$row['name']] = $row['value'];
-	}
-	catch (Exception $e)
-	{
-		$debug_log[] = array(
-			'type' => 'error',
-			'success' => false,
-			'text' => 'The config setting <i>' . $row['config_value'] . '</i> has an invalid name.'
-		);
-	}
-}
+// Grab the config
+sp_update_config();
 
 // Include the other important files
 include('template.php');
@@ -83,6 +67,28 @@ include('sp-includes/users.php');
 
 
 // Functions begin here
+function sp_update_config()
+{
+	global $config;
+	$config = array();
+	$configquery = db_query("SELECT * FROM config", 'Retrieving the configuration');
+	while($row = mysql_fetch_array($configquery))
+	{
+		try
+		{
+			$config[$row['name']] = $row['value'];
+		}
+		catch (Exception $e)
+		{
+			$debug_log[] = array(
+				'type' => 'error',
+				'success' => false,
+				'text' => 'The config setting <i>' . $row['config_value'] . '</i> has an invalid name.'
+			);
+		}
+	}
+}
+
 function db_query($query, $purpose='<i>No purpose given</i>')
 {	
 	global $debug, $debug_log, $db_queries;

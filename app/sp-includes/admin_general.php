@@ -41,33 +41,33 @@ if (isset($_POST['submit']))
 	// no errors?
 	if (!$error)
 	{
-		// alright, let's do this!
+		// Alright, let's do this!
 		$success = true;
 		
-		// a new site name!
+		// A new site name!
 		if ($sitename != $config['sitename'])
 		{
 			db_query("REPLACE INTO config(name, value) VALUES ('sitename', '$sitename')", 'Updating the site name') or $success = false;
 		}
 		
-		// a new theme!
+		// A new theme!
 		if ($theme != $config['theme'])
 		{
 			db_query("REPLACE INTO config(name, value) VALUES ('theme', '$theme')", 'Updating the theme') or $success = false;
 		}
 		
-		// gzip!
+		// Gzip compression!
 		if ($gzip != $config['gzip'])
 		{
 			db_query("REPLACE INTO config(name, value) VALUES ('gzip', '$gzip')", 'Updating the gzip option') or $success = false;
 		}
-		// stripping whitespace!
+		// Stripping whitespace!
 		if ($stripwhitespace != $config['stripwhitespace'])
 		{
 			db_query("REPLACE INTO config(name, value) VALUES ('stripwhitespace', '$stripwhitespace')", 'Updating the stripwhitespace option') or $success = false;
 		}
 		
-		// do we have success?
+		// Do we have success?
 		if ($success)
 		{
 			$config['sitename'] = $sitename;
@@ -78,11 +78,12 @@ if (isset($_POST['submit']))
 		{
 			echo '<div class="error" style="width: 768px;">Oh dear, something went wrong!<br />' . mysql_error() . '</div>';
 		}
+		
+		// And finally, grab the new config!
+		sp_update_config();
 	}
 }
 ?>
-
-<p><b>TODO: Run controller things before the template, this means a load of another page will be needed to view your changes once you save.</b></p>
 
 <form class="config" action="" method="post">
 

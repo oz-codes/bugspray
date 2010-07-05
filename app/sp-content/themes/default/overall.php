@@ -12,7 +12,7 @@
 <body>	
 	<div id="wrap">
 		<header id="header">
-			<h1><a href="index.php"><?php echo $this->sitename ?></a></h1>
+			<h1><a href="index.php"><?php echo $config['sitename'] ?></a></h1>
 			
 			<div id="user_wrapper">
 				<?php if ($users->client->is_logged): ?>

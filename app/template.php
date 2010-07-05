@@ -39,15 +39,13 @@ register_shutdown_function(array($page, 'finish'));
 
 class SPTemplate
 {
-	public $sitename;
 	private $title, $content, $stylesheets=array(), $javascripts=array(), $disabled=false, $location;
 	
 	function __construct()
 	{
-		global $sitename, $location, $config;
+		global $location, $config;
 		
 		// Outside stuff
-		$this->sitename = $config['sitename'];
 		$this->location = $location;
 		
 		// Default stuff to output to the header
@@ -115,7 +113,6 @@ class SPTemplate
 	
 	public function setTitle($title)
 	{
-		global $sitename;
 		$this->title = $title;
 	}
 	
@@ -146,8 +143,10 @@ class SPTemplate
 	
 	public function get_head()
 	{
+		global $config;
+		
 		// Form the title
-		$string = '<title>' . $this->title . ' &laquo; ' . $this->sitename . '</title>'."\n";
+		$string = '<title>' . $this->title . ' &laquo; ' . $config['sitename'] . '</title>'."\n";
 		
 		// We'll just have it UTF-8 at all times for now
 		$string .=  "\t".'<meta charset="UTF-8" />'."\n";
@@ -179,7 +178,7 @@ class SPTemplate
 	
 	public function include_template($page, $variables=array())
 	{
-		global $client, $users;
+		global $config, $users;
 		
 		// Grab the variables
 		extract($variables, EXTR_SKIP);
@@ -286,6 +285,9 @@ class SPTemplate
 		{
 			// Tabs are interpreted as spaces by browsers, so keep in mind usage of that
 			$out = str_replace("\n\t", "\n ", $out);
+			
+			// We can remove a bit more
+			$out = str_replace('> </', '></', $out);
 			
 			// And now we get rid of the rest
 			$out = str_replace(array("\n","\r","\r\n","\t"), '', $out);

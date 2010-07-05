@@ -52,12 +52,12 @@ $page->theme_disable(true);
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login to <?php echo $page->sitename ?></title>
+<title>Login to <?php echo $config['sitename'] ?></title>
 <link rel="stylesheet" type="text/css" href="sp-includes/_spray.css" />
 </head>
 <body>
 <div id="container">
-	<h1 id="heading">Login to <?php echo $page->sitename ?></h1>
+	<h1 id="heading">Login to <?php echo $config['sitename'] ?></h1>
 	<div id="back"><a href="index.php">&laquo; back</a></div>
 	
 	<form id="main" action="" method="post">
