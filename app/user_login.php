@@ -92,7 +92,7 @@ $page->theme_disable(true);
 	</form>
 	
 	<footer>
-		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> 0.3-dev</div>
+		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> <?php echo sp_get_version() ?></div>
 		<div id="by">a project by <a href="http://a2h.uni.cc/">a2h</a></div>
 	</footer>
 </div>

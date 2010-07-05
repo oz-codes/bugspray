@@ -21,6 +21,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// The version
+$sp_version_major = 0;
+$sp_version_minor = 3;
+$sp_version_dev = true;
+
 // Generation time tracking
 $starttime = explode(' ', microtime());
 $starttime = $starttime[1] + $starttime[0];
@@ -89,6 +94,52 @@ function sp_update_config()
 	}
 }
 
+function sp_get_version()
+{
+	global $sp_version_major, $sp_version_minor, $sp_version_dev;
+	return $sp_version_major . '.' . $sp_version_minor . ($sp_version_dev ? '-dev' : '');
+}
+
+function sp_die($message, $title='Error!')
+{
+	// Disable templating if it's already loaded
+	global $page;
+	if (isset($page))
+	{
+		$page->theme_disable(true);
+	}
+	
+	// And now for the content...
+	ob_start();
+	
+	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title><?php echo $title ?></title>
+		<link rel="stylesheet" type="text/css" href="sp-includes/_spray.css" />
+	</head>
+	<div id="container">
+	<h1 id="heading"><?php echo $title ?></h1>
+	<div id="main">
+		<?php echo $message ?>
+	</div>
+	<footer>
+		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> <?php echo sp_get_version() ?></div>
+		<div id="by">a project by <a href="http://a2h.uni.cc/">a2h</a></div>
+	</footer>
+	</div>
+	<?php
+	
+	// Strip out all the tabs and all
+	$out = ob_get_clean();
+	$out = str_replace("\t", '', $out);
+	
+	// And now to output it!
+	die($out);
+}
+
 function db_query($query, $purpose='<i>No purpose given</i>')
 {	
 	global $debug, $debug_log, $db_queries;
@@ -150,46 +201,6 @@ function db_query_toarray($query, $properid=false, $purpose='<i>No purpose given
 	}
 	
 	return $result ? $ret : false;
-}
-
-function sp_die($message, $title='Error!')
-{
-	// Disable templating if it's already loaded
-	global $page;
-	if (isset($page))
-	{
-		$page->theme_disable(true);
-	}
-	
-	// And now for the content...
-	ob_start();
-	
-	?>
-	<!DOCTYPE html>
-	<html>
-	<head>
-		<meta charset="UTF-8" />
-		<title><?php echo $title ?></title>
-		<link rel="stylesheet" type="text/css" href="sp-includes/_spray.css" />
-	</head>
-	<div id="container">
-	<h1 id="heading"><?php echo $title ?></h1>
-	<div id="main">
-		<?php echo $message ?>
-	</div>
-	<footer>
-		<div id="powered">powered by <a href="http://github.com/a2h/bugspray">spray</a> 0.3-dev</div>
-		<div id="by">a project by <a href="http://a2h.uni.cc/">a2h</a></div>
-	</footer>
-	</div>
-	<?php
-	
-	// Strip out all the tabs and all
-	$out = ob_get_clean();
-	$out = str_replace("\t", '', $out);
-	
-	// And now to output it!
-	die($out);
 }
 
 function logwhencmp($a,$b)
