@@ -1,7 +1,7 @@
 <?php
-/*
- * bugspray issue tracking software
- * Copyright (c) 2009 a2h - http://a2h.uni.cc/
+/**
+ * spray issue tracking software
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 include("functions.php");
@@ -30,7 +29,7 @@ echo '<h2>Register</h2>';
 
 if ($recaptcha_use)
 {
-	require_once("recaptchalib.php");
+	require_once('sp-includes/recaptchalib.php');
 }
 
 if (isset($_POST['submit']))
