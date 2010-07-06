@@ -645,6 +645,7 @@ function parsebbcode($string)
 		'/\[img\](.*?)\[\/img\]/is',
 		'/\[quote=(.*?)\](.*?)\[\/quote\]/is',
 		'/\[quote\](.*?)\[\/quote\]/is',
+		'/\[code\](.*?)\[\/code\]/is'
 	);
 
 	$replaces = array(
@@ -658,7 +659,8 @@ function parsebbcode($string)
 		'<a href="\\1">\\1</a>',
 		'<img src="\\1" alt="" />',
 		'<small>Quote from \\1:</small><blockquote>\\2</blockquote>',
-		'<small>Quote:</small><blockquote>\\1</blockquote>'
+		'<small>Quote:</small><blockquote>\\1</blockquote>',
+		'<div class="code"><code>\\1</code></div>'
 	);
 
 	$ret = preg_replace($original, $replaces, $string);

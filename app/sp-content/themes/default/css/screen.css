@@ -957,6 +957,16 @@ dl.form .alert, dl.form .error
 	font-size: 10px;
 }
 
+.comment .code
+{
+	padding: 12px;
+	background: #eee;
+}
+.comment .code code
+{
+	display: block;
+}
+
 /* monospaced fonts = instant cool */
 
 .mono
