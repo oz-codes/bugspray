@@ -38,7 +38,7 @@ switch ($_GET['action'])
 	case 'deletecomment':
 		if ($client['is_admin'])
 		{
-			$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
+			$page->theme_disable(true); // eventually this should be at the top and all methods will use ajax
 			header('Content-type: application/json');
 			echo json_encode(ticket_comment_delete($id));
 			break;
@@ -49,13 +49,13 @@ switch ($_GET['action'])
 		break;
 	
 	case 'comment':
-		$page->disableTemplate(); // eventually this should be at the top and all methods will use ajax
+		$page->theme_disable(true); // eventually this should be at the top and all methods will use ajax
 		header('Content-type: application/json');
 		echo json_encode(ticket_comment_add(escape_smart($_POST['id']), escape_smart(htmlspecialchars($_POST['content'])), 'json'));
 		break;
 	
 	case 'favorite':
-		$page->disableTemplate();
+		$page->theme_disable(true);
 		header('Content-type: application/json');
 		echo json_encode(ticket_favorite(escape_smart($_GET['id']), 'json'));
 		break;
