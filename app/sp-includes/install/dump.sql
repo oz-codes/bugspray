@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `when_posted` datetime NOT NULL,
   `when_edited` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE IF NOT EXISTS `config` (
   `name` varchar(16) NOT NULL,
@@ -20,14 +19,14 @@ CREATE TABLE IF NOT EXISTS `config` (
 
 INSERT INTO `config` (`name`, `value`) VALUES
 ('sitename', 'My Issue Tracker'),
-('theme', 'default');
-
+('theme', 'default'),
+('stripwhitespace', '0'),
+('gzip', '0');
 
 CREATE TABLE IF NOT EXISTS `favorites` (
   `ticketid` int(11) NOT NULL,
   `userid` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
 
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -54,8 +53,7 @@ CREATE TABLE IF NOT EXISTS `issues` (
   `num_comments` int(11) NOT NULL,
   `num_views` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `log_issues` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -64,8 +62,7 @@ CREATE TABLE IF NOT EXISTS `log_issues` (
   `actiontype` int(11) NOT NULL,
   `issue` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -74,9 +71,9 @@ CREATE TABLE IF NOT EXISTS `tags` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
-INSERT INTO `tags` (`id`, `name`, `color`, `projects`) VALUES
-(1, 'suggestion', 'F8FFBF', ''),
-(2, 'bug', 'FF7F7F', '');
+INSERT INTO `tags` (`id`, `name`, `slug`) VALUES
+(1, 'suggestion', ''),
+(2, 'bug', '');
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -95,5 +92,4 @@ CREATE TABLE IF NOT EXISTS `users` (
   `num_posted_issues` int(11) NOT NULL,
   `num_posted_comments` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
