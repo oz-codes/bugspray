@@ -642,6 +642,8 @@ function parsebbcode($string)
 		'/\[s\](.*?)\[\/s\]/is',
 		'/\[url=(.*?)\](.*?)\[\/url\]/is',
 		'/\[url\](.*?)\[\/url\]/is',
+		'/(^|[\n ])([\w]*?)((ht|f)tp(s)?:\/\/[\w]+[^\s\,\"<]*)/is', // http://buildinternet.com/?p=8784
+		'/(^|[\n ])([\w]*?)((www)\.[^\s\,\"<]*)/is', // http://buildinternet.com/?p=8784
 		'/\[img\](.*?)\[\/img\]/is',
 		'/\[quote=(.*?)\](.*?)\[\/quote\]/is',
 		'/\[quote\](.*?)\[\/quote\]/is',
@@ -649,14 +651,16 @@ function parsebbcode($string)
 	);
 
 	$replaces = array(
-		'<br />',
+		'<br /> ', // added space to help with linkification
 		'str_replace(array("[","]"),array("&#91;","&#93;"),\'\\1\')',
 		'<b>\\1</b>',
 		'<i>\\1</i>',
 		'<span style="text-decoration:underline;">\\1</span>',
 		'<del>\\1</del>',
-		'<a href="\\1">\\2</a>',
-		'<a href="\\1">\\1</a>',
+		'<a href="\\1" rel="nofollow" target="_blank">\\2</a>',
+		'<a href="\\1" rel="nofollow" target="_blank">\\1</a>',
+		'<a href="\\3" rel="nofollow" target="_blank">\\3</a>',
+		'<a href="\\3" rel="nofollow" target="_blank">\\3</a>',
 		'<img src="\\1" alt="" />',
 		'<small>Quote from \\1:</small><blockquote>\\2</blockquote>',
 		'<small>Quote:</small><blockquote>\\1</blockquote>',
