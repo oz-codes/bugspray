@@ -23,8 +23,8 @@
 
 // The version
 $sp_version_major = 0;
-$sp_version_minor = 3;
-$sp_version_dev = false;
+$sp_version_minor = 4;
+$sp_version_dev = true;
 
 // Generation time tracking
 $starttime = explode(' ', microtime());
