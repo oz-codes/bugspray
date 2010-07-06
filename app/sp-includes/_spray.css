@@ -119,6 +119,16 @@ body
 	-webkit-box-shadow: 0 0 8px rgba(0,0,0,0.05);
 }
 
+h2
+{
+	font-size: 18px;
+}
+
+.centre
+{
+	text-align: center;
+}
+
 p.small
 {
 	font-size: 10px;
