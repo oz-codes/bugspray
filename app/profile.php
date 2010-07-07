@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -24,15 +24,13 @@
 include("functions.php");
 $page->setType('account');
 
-$id = isset($_GET['id']) ? escape_smart($_GET['id']) : $_SESSION['uid'];
+$profile = $users->id( is_numeric($_GET['id']) ? $_GET['id'] : $_SESSION['uid'] )->info;
 
-$profile = db_query_single("SELECT users.*, groups.name AS group_name FROM users LEFT JOIN groups ON groups.id = users.group WHERE users.id = '$id'");
-
-$page->setTitle($profile['username'].'\'s Profile');
+$page->setTitle($profile['name'] . '\'s Profile');
 ?>
 
 <div class="imgtitle imgtitle-32">
-	<img class="image" src="<?php echo getav($id); ?>" alt="" />
+	<img class="image" src="<?php echo $profile['avatar_location']; ?>" alt="" />
 	<div class="text">
 		<h1><?php echo $profile['username']; ?>'s Profile</h1>
 	</div>
