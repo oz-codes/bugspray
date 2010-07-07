@@ -183,17 +183,17 @@ class SPTemplate
 		// Grab the variables
 		extract($variables, EXTR_SKIP);
 		
-		// For convenience
+		// Convenience variables for use by the included template
 		$location = $this->location;
 		
 		// If the desired file doesn't exist, we include it from the default theme
-		if (!file_exists($this->location['theme'] . '/' . $page))
+		if (!file_exists($this->location['theme'] . '/template_' . $page))
 		{
-			include($this->location['themes'] . '/default/' . $page);
+			include($this->location['themes'] . '/default/template_' . $page);
 		}
 		else
 		{
-			include($this->location['theme'] . '/' . $page);
+			include($this->location['theme'] . '/template_' . $page);
 		}
 		
 		// This is to allow for nice spacing
