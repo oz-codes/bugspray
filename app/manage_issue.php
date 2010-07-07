@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include("functions.php");
+include('sp-core.php');
 
 $id = escape_smart($_GET['id']);
 $a = escape_smart($_SESSION['uid']);

@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,9 +21,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+include('sp-core.php');
+
 // if possible make this more like the reg/login forms or at least introduce similarities to this or them
 
-include("functions.php");
 $page->setType('tickets');
 $page->setTitle('Add a ticket');
 

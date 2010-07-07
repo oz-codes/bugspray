@@ -21,58 +21,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// The version
-$sp_version_major = 0;
-$sp_version_minor = 4;
-$sp_version_dev = true;
-
-// Generation time tracking
-$starttime = explode(' ', microtime());
-$starttime = $starttime[1] + $starttime[0];
-
-// Some variable(s) to use
-$datetimenull = '0000-00-00 00:00:00';
-
-// User stuff!
-session_start();
-
-// Debugging
-$debug_log = array();
-
-// Grab the settings
-if (file_exists('settings.php'))
-{
-	include('settings.php');
-}
-// But wait, we can't!
-else
-{
-	sp_die(
-		'<img class="primary left" src="sp-includes/gentlemanne.jpg" alt="" style="width: 96px;" />
-		<p>Well, from the looks of it, spray couldn\'t find a <code>settings.php</code> file to use!</p>
-		<p>That probably means it\'s not installed. Hop over to the <a href="sp-includes/install">installer</a> if that\'s the case!</p>
-		<p class="small">image by <a href="http://www.flickr.com/photos/stevendepolo/4002542760/">stevendepolo</a> (cc-by 2.0)</p>
-		<div class="clear"></div>',
-		'Surprisingly fatal error, old bean!'
-	);
-}
-
-// Connect up to the database
-$con = mysql_connect($mysql_server, $mysql_username, $mysql_password) or die(mysql_error());
-mysql_select_db($mysql_database, $con);
-
-// Grab the config
-sp_update_config();
-
-// Include the other important files
-include('template.php');
-include('sp-includes/users.php');
-
-
-
-
-// Functions begin here
-
 /**
  * @version 0.3
  * @since 0.3
@@ -799,4 +747,3 @@ function output_errors($arr)
 	
 	return $o;
 }
-?>

@@ -335,11 +335,11 @@ function sp_install_writeconfig($mysql_info)
 	// Open the file
 	try
 	{
-		$sffile = @fopen('../../settings.php', 'w');
+		$sffile = @fopen('../../sp-config.php', 'w');
 	}
 	catch (Exception $e)
 	{
-		sp_install_error('The <code>settings.php</code> file could not be created and/or opened.');
+		sp_install_error('The <code>sp-config.php</code> file could not be created and/or opened.');
 		return false;
 	}
 	
@@ -351,7 +351,7 @@ function sp_install_writeconfig($mysql_info)
 	catch (Exception $e)
 	{
 		fclose($sffile);
-		sp_install_error('The <code>settings.php</code> file could not be written to, reason: ' . $e);
+		sp_install_error('The <code>sp-config.php</code> file could not be written to, reason: ' . $e);
 		return false;
 	}
 	

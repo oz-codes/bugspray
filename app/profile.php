@@ -21,7 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include("functions.php");
+include('sp-core.php');
+
 $page->setType('account');
 
 $id = is_numeric($_GET['id']) ? $_GET['id'] : $_SESSION['uid'];

@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+include('sp-core.php');
+
 // This file is used for AJAX requests
-include("functions.php");
 $page->theme_disable(true);
 echo ticket_list($_POST['status'], 'desc', true);
 ?>
