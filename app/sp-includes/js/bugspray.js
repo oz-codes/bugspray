@@ -1,5 +1,5 @@
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -364,13 +364,21 @@ function ticketFavorite()
 							
 							if (tempattr !== undefined)
 							{
-								if (tempattr.indexOf('on') != -1)
+								if (tempattr.indexOf('-on') != -1)
 								{
-									$(target).attr(v, tempattr.replace('on', 'off'));
+									$(target).attr(v, tempattr.replace('-on', '-off'));
 								}
-								else if (tempattr.indexOf('off') != -1)
+								else if (tempattr.indexOf('-off') != -1)
 								{
-									$(target).attr(v, tempattr.replace('off', 'on'));
+									$(target).attr(v, tempattr.replace('-off', '-on'));
+								}
+								else if (tempattr.indexOf('_on') != -1)
+								{
+									$(target).attr(v, tempattr.replace('_on', '_off'));
+								}
+								else if (tempattr.indexOf('_off') != -1)
+								{
+									$(target).attr(v, tempattr.replace('_off', '_on'));
 								}
 							}
 						});
