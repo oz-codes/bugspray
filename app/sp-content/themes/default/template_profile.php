@@ -25,7 +25,7 @@
 				<?php
 					if ($profile['email'] != '')
 					{
-						if ($profile['email_show'] || $client['is_admin'])
+						if ($profile['email_show'] || $users->client->is_admin)
 						{
 							if (!$profile['email_show'])
 							{
