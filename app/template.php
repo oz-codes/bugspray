@@ -187,13 +187,13 @@ class SPTemplate
 		$location = $this->location;
 		
 		// If the desired file doesn't exist, we include it from the default theme
-		if (!file_exists($this->location['theme'] . '/template_' . $page))
+		if (!file_exists($this->location['theme'] . '/template_' . $page . '.php'))
 		{
-			include($this->location['themes'] . '/default/template_' . $page);
+			include($this->location['themes'] . '/default/template_' . $page . '.php');
 		}
 		else
 		{
-			include($this->location['theme'] . '/template_' . $page);
+			include($this->location['theme'] . '/template_' . $page . '.php');
 		}
 		
 		// This is to allow for nice spacing
@@ -269,7 +269,7 @@ class SPTemplate
 		
 		// Alright, the overall template can handle the content...
 		ob_start();
-		$this->include_template('overall.php');
+		$this->include_template('overall');
 		$out = ob_get_clean();
 		
 		// To ensure nothing at all is run (at least, most stuff) after debug info, we stick it at the end :O

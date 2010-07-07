@@ -157,7 +157,7 @@ else
 		
 		// output the page
 		$page->include_template(
-			'ticket.php',
+			'ticket',
 			array(
 				'issue' => $issue,
 				'comments' => $result_comments

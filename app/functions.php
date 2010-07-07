@@ -449,7 +449,7 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 	// And we're off!
 	ob_start();
 	$page->include_template(
-		'ticket_list.php',
+		'ticket_list',
 		array(
 			'type' => $type,
 			'statuses' => $statuses,

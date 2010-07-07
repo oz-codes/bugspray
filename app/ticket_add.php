@@ -114,7 +114,7 @@ else
 	if (!isset($error) || $error)
 	{
 		$page->include_template(
-			'ticket_add.php',
+			'ticket_add',
 			array(
 				'errors_title' => $errors_title,
 				'errors_tags' => $errors_tags,

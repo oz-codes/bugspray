@@ -30,7 +30,7 @@ $profile = $users->id($id)->info;
 $page->setTitle($profile['name'] . '\'s Profile');
 
 $page->include_template(
-	'profile.php',
+	'profile',
 	array(
 		'profile' => $profile
 	)
