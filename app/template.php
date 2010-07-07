@@ -129,7 +129,7 @@ class SPTemplate
 	public function get_menu()
 	{
 		// Grab the menu
-		include("menu.php");
+		include($this->location['content'] . '/menu.php');
 		
 		// Cycle through the menu to see if we have an item matching our current page type
 		foreach ($menu as &$menuitem)
