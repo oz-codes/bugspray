@@ -125,14 +125,7 @@ class SPUsers
 				}
 				
 				// The password we need to check against needs to be generated
-				if (!$passwordishash)
-				{
-					$supposedpass = $this->generate_password($salt, $password);
-				}
-				else
-				{
-					$supposedpass = $password;
-				}
+				$supposedpass = $passwordishash ? $password : $this->generate_password($salt, $password);
 				
 				if ($supposedpass == $row['password'])
 				{
