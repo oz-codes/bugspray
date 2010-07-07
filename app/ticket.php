@@ -1,7 +1,7 @@
 <?php
 /**
- * bugspray issue tracking software
- * Copyright (c) 2009-2010 a2h
+ * spray issue tracking software
+ * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -140,15 +140,14 @@ else
 			$issue['assignedto'] = 'nobody';
 		}
 
-		// get list of assignable users
+		// Get assignable users (for now, just admins)
 		$assignsarr = array(array(0,'nobody'),array(0,'----------------------'));
-		$result_assignableusers = db_query("SELECT * FROM users WHERE `group` = 2", "Retrieving assignable users");
-		while ($user = mysql_fetch_array($result_assignableusers))
-		{			
+		foreach ($users->from_admins() as $uid)
+		{
 			$assignsarr[] = array(
-				$user['id'],
-				getunm($user['id']),
-				$user['id'] == $issue['assign'] ? true : false
+				$uid,
+				getunm($uid),
+				$uid == $issue['assign'] ? true : false
 			);
 		}
 		$issue['assigns'] = $assignsarr;
