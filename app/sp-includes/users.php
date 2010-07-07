@@ -167,28 +167,40 @@ class SPUsers
 		return hash('whirlpool', $salt.$password);
 	}
 	
-	// Returns an array of user ids, $input can either be an int or array
-	public function from_group($input)
+	// Returns an array of user ids
+	public function from_group()
 	{
 		$ret = array();
+		$num = func_num_args();
 		
-		if (is_int($input))
+		// Did we get nothing?
+		if ($num < 1)
 		{
-			$users = db_query_toarray("SELECT id FROM users WHERE `group` = $input", "Retrieving users from group $input");
-			foreach ($users as $user)
+			return $ret;
+		}
+		// We want just one group?
+		elseif ($num == 1)
+		{
+			$id = func_get_arg(0);
+			if (is_numeric($id))
 			{
-				$ret[] = $user['id'];
+				$users = db_query_toarray("SELECT id FROM users WHERE `group` = $id", "Retrieving users from group $id");
+				foreach ($users as $user)
+				{
+					$ret[] = $user['id'];
+				}
+			}
+			else
+			{
+				// todo: log an error
 			}
 		}
-		elseif (is_array($input))
+		// To infinity and beyond!
+		else
 		{
-			$ret = array();
-			foreach ($input as $id)
+			foreach (func_get_args() as $id)
 			{
-				foreach ($this->from_group($id) as $uid)
-				{
-					$ret[] = $uid;
-				}
+				$ret = array_merge($ret, $this->from_group($id));
 			}
 		}
 		
