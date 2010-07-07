@@ -72,6 +72,11 @@ include('sp-includes/users.php');
 
 
 // Functions begin here
+
+/**
+ * @version 0.3
+ * @since 0.3
+ */
 function sp_update_config()
 {
 	global $config;
@@ -94,12 +99,20 @@ function sp_update_config()
 	}
 }
 
+/**
+ * @version 0.3
+ * @since 0.3
+ */
 function sp_get_version()
 {
 	global $sp_version_major, $sp_version_minor, $sp_version_dev;
 	return $sp_version_major . '.' . $sp_version_minor . ($sp_version_dev ? '-dev' : '');
 }
 
+/**
+ * @version 0.3
+ * @since 0.3
+ */
 function sp_die($message, $title='Error!')
 {
 	// Disable templating if it's already loaded
@@ -140,6 +153,10 @@ function sp_die($message, $title='Error!')
 	die($out);
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function db_query($query, $purpose='<i>No purpose given</i>')
 {	
 	global $debug, $debug_log, $db_queries;
@@ -163,6 +180,10 @@ function db_query($query, $purpose='<i>No purpose given</i>')
 	return $result;
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function db_query_single($query, $purpose='<i>No purpose given</i>')
 {
 	if (strstr($query,"LIMIT 1")) { exit('fix this'); } // temporary line added after this function changed to what it is now
@@ -177,6 +198,10 @@ function db_query_single($query, $purpose='<i>No purpose given</i>')
 	return $result ? $array : false;
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function db_query_toarray($query, $properid=false, $purpose='<i>No purpose given</i>')
 {
 	$result = db_query($query, $purpose);
@@ -203,6 +228,10 @@ function db_query_toarray($query, $properid=false, $purpose='<i>No purpose given
 	return $result ? $ret : false;
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function logwhencmp($a,$b)
 {
     if ($a['when'] == $b['when'])
@@ -212,6 +241,10 @@ function logwhencmp($a,$b)
 	return ($a['when'] > $b['when']) ? -1 : 1;
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function query_cats($id) /* queries don't have 9 lives though */
 {
 	global $queries_cats;
@@ -224,6 +257,10 @@ function query_cats($id) /* queries don't have 9 lives though */
 	return $queries_cats[$id];
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function query_tags($id)
 {
 	global $queries_tags;
@@ -236,24 +273,40 @@ function query_tags($id)
 	return $queries_tags[$id];
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function gettagnm($id)
 {
 	$q = query_tags($id);
 	return $q['name'];
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function getcatnm($id)
 {
 	$q = query_cats($id);
 	return $q['name'];
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function getissnm($id)
 {	
 	$q = db_query_single("SELECT name FROM issues WHERE id = $id", "Retrieving info for issue id $id from database");
 	return $q[0];
 }
 
+/**
+ * @version 0.2
+ * @since 0.1
+ */
 function getstatuses()
 {	
 	return array(
@@ -265,18 +318,30 @@ function getstatuses()
 	);
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function getstatusnm($id)
 {
 	$statuses = getstatuses();
 	return $statuses[$id-1]['name'];
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function getstatustype($id)
 {
 	$statuses = getstatuses();
 	return $statuses[$id-1]['type'];
 }
 
+/**
+ * @version 0.4
+ * @since 0.2
+ */
 function ticket_list($status, $order='desc', $pinfollowing=false)
 {
 	global $page, $users;
@@ -459,11 +524,19 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 	return ob_get_clean();
 }
 
+/**
+ * @version 0.2
+ * @since 0.2
+ */
 function hascharacters($string)
 {
 	return trim($string) == '' ? false : true;
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function escape_smart($value)
 {
 	// code from http://simon.net.nz/articles/protecting-mysql-sql-injection-attacks-using-php/
@@ -478,6 +551,10 @@ function escape_smart($value)
 	return $value;
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function timehtml5($timestamp,$pubdate=false,$innerhtml='[nothingatall]')
 {
 	// for reference
@@ -509,6 +586,10 @@ function timehtml5($timestamp,$pubdate=false,$innerhtml='[nothingatall]')
 	}
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function timeago($timestamp, $pubdate=false, $short=false)
 {
 	// original function written by Thomaschaaf - http://stackoverflow.com/questions/11/how-do-i-calculate-relative-time
@@ -602,6 +683,10 @@ function timeago($timestamp, $pubdate=false, $short=false)
 	return timehtml5($timestamp, $pubdate, $ret);
 }
 
+/**
+ * @version 0.1
+ * @since 0.1
+ */
 function timeago_short($timestamp, $pubdate=false)
 {
 	$temp = timeago($timestamp, $pubdate);
@@ -631,6 +716,10 @@ function timeago_short($timestamp, $pubdate=false)
 	);
 }
 
+/**
+ * @version 0.4
+ * @since 0.1
+ */
 function parsebbcode($string)
 {	
 	$original = array(
@@ -674,6 +763,10 @@ function parsebbcode($string)
 	return $ret;
 }
 
+/**
+ * @version 0.2
+ * @since 0.2
+ */
 function is_email($string)
 {
 	// http://stackoverflow.com/questions/1374881
@@ -681,6 +774,10 @@ function is_email($string)
 	return preg_match('/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i', $string);
 }
 
+/**
+ * @version 0.2
+ * @since 0.2
+ */
 function output_errors($arr)
 {
 	$o = '';
