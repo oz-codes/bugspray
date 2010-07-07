@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -165,6 +165,39 @@ class SPUsers
 	public function generate_password($salt, $password)
 	{
 		return hash('whirlpool', $salt.$password);
+	}
+	
+	// Returns an array of user ids, $input can either be an int or array
+	public function from_group($input)
+	{
+		$ret = array();
+		
+		if (is_int($input))
+		{
+			$users = db_query_toarray("SELECT id FROM users WHERE `group` = $input", "Retrieving users from group $input");
+			foreach ($users as $user)
+			{
+				$ret[] = $user['id'];
+			}
+		}
+		elseif (is_array($input))
+		{
+			$ret = array();
+			foreach ($input as $id)
+			{
+				foreach ($this->from_group($id) as $uid)
+				{
+					$ret[] = $uid;
+				}
+			}
+		}
+		
+		return $ret;
+	}
+	
+	public function from_admins()
+	{
+		return $this->from_group(2);
 	}
 	
 	public function id($id)
