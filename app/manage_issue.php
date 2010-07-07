@@ -1,6 +1,6 @@
 <?php
 /**
- * bugspray issue tracking software
+ * spray issue tracking software
  * Copyright (c) 2009-2010 a2h - http://a2h.uni.cc/
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -29,14 +29,14 @@ $a = escape_smart($_SESSION['uid']);
 switch ($_GET['action'])
 {	
 	case 'delete':
-		if ($client['is_admin'])
+		if ($users->client->is_admin)
 		{
 			ticket_delete($id);
 			break;
 		}
 	
 	case 'deletecomment':
-		if ($client['is_admin'])
+		if ($users->client->is_admin)
 		{
 			$page->theme_disable(true); // eventually this should be at the top and all methods will use ajax
 			header('Content-type: application/json');
