@@ -669,43 +669,54 @@ function timeago_short($timestamp, $pubdate=false)
  * @since 0.1
  */
 function parsebbcode($string)
-{	
-	$original = array(
-		'/\n/',
-		'/\[noparse\](.*?)\[\/noparse\]/ise',
-		'/\[b\](.*?)\[\/b\]/is',
-		'/\[i\](.*?)\[\/i\]/is',
-		'/\[u\](.*?)\[\/u\]/is',
-		'/\[s\](.*?)\[\/s\]/is',
-		'/\[url=(.*?)\](.*?)\[\/url\]/is',
-		'/\[url\](.*?)\[\/url\]/is',
-		'/(^|[\n ])([\w]*?)((ht|f)tp(s)?:\/\/[\w]+[^\s\,\"<]*)/is', // http://buildinternet.com/?p=8784
-		'/(^|[\n ])([\w]*?)((www)\.[^\s\,\"<]*)/is', // http://buildinternet.com/?p=8784
-		'/\[img\](.*?)\[\/img\]/is',
-		'/\[quote=(.*?)\](.*?)\[\/quote\]/is',
-		'/\[quote\](.*?)\[\/quote\]/is',
-		'/\[code\](.*?)\[\/code\]/is'
-	);
-
-	$replaces = array(
-		'<br /> ', // added space to help with linkification
-		'str_replace(array("[","]"),array("&#91;","&#93;"),\'\\1\')',
-		'<b>\\1</b>',
-		'<i>\\1</i>',
-		'<span style="text-decoration:underline;">\\1</span>',
-		'<del>\\1</del>',
-		'<a href="\\1" rel="nofollow" target="_blank">\\2</a>',
-		'<a href="\\1" rel="nofollow" target="_blank">\\1</a>',
-		'<a href="\\3" rel="nofollow" target="_blank">\\3</a>',
-		'<a href="\\3" rel="nofollow" target="_blank">\\3</a>',
-		'<img src="\\1" alt="" />',
-		'<small>Quote from \\1:</small><blockquote>\\2</blockquote>',
-		'<small>Quote:</small><blockquote>\\1</blockquote>',
-		'<div class="code"><code>\\1</code></div>'
-	);
-
-	$ret = preg_replace($original, $replaces, $string);
+{
+	$ret = $string;
 	
+	// Convert newlines
+	$ret = str_replace("\n", '<br />', $ret);
+	
+	// Convert extra spaces
+	while (strstr($ret, '  '))
+	{
+		$ret = str_replace('  ' , '&nbsp; ', $ret);
+	}
+	
+	// All the standard BBcode stuff
+	$ret = preg_replace(
+		array(
+			'/\[noparse\](.*?)\[\/noparse\]/ise',
+			'/\[b\](.*?)\[\/b\]/is',
+			'/\[i\](.*?)\[\/i\]/is',
+			'/\[u\](.*?)\[\/u\]/is',
+			'/\[s\](.*?)\[\/s\]/is',
+			'/\[url=(.*?)\](.*?)\[\/url\]/is',
+			'/\[url\](.*?)\[\/url\]/is',
+			'/(^|[\n ]|<br \/>)([\w]*?)((ht|f)tp(s)?:\/\/[\w]+[^\s\,\"<]*)/is', // http://buildinternet.com/?p=8784
+			'/(^|[\n ]|<br \/>)([\w]*?)((www)\.[^\s\,\"<]*)/is', // http://buildinternet.com/?p=8784
+			'/\[img\](.*?)\[\/img\]/is',
+			'/\[quote=(.*?)\](.*?)\[\/quote\]/is',
+			'/\[quote\](.*?)\[\/quote\]/is',
+			'/\[code\](.*?)\[\/code\]/is'
+		),
+		array(
+			'str_replace(array("[","]"), array("&#91;","&#93;"),\'\\1\')',
+			'<b>\\1</b>',
+			'<i>\\1</i>',
+			'<span style="text-decoration:underline;">\\1</span>',
+			'<del>\\1</del>',
+			'<a href="\\1" rel="nofollow" target="_blank">\\2</a>',
+			'<a href="\\1" rel="nofollow" target="_blank">\\1</a>',
+			'\\1<a href="\\3" rel="nofollow" target="_blank">\\3</a>',
+			'\\1<a href="\\3" rel="nofollow" target="_blank">\\3</a>',
+			'<img src="\\1" alt="" />',
+			'<small>Quote from \\1:</small><blockquote>\\2</blockquote>',
+			'<small>Quote:</small><blockquote>\\1</blockquote>',
+			'<div class="code"><code>\\1</code></div>'
+		),
+		$ret
+	);
+	
+	// Convert back the &#91; and &#93; instances created while parsing [noparse]
 	$ret = str_replace(array('&#91;', '&#93;'), array('[', ']'), $ret);
 	
 	return $ret;
