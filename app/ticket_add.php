@@ -42,23 +42,36 @@ else
 		$description = escape_smart(htmlentities($_POST['description']));
 		$severity = escape_smart($_POST['severity']);
 		
+		// Error arrays
 		$error = false;
 		$errors_title = array();
 		$errors_tags = array();
 		$errors_description = array();
 		
-		$tags = escape_smart(htmlentities($_POST['tags'])); // TODO: use the separate table for tags instead of one long string
+		// Sanitise the tags string [TODO: use the separate table for tags instead of one long string]
+		$tags = escape_smart(htmlentities($_POST['tags']));
+		
+		// Remove excessive whitespace, first on the sides, and then double/triple/quadruple/etc spaces
+		$tags = trim($tags);
+		while (strstr($tags, '  '))
+		{
+			$tags = str_replace('  ', ' ', $tags);
+		}
+		
+		// Split the tags into a nice array and get a proper count of how many tags there are
 		$tagsarr = explode(' ', $tags);
 		sort($tagsarr);
 		$tagsc = empty($tags) ? 0 : count($tagsarr); // We need to explicitly set to 0 if there's no items because of how explode works
 		
+		// Have we gone over the tag limit?
 		if ($tagsc > 5)
 		{
 			$error = true;
 			$errors_tags[] = 'You may only provide up to 5 tags.';
 		}
 		
-		if ($tagsc > 0) // We still want to run this even if there's more than 5 tags to check for other errors
+		// We still want to run this even if there's more than 5 tags to check for other errors
+		if ($tagsc > 0)
 		{
 			$tags = '';
 			for ($i=0; $i<$tagsc; $i++)
