@@ -18,6 +18,10 @@
 		</dt>
 		<dd>
 			<input id="title" name="title" type="text" maxlength="192" value="<?php echo $_POST['title'] ?>" />
+			<div class="infobubble">
+				<p>What's the problem? Remember to <b>K</b>eep <b>I</b>t <b>S</b>hort and <b>S</b>weet.</p>
+				<p>You're limited to <b>192</b> characters here.</p>
+			</div>
 		</dd>
 	</dl>
 	
@@ -30,8 +34,13 @@
 			<label for="tags">Tags</label>
 		</dt>
 		<dd>
-			<input id="tags" name="tags" type="text" value="<?php echo $_POST['tags'] ?>" />
-			<span class="small">(seperate tags by spaces)</span>
+			<input id="tags" name="tags" type="text" value="<?php echo $_POST['tags'] ?>" />			
+			<div class="infobubble">
+				<p>Tags are a multipurpose method of describing your ticket. Just separate them with spaces.</p>
+				<p>You can provide up to <b>5</b> tags, and all the tags you provide can't be longer than <b>16</b> characters.</p>
+				<p>For example, <code>windows-7 64-bit ui</code>.</p>
+				<p class="small">[TODO: Suggested tags]</p>
+			</div>
 		</dd>
 	</dl>
 	
