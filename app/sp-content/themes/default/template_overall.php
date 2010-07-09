@@ -3,6 +3,7 @@
 <head>
 	<?php
 	$this->script_enqueue('html5ie');
+	$this->script_enqueue('silkyjs', $this->location['theme'] . '/js/spsilky.js', array('jquery'));
 	$this->script_enqueue('amwnd', $this->location['theme'] . '/js/jquery.amwnd.js', array('jquery'));
 	$this->script_enqueue('jquery-ui-slideronly', $this->location['theme'] . '/js/jquery-ui-1.8.2.slideronly.min.js', array('jquery'));
 	$this->output_head();

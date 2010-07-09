@@ -5,13 +5,14 @@
  *
  * @name Silky
  * @description A smooth, clean theme with plenty of breathing room
- * @tags clean, white, fixed width
- * @version 0.3
+ * @tags clean, white, blue, fixed width
+ * @version 0.4-dev
  * @copyright Copyright (c) a2h 2009-2010
  *
  * Silk icons (c) Mark James
  * WooFunction icons (c) WooThemes and WeFunction 2009
  * btnmini icons, img/titles/ticket.png and icons in img/btn/ are (c) a2h 2009-2010
+ * Pure CSS speech bubbles by Nicolas Gallagher - http://nicolasgallagher.com/?p=486
  */
 
 /* main stuff */
@@ -408,9 +409,11 @@ input[type=text]:hover, input[type=password]:hover, textarea:hover
 }
 input[type=text]:focus, input[type=password]:focus, textarea:focus
 {
-	border: 1px solid #abbbcc;
+	border: 1px solid #919ead;
 	outline: 0;
+	box-shadow: 0 0 2px rgba(0,48,255,0.15);
 	-moz-box-shadow: 0 0 2px rgba(0,48,255,0.15);
+	-webkit-box-shadow: 0 0 2px rgba(0,48,255,0.15);
 }
 input[type=text], input[type=password]
 {
@@ -481,6 +484,69 @@ a.button
 button img, a.button img
 {
 	margin: -6px 8px -2px 0;
+}
+
+/* form info bubbles */
+
+.infobubble
+{
+	position: relative;
+	z-index: 2;
+	margin: 16px 0 0 6px;
+	padding: 6px;
+	width: 224px;
+	opacity: 0.8;
+	background: #000511;
+	color: #eee;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	box-shadow: 0 0 3px #000;
+	-moz-box-shadow: 0 0 3px #000;
+	-webkit-box-shadow: 0 0 3px #000;
+	font-size: 11px;
+	line-height: 14px;
+}
+.infobubble:after /* the triangle */
+{
+	content: "\00a0";
+	display: block; /* reduce the damage in FF3.0 */
+	position: absolute;
+	z-index: -1;
+	top: 4px;
+	left: -19px;
+	width: 0;
+	height: 0;
+	border-width: 8px 12px;
+	border-style: solid;
+	border-color: transparent #000511 transparent transparent;
+}
+.infobubble p
+{
+	margin: 10px 0 0;
+}
+.infobubble ul
+{
+	margin: 2px 0 0;
+}
+.infobubble p:first-child, .infobubble ul:first-child
+{
+	margin: 0;
+}
+.infobubble ul
+{
+	padding-left: 20px;
+}
+.form dd
+{
+	position: relative;
+}
+.form dd .infobubble
+{
+	display: none; /* don't show the bubbles before the js has a chance to handle them */
+	position: absolute;
+	top: -15px;
+	right: -250px;
 }
 
 /* drop downs */
