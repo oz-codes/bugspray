@@ -333,6 +333,20 @@ dl.form, p.form
 	margin: 2px 0;
 	padding: 0;
 }
+dl.form label
+{
+	font-weight: bold;
+}
+dl.form textarea
+{
+	width: 704px;
+}
+dl.form.col-3
+{
+	clear: none;
+	float: left;
+	width: 25%;
+}
 dl.form.inline dt, dl.form.inline dd
 {
 	float: left;
@@ -342,19 +356,9 @@ dl.form.inline dt
 	width: 96px;
 	padding-top: 3px;
 }
-dl.form label
+dl.form.inline dd input[type=text], dl.form.inline dd input[type=password], dl.form.inline textarea
 {
-	font-weight: bold;
-}
-dl.form textarea
-{
-	width: 75%;
-}
-dl.form.col-3
-{
-	clear: none;
-	float: left;
-	width: 25%;
+	width: 416px;
 }
 
 .form.big dt
@@ -398,17 +402,23 @@ input[type=text], input[type=password], textarea
 	font-family: verdana, arial, sans-serif;
 	font-size: 12px;
 }
+input[type=text]:hover, input[type=password]:hover, textarea:hover
+{
+	border: 1px solid #ccc;
+}
 input[type=text]:focus, input[type=password]:focus, textarea:focus
 {
-	border: 1px solid #bdbdbd;
+	border: 1px solid #abbbcc;
+	outline: 0;
+	-moz-box-shadow: 0 0 2px rgba(0,48,255,0.15);
 }
 input[type=text], input[type=password]
 {
-	padding: 3px;
+	padding: 4px;
 }
 textarea
 {
-	padding: 4px;
+	padding: 5px;
 }
 
 input[type=text].unchanged, input[type=password].unchanged, textarea.unchanged,

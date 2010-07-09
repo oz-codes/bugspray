@@ -17,7 +17,7 @@
 			<label for="title">Summary</label>
 		</dt>
 		<dd>
-			<input id="title" name="title" type="text" size="64" maxlength="128" value="<?php echo $_POST['title'] ?>" />
+			<input id="title" name="title" type="text" maxlength="192" value="<?php echo $_POST['title'] ?>" />
 		</dd>
 	</dl>
 	
@@ -30,7 +30,7 @@
 			<label for="tags">Tags</label>
 		</dt>
 		<dd>
-			<input id="tags" name="tags" type="text" size="64" value="<?php echo $_POST['tags'] ?>" />
+			<input id="tags" name="tags" type="text" value="<?php echo $_POST['tags'] ?>" />
 			<span class="small">(seperate tags by spaces)</span>
 		</dd>
 	</dl>
@@ -43,7 +43,7 @@
 		</dt>
 		<dd>
 			<input id="severity" name="severity" type="hidden" value="0" />
-			<div id="severity-slider" class="left" style="width: 410px; margin-top: 6px;"></div>
+			<div id="severity-slider" class="left" style="width: 422px; margin-top: 6px;"></div>
 			<span id="severity-name" class="left small" style="margin-left: 4px; margin-top: 4px;">none</span>
 			<script type="text/javascript">
 				$("#severity-slider").slider({
