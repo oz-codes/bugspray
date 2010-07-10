@@ -845,14 +845,19 @@ a.button.drop-button img, button.drop-button img
 	font-weight: bold;
 	font-size: 7px;
 }
-.ticket .id
+.tickets .id
 {
 	width: 8px;
 }
-.ticket .assigned, .ticket .last
+.ticket .replies, .ticket .assigned, .ticket .last
 {
 	color: #a0a0a0;
 	font-size: 10px;
+}
+.ticket .replies, .tickets thead .replies
+{
+	width: 48px;
+	text-align: right;
 }
 .ticket .assigned a
 {

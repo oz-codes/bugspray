@@ -5,6 +5,7 @@
 			<th class="star"></th>
 			<th class="id"><a href="#">#</a></th>
 			<th class="summary"><a href="#">Summary</a></th>
+			<th class="replies"><a href="#">Replies</a></th>
 			<th class="assigned"><a href="#">Assigned</a></th>
 			<th class="last"><a href="#">Last</a></th>
 		</tr>
@@ -48,6 +49,7 @@
 			?>
 			
 		</td>
+		<td class="replies"><?php echo $ticket['num_comments'] ?></td>
 		<td class="assigned<?php echo $ticket['assign'] == $_SESSION['uid'] && $ticket['status'] < 3 ? ' you' : '' ?>"><?php echo $ticket['assign'] > 0 ? '<a href="profile.php?id=' . $ticket['assign'] . '">' . getunm($ticket['assign']) . '</a>' : '--' ?></td>
 		<td class="last"><?php echo timeago($ticket['when_updated'], false, true) ?></td>
 	</tr>
