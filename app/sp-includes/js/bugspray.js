@@ -74,7 +74,7 @@ jQuery(function($) {
 			else if($text.match(/^Enter a comment\.\.\.$/i)) {
 				error = "did not change textarea";
 			}
-			else if($text.length < 8) {
+			else if($text.length < 3) {
 				error = "submitted reply is too short";
 			}
 			if(error != null) {
