@@ -8,16 +8,17 @@
 			<th class="replies"><a href="#">Replies</a></th>
 			<th class="assigned"><a href="#">Assigned</a></th>
 			<th class="last"><a href="#">Last</a></th>
+                        <th class="status"><a href="#">Status</a></th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
-			<td colspan="7">
+			<td colspan="8">
 				<form class="filter">
 					Showing
 					<select name="status">
 						<?php foreach ($statuses as $status): ?>
-						<option value="<?php echo $status['type']; ?>"<?php echo $status['sel'] ? ' selected' : ''; ?>><?php echo strtolower($status['name']); ?></option>
+						<option value="<?php echo $status['type']; ?>"<?php echo $status['type'] == $_COOKIE['current'] ? ' selected' : ''; ?>><?php echo strtolower($status['name']); ?></option>
 						<?php endforeach; ?>
 					</select>
 					tickets
@@ -52,6 +53,7 @@
 		<td class="replies"><?php echo $ticket['num_comments'] ?></td>
 		<td class="assigned<?php echo $ticket['assign'] == $_SESSION['uid'] && $ticket['status'] < 3 ? ' you' : '' ?>"><?php echo $ticket['assign'] > 0 ? '<a href="profile.php?id=' . $ticket['assign'] . '">' . getunm($ticket['assign']) . '</a>' : '--' ?></td>
 		<td class="last"><?php echo timeago($ticket['when_updated'], false, true) ?></td>
+                <td class="status"><?php echo getstatusnm($ticket["status"]); ?></td>
 	</tr>
 	
 	<?php endforeach; ?>

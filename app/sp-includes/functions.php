@@ -258,11 +258,14 @@ function getissnm($id)
 function getstatuses()
 {	
 	return array(
+                "",
+                array('id' => 0, 'type' => 'unassigned', 'name' => 'unassigned'),
 		array('id' => 1, 'type' => 'open', 'name' => 'open'),
 		array('id' => 2, 'type' => 'assigned', 'name' => 'assigned'),
 		array('id' => 3, 'type' => 'resolved', 'name' => 'resolved'),
-		array('id' => 4, 'type' => 'postponed', 'name' => 'open'),
-		array('id' => 5, 'type' => 'declined', 'name' => 'declined')
+		array('id' => 4, 'type' => 'postponed', 'name' => 'postponed'),
+		array('id' => 5, 'type' => 'declined', 'name' => 'declined'),
+		array('id' => 6, 'type' => 'duplicate', 'name' => 'duplicate')
 	);
 }
 
@@ -273,7 +276,7 @@ function getstatuses()
 function getstatusnm($id)
 {
 	$statuses = getstatuses();
-	return $statuses[$id-1]['name'];
+	return $statuses[$id+1]['name'];
 }
 
 /**
@@ -285,6 +288,14 @@ function getstatustype($id)
 	$statuses = getstatuses();
 	return $statuses[$id-1]['type'];
 }
+function getIdFromName($name) {
+        $statuses = getstatuses();
+        foreach($statuses as $status) {
+               if($status['name'] == $name) {
+                  return $status['id'];
+               }
+        }
+}
 
 /**
  * @version 0.4
@@ -293,17 +304,20 @@ function getstatustype($id)
 function ticket_list($status, $order='desc', $pinfollowing=false)
 {
 	global $page, $users;
-	
+	if($_COOKIE["current"] !== "") {
+           $status = $_COOKIE["current"];
+        }
 	// Ah, the myriad of status filters
 	switch ($status)
 	{
-		case 'unassigned': $whereclause = 'issues.status = 1'; break;
+		case 'unassigned': $whereclause = 'issues.status = 0'; break;
 		case 'assigned': $whereclause = 'issues.status = 2'; break;
 		case 'resolved': $whereclause = 'issues.status = 3'; break;
 		case 'postponed': $whereclause = 'issues.status = 4'; break;
 		case 'declined': $whereclause = 'issues.status = 5'; break;
+                case 'duplicate': $whereclause = 'issues.status = 6'; break;
 		case 'all': $whereclause = '1'; break; // This seems to be okay, see http://stackoverflow.com/questions/1983655
-		case 'open': default: $status = 'open'; $whereclause = '(issues.status = 1 OR issues.status = 2)'; break;
+		case 'open': default: $status = 'open'; $whereclause = '(issues.status = 0 OR issues.status = 1 OR issues.status = 2)'; break;
 	}
 	
 	// If we don't have a proper order defined, just make it descending
@@ -448,6 +462,11 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 			'sel' => $status == 'resolved' ? true : false
 		),
 		array(
+			'name' => 'Postponed',
+			'type' => 'postponed',
+			'sel' => $status == 'postponed' ? true : false
+		),
+		array(
 			'name' => 'Declined',
 			'type' => 'declined',
 			'sel' => $status == 'declined' ? true : false
@@ -456,7 +475,12 @@ function ticket_list($status, $order='desc', $pinfollowing=false)
 			'name' => 'All',
 			'type' => 'all',
 			'sel' => $status == 'all' ? true : false
-		)
+		),
+                array(
+                        'name' => 'Duplicate',
+                        'type' => 'duplicate',
+                        'sel' => $status == 'duplicate' ? true : false,
+                )
 	);
 
 	// And we're off!

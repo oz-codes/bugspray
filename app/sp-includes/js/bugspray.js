@@ -28,8 +28,87 @@ function getNewComments()
 {
 	history.go();
 }
+	function createCookie(name,value,days) {
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime()+(days*24*60*60*1000));
+			var expires = "; expires="+date.toGMTString();
+		}
+		else var expires = "";
+		document.cookie = name+"="+value+expires+"; path=/";
+	}
+	function readCookie(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) {
+					return c.substring(nameEQ.length,c.length);
+			}
+		}
+		return null;
+	}
+	function eraseCookie(name) {
+		createCookie(name,"",-1);
+	}
+    function scrollTo(theElement){
+		var selectedPosX = 0;
+		var selectedPosY = 0;
+		while(theElement != null){
+			selectedPosX += theElement.offsetLeft;
+			selectedPosY += theElement.offsetTop;
+			theElement = theElement.offsetParent;
+		}
+	window.scrollTo(selectedPosX,selectedPosY);
+	}
 
 jQuery(function($) {
+	$("form.config").live("submit",function() {
+			$area = $("textarea#comment_form");
+			$text = $area.val();
+			error = null;
+			if($text == "") {
+				error = "textarea empty";
+			}
+			else if($text.match(/^Enter a comment\.\.\.$/i)) {
+				error = "did not change textarea";
+			}
+			else if($text.length < 8) {
+				error = "submitted reply is too short";
+			}
+			if(error != null) {
+				alert("There's something wrong with the comment you submitted. Error message is: "+error);
+				return false;
+			}
+		});
+
+	view = readCookie("current");
+	if(view == null) {
+		createCookie("current","all",1);
+		view  = "all";
+	}
+	$("option:selected").removeAttr("selected");
+	$("select[name='status']").children().each(function(k) {
+		if($(this).val()==view) {
+			$(this).attr("selected","selected");
+			$(this).change();
+			return false;
+		}
+	});
+        $("select#status").live("change",function() {
+            s = $(this).find("option:selected");
+            val = $(s).attr("value");
+            if(val == 6) {
+               $("form#comment_form").append($("<div id='miscdiv'><label for='miscellanea'>ID of duplicate:</label> <input type='text' id='misc' name='misc' /></div>"));
+            } else {
+               if($("#miscellanea").size() == 0) {
+					return true;
+				} else {
+					$("#miscdiv").remove();
+				}
+			}
+        });
 	// drop downs
 	$(".drop-button").each(function() {
 		var dropbutton = $(this);
@@ -126,7 +205,13 @@ jQuery(function($) {
 		$(".comment_quote").click(function() {
 			var e = caElm(this);
 			// todo - grab bbcode instead of text
-			$("#comment_form").append('[quote=' + $(e).find('.username a').text() + ']' + $(e).find('.cont').text() + '[/quote]');
+                        $box = $("textarea#comment_form");
+                        cur = $box.val();
+                        cont = $(e).find(".content").text().replace(/^\s*/,"");
+                        cont = cont.replace(/\*\*\* Status .+ \*\*\*/g,"").replace(/\s*$/,"\n");
+                        username = $(e).find("a.username").text();
+			$box.val(cur+'[quote=' + username + ']\n' + cont +'[/quote]');
+			scrollTo($box.get(0));
 		});
 		$(".comment_delete").click(function() {			
 			if (confirm('Make sure you want to delete this comment. It cannot be recovered.'))
@@ -156,7 +241,9 @@ jQuery(function($) {
 	{
 		$(".tickets .filter select[name=status]").live('change', function() {
 			var tickets = $(this).closest(".tickets");
-			
+			eraseCookie("current");
+			value = $(this).find("option:selected").val()
+			createCookie("current",value,1);
 			$.ajax({
 				type: 'post',
 				url: 'ticket_list.php',

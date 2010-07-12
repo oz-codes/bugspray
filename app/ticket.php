@@ -71,13 +71,16 @@ else
 			$comment = escape_smart($_POST['comment']);
 			$status = escape_smart($_POST['status']);
 			$assign = escape_smart($_POST['assign']);
+                        $data = isset($_POST["misc"])?$_POST["misc"]:"";
+                        $bn = basename(dirname($_SERVER[PHP_SELF]));
+                        if($status == 6) { $misc = escape_smart("Duplicate Of=<a href='$bn/ticket.php?id=$data'>$data</a>"); }
 			
 			// TODO: make a method of adding these messages that don't involve permanently storing a name...
 			
 			// has the status been changed?
 			if (is_numeric($status) && $status != $issue['status'])
 			{
-				if (!db_query("UPDATE issues SET status = $status WHERE id = $id"))
+				if (!db_query("UPDATE issues SET status = $status, misc='$misc' WHERE id = $id "))
 				{
 					$error = true;
 					$errors[] = 'The status of the ticket could not be changed. There may be a server error.';
@@ -85,6 +88,7 @@ else
 				else
 				{
 					$comment .= "\n\n" . '[b]*** Status changed to ' . getstatusnm($status) . ' ***[/b]';
+                                        $comment .= ($misc != "")?"\n\n[b]*** Received extra data: $data ***[/b]":"";
 				}
 			}
 			

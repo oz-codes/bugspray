@@ -31,7 +31,7 @@
 	<table class="details">
 		<tr>
 			<td>Status</td>
-			<td><?php echo getstatusnm($issue['status']); ?></td>
+			<td><?php echo getstatusnm($issue['status']) ?></td>
 		</tr>
 		<tr>
 			<td>Severity</td>
@@ -44,6 +44,21 @@
 				<div class="fc"></div>
 			</td>
 		</tr>
+                <?php
+                if($issue['misc'] != "") {
+                   list($left, $right) = explode("=",$issue['misc'],2);
+                 ?>
+                <tr>
+                    <td>
+                     <?php echo $left;?>
+                    </td>
+                    <td>
+                     <?php echo $right;?>
+                    </td>
+                </tr>
+                <?php
+                 }
+                 ?>
 	</table>
 	
 	<br />
@@ -57,6 +72,9 @@
 					<td>
 						<div class="user"><?php echo getuinfo($issue['author'], false); ?></div>
 						<div class="time">Posted on <?php echo timehtml5($issue['when_opened'], true); ?></div>
+                                                <div class="actions">
+							<img class="comment_quote" src="<?php echo $location['images']; ?>/btnmini/quote.png" alt="" />
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -117,6 +135,7 @@
 						<option value="3">Resolved</option>
 						<option value="4">Postponed</option>
 						<option value="5">Declined</option>
+                                                <option value="6">Duplicate</option>
 					</select>
 				</dd>
 			</dl>
