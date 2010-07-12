@@ -6,12 +6,7 @@
 		</div>
 		
 		<?php
-			$tags = explode(' ', $issue['tags']); // todo: use the separate table for tags instead of one long string
-			foreach ($tags as $tag)
-			{
-				if($tag == "") { continue; }
-				echo '<span class="tag"><a href="#">' . $tag . '</a></span>';
-			}
+			echo_tags($issue['tags']);
 		?>
 		
 		<?php if ($users->client->is_admin): ?><div class="right">
